@@ -1,0 +1,40 @@
+{
+  "name": "Skotovody Club",
+  "about_url": "https://skotovody.com/",
+  "license_url": "https://github.com/bzrkv/skotovody-club/blob/main/LICENSE",
+  "component": false,
+  "assets": {
+    "primary-logo": "assets/svg/logo.svg",
+    "favicon": "assets/svg/favicon.svg"
+  },
+  "color_schemes": {
+    "Skotovody Light": {
+      "primary": "34302A",
+      "secondary": "F9F7F1",
+      "tertiary": "4A6B4A",
+      "quaternary": "A88845",
+      "header_background": "FFFFFF",
+      "header_primary": "34302A",
+      "highlight": "C56848",
+      "selected": "DDE8DC",
+      "hover": "F0EBE0",
+      "danger": "C56848",
+      "success": "4A6B4A",
+      "love": "C56848"
+    },
+    "Skotovody Dark": {
+      "primary": "F0EBE0",
+      "secondary": "34302A",
+      "tertiary": "8AAA8A",
+      "quaternary": "D6B97A",
+      "header_background": "2A2620",
+      "header_primary": "F0EBE0",
+      "highlight": "E58C70",
+      "selected": "3F4A3F",
+      "hover": "453F35",
+      "danger": "E58C70",
+      "success": "8AAA8A",
+      "love": "E58C70"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+enable_guest_landing:
+  default: true
+  type: bool
+  description: "Показывать .dc-landing hero на главной для неавторизованных юзеров"
+
+enable_admin_banner:
+  default: false
+  type: bool
+  description: "Показывать .dc-banner глобальный анонс сверху"
+
+admin_banner_text:
+  default: "Открыт Клуб Скотоводов. Это закрытое профессиональное сообщество — для регистрации заполните заявку."
+  type: string
+  description: "Текст в admin banner (HTML allowed)"
+
+admin_banner_cta_text:
+  default: "Подать заявку →"
+  type: string
+  description: "Текст CTA-ссылки в admin banner"
+
+admin_banner_cta_url:
+  default: "https://skotovody.com/klub-zayavka/"
+  type: string
+  description: "Куда ведёт CTA — обычно application form на skotovody.com"
+
+enable_slider:
+  default: true
+  type: bool
+  description: "Slider анонсов на главной (pull свежих топиков с тегом 'announcement' из /news)"
+
+slider_tag:
+  default: "announcement"
+  type: string
+  description: "Discourse tag для топиков, которые показываются в slider"
+
+slider_count:
+  default: 3
+  type: integer
+  min: 1
+  max: 10
+  description: "Сколько слайдов показывать (max 10)"
+
+pricing_url:
+  default: "https://skotovody.com/klub/"
+  type: string
+  description: "URL pricing-страницы на skotovody.com — куда ведут CTA «Подать заявку» из guest landing"
+
+verified_badge_admin_emoji:
+  default: "⚙️"
+  type: string
+
+verified_badge_expert_emoji:
+  default: "🎓"
+  type: string
+
+verified_badge_farm_emoji:
+  default: "🏡"
+  type: string

@@ -1,0 +1,298 @@
+// ============================================
+//  Skotovody Club — Design Tokens
+//  Source of truth: docs/Club_Skotovody/styles.css (Claude Design package)
+//
+//  We use oklch() directly — Discourse 3.x runs on modern browsers
+//  (Chromium 111+, Firefox 113+, Safari 15.4+) which all support it.
+// ============================================
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+  // Type families
+  --sktvd-font-ui:      'Manrope', system-ui, sans-serif;
+  --sktvd-font-display: 'Fraunces', Georgia, serif;
+  --sktvd-font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  // Light theme tokens
+  --sktvd-bg:           oklch(0.97 0.012 85);
+  --sktvd-bg-elev:      oklch(0.99 0.008 85);
+  --sktvd-bg-sunk:      oklch(0.94 0.018 85);
+  --sktvd-surface:      #ffffff;
+  --sktvd-line:         oklch(0.88 0.015 75);
+  --sktvd-line-strong:  oklch(0.78 0.02 70);
+
+  --sktvd-ink:          oklch(0.22 0.018 60);
+  --sktvd-ink-2:        oklch(0.40 0.02 60);
+  --sktvd-ink-3:        oklch(0.55 0.018 65);
+  --sktvd-ink-mute:     oklch(0.68 0.015 70);
+
+  // Accents
+  --sktvd-forest:       oklch(0.42 0.08 145);
+  --sktvd-forest-soft:  oklch(0.92 0.04 145);
+  --sktvd-forest-ink:   oklch(0.28 0.06 145);
+
+  --sktvd-ochre:        oklch(0.62 0.10 65);
+  --sktvd-ochre-soft:   oklch(0.93 0.05 75);
+  --sktvd-ochre-deep:   oklch(0.48 0.10 60);
+
+  --sktvd-terracotta:      oklch(0.55 0.13 35);
+  --sktvd-terracotta-soft: oklch(0.93 0.05 40);
+
+  --sktvd-sand:         oklch(0.88 0.05 80);
+  --sktvd-hay:          oklch(0.85 0.09 95);
+
+  // Radii
+  --sktvd-r-sm: 6px;
+  --sktvd-r-md: 10px;
+  --sktvd-r-lg: 14px;
+  --sktvd-r-xl: 20px;
+
+  // Shadows
+  --sktvd-shadow-sm: 0 1px 2px rgb(60 40 20 / 0.06);
+  --sktvd-shadow-md: 0 6px 18px -8px rgb(60 40 20 / 0.18), 0 2px 4px rgb(60 40 20 / 0.06);
+  --sktvd-shadow-lg: 0 18px 40px -16px rgb(60 40 20 / 0.25), 0 4px 8px rgb(60 40 20 / 0.08);
+}
+
+[data-theme="dark"] {
+  --sktvd-bg:           oklch(0.18 0.012 60);
+  --sktvd-bg-elev:      oklch(0.22 0.014 60);
+  --sktvd-bg-sunk:      oklch(0.14 0.012 60);
+  --sktvd-surface:      oklch(0.24 0.014 60);
+  --sktvd-line:         oklch(0.32 0.018 60);
+  --sktvd-line-strong:  oklch(0.42 0.022 60);
+
+  --sktvd-ink:          oklch(0.94 0.012 85);
+  --sktvd-ink-2:        oklch(0.80 0.014 80);
+  --sktvd-ink-3:        oklch(0.66 0.016 75);
+  --sktvd-ink-mute:     oklch(0.52 0.018 70);
+
+  --sktvd-forest:       oklch(0.62 0.10 145);
+  --sktvd-forest-soft:  oklch(0.30 0.05 145);
+  --sktvd-forest-ink:   oklch(0.85 0.08 145);
+
+  --sktvd-ochre:        oklch(0.72 0.12 70);
+  --sktvd-ochre-soft:   oklch(0.32 0.06 70);
+  --sktvd-ochre-deep:   oklch(0.58 0.12 60);
+
+  --sktvd-terracotta:      oklch(0.65 0.14 35);
+  --sktvd-terracotta-soft: oklch(0.32 0.08 35);
+}
+
+// ============================================
+// Discourse base overrides
+// ============================================
+
+body {
+  font-family: var(--sktvd-font-ui);
+  font-feature-settings: "ss01", "cv11";
+}
+
+h1, h2, h3 {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+// Topic titles in /latest use display font
+.topic-list .title {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// Buttons that act as primary CTAs
+.btn-primary {
+  background: var(--sktvd-forest);
+  border-color: var(--sktvd-forest);
+
+  &:hover, &:focus {
+    background: var(--sktvd-forest-ink);
+    border-color: var(--sktvd-forest-ink);
+  }
+}
+
+// ============================================
+// Verified badges (rendered by theme component)
+// ============================================
+.sktvd-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &[data-tier="admin"] {
+    background: var(--sktvd-terracotta-soft);
+    color: var(--sktvd-terracotta);
+  }
+  &[data-tier="expert"] {
+    background: var(--sktvd-forest-soft);
+    color: var(--sktvd-forest-ink);
+  }
+  &[data-tier="farm"] {
+    background: var(--sktvd-ochre-soft);
+    color: var(--sktvd-ochre-deep);
+  }
+}
+
+// ============================================
+// Guest login wall (.dc-loginwall)
+// Shown when guest tries to access a closed category/topic
+// ============================================
+.sktvd-loginwall {
+  max-width: 480px;
+  margin: 60px auto;
+  text-align: center;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 16px;
+  padding: 44px 36px;
+  box-shadow: var(--sktvd-shadow-md);
+
+  &-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    background: var(--sktvd-forest-soft);
+    color: var(--sktvd-forest-ink);
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+  }
+
+  &-title {
+    font-family: var(--sktvd-font-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+    color: var(--sktvd-ink);
+  }
+
+  &-desc {
+    font-size: 14px;
+    color: var(--sktvd-ink-2);
+    line-height: 1.55;
+    margin: 0 0 22px;
+  }
+
+  &-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+// ============================================
+// Admin banner (.dc-banner) — top-of-page announcement
+// ============================================
+.sktvd-banner {
+  background: linear-gradient(135deg, var(--sktvd-forest) 0%, var(--sktvd-forest-ink) 70%, oklch(0.18 0.05 90) 100%);
+  color: oklch(0.95 0.02 80);
+  padding: 18px 24px;
+  position: relative;
+  overflow: hidden;
+
+  &-pill {
+    background: var(--sktvd-ochre);
+    color: var(--sktvd-ochre-deep);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  &-text {
+    flex: 1;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  &-cta {
+    color: var(--sktvd-ochre);
+    font-weight: 700;
+    text-decoration: underline;
+  }
+}
+
+// ============================================
+// Custom header auth buttons (Регистрация + Вход)
+// Replaces default Discourse login/signup buttons.
+// ============================================
+
+// Hide default Discourse auth buttons (we replace with custom)
+.d-header {
+  .login-button,
+  .sign-up-button {
+    display: none !important;
+  }
+}
+
+.sktvd-club-header-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+
+  .btn {
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--sktvd-r-md);
+    transition: background .12s, border-color .12s;
+  }
+
+  .sktvd-club-btn-register {
+    background: transparent;
+    color: var(--sktvd-ink-2);
+    border: 1px solid var(--sktvd-line-strong);
+
+    &:hover {
+      background: var(--sktvd-bg-sunk);
+      color: var(--sktvd-ink);
+      border-color: var(--sktvd-ink-3);
+    }
+  }
+
+  .sktvd-club-btn-login {
+    background: var(--sktvd-forest);
+    color: oklch(0.97 0.012 85);
+    border: 1px solid var(--sktvd-forest);
+
+    &:hover {
+      background: var(--sktvd-forest-ink);
+      border-color: var(--sktvd-forest-ink);
+    }
+  }
+}
+
+// Mobile: stack vertically or hide one
+@media (max-width: 480px) {
+  .sktvd-club-header-auth {
+    gap: 4px;
+    .btn { padding: 6px 10px; font-size: 12px; }
+  }
+}
+
+// ============================================
+// TODO Phase E full implementation
+// ============================================
+// - .dc-toplist (custom Latest topic list table)
+// - .dc-cat-grid (categories grid with colored left edge)
+// - .dc-topic-layout + .dc-timeline (thread page right-rail scrubber)
+// - .dc-composer-dock (bottom slide-up composer)
+// - .dc-sidebar (left rail with category counts)
+// - .dc-landing (public guest hero)
+// - .dc-cat-box[data-locked] (blur preview for guests)
+// - Slider (homepage announcement carousel)
+// - Light/Dark mode switching UI
+//
+// Reference: docs/Club_Skotovody/club/club-styles.css (Claude Design)
