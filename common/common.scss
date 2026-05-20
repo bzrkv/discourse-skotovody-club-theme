@@ -1560,6 +1560,10 @@ body.has-sidebar-page .sktvd-banner-inner {
   margin-bottom: 18px;
 
   &-slide {
+    // border-box: keep the slide exactly 340px tall. With content-box the
+    // 34px vertical padding added onto height:340 → a 408px slide that
+    // overflowed the 340px container, clipped 68px and dropped the content.
+    box-sizing: border-box;
     height: 340px;
     padding: 34px 46px;
     display: grid;
