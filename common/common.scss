@@ -585,7 +585,7 @@ body.has-sidebar-page .sktvd-nav-inner {
 
 .topic-list {
   border: 1px solid var(--sktvd-line);
-  border-radius: var(--sktvd-r-lg);
+  border-radius: 12px; // spec §5.E3
   overflow: hidden;
   background: var(--sktvd-surface);
   border-collapse: separate;
@@ -623,15 +623,16 @@ body.has-sidebar-page .sktvd-nav-inner {
     flex-wrap: wrap;
   }
 
+  // Title — Manrope UI font, 15px/600 (spec §5.E3 — NOT the display serif)
   .link-top-line .title,
   a.title.raw-topic-link,
   a.title {
-    font-family: var(--sktvd-font-display);
+    font-family: var(--sktvd-font-ui);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     color: var(--sktvd-ink);
-    font-size: 15.5px;
-    line-height: 1.32;
+    font-size: 15px;
+    line-height: 1.35;
 
     &:hover { color: var(--sktvd-forest-ink); }
   }
@@ -1479,13 +1480,13 @@ body.has-sidebar-page .sktvd-banner-inner {
   position: relative;
   border-radius: var(--sktvd-r-lg);
   overflow: hidden;
-  min-height: 340px;
+  height: 340px; // spec §5.E1 — fixed slide height
   box-shadow: var(--sktvd-shadow-md);
   margin-bottom: 18px;
 
   &-slide {
-    min-height: 340px;
-    padding: 42px 46px;
+    height: 340px;
+    padding: 34px 46px;
     display: grid;
     grid-template-columns: 1.6fr 1fr;
     gap: 28px;
@@ -1604,35 +1605,30 @@ body.has-sidebar-page .sktvd-banner-inner {
     &[aria-current="true"] { background: oklch(0.85 0.13 80); width: 24px; }
   }
 
+  // Arrows — bare glyphs, no circle (per review)
   &-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: oklch(1 0 0 / 0.18);
-    backdrop-filter: blur(8px);
+    background: transparent;
     border: 0;
+    padding: 6px 10px;
     color: oklch(0.95 0.02 80);
-    font-size: 22px;
+    font-size: 34px;
+    line-height: 1;
     cursor: pointer;
-    display: grid;
-    place-items: center;
     z-index: 10;
+    transition: opacity 0.12s;
 
-    &:hover { background: oklch(1 0 0 / 0.3); }
-    &.prev { left: 14px; }
-    &.next { right: 14px; }
+    &:hover { opacity: 0.65; }
+    &.prev { left: 8px; }
+    &.next { right: 8px; }
   }
 
   // Light slides (event / partner) — dark arrows + dots for contrast
   &:has(.--event) &-arrow,
   &:has(.--partner) &-arrow {
-    background: oklch(0.22 0.018 60 / 0.16);
     color: var(--sktvd-ink);
-
-    &:hover { background: oklch(0.22 0.018 60 / 0.3); }
   }
 
   &:has(.--event) &-dot,
