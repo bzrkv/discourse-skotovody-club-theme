@@ -1,18 +1,19 @@
 {{#unless this.currentUser}}
   <div class="sktvd-club-header-auth">
     <a
-      href="https://skotovody.com/?auth=register&from=club&redirect_to={{this.returnUrl}}"
+      href={{this.registerUrl}}
       class="btn btn-default sktvd-club-btn-register"
-      title="Подать заявку на вступление в Клуб"
+      title="Зарегистрироваться и подать заявку в Клуб"
     >
       Регистрация
     </a>
-    <a
-      href="https://skotovody.com/?auth=login&from=club&redirect_to={{this.returnUrl}}"
+    <button
+      type="button"
       class="btn btn-primary sktvd-club-btn-login"
       title="Войти в Клуб"
+      {{on "click" (action "login")}}
     >
       Вход
-    </a>
+    </button>
   </div>
 {{/unless}}
