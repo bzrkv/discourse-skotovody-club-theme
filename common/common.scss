@@ -1,6 +1,11 @@
 // ============================================
-//  Skotovody Club — Design Tokens
-//  Source of truth: docs/Club_Skotovody/styles.css (Claude Design package)
+//  Skotovody Club — Discourse theme
+//  Source of truth: docs/Club_Skotovody/club/club-styles.css (mockup)
+//
+//  Strategy: we restyle Discourse's OWN selectors (.topic-list,
+//  .category-list, .topic-post, #reply-control, .sidebar-wrapper, …) so the
+//  native DOM looks like the mockup. No template overrides — this survives
+//  every `./launcher rebuild app` and Discourse upgrade.
 //
 //  We use oklch() directly — Discourse 3.x runs on modern browsers
 //  (Chromium 111+, Firefox 113+, Safari 15.4+) which all support it.
@@ -79,9 +84,9 @@
   --sktvd-terracotta-soft: oklch(0.32 0.08 35);
 }
 
-// ============================================
-// Discourse base overrides
-// ============================================
+// ════════════════════════════════════════════════════════════════
+//  Base typography
+// ════════════════════════════════════════════════════════════════
 
 body {
   font-family: var(--sktvd-font-ui);
@@ -94,14 +99,7 @@ h1, h2, h3 {
   letter-spacing: -0.015em;
 }
 
-// Topic titles in /latest use display font
-.topic-list .title {
-  font-family: var(--sktvd-font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-// Buttons that act as primary CTAs
+// Primary CTAs — forest green
 .btn-primary {
   background: var(--sktvd-forest);
   border-color: var(--sktvd-forest);
@@ -112,9 +110,724 @@ h1, h2, h3 {
   }
 }
 
-// ============================================
-// Verified badges (rendered by theme component)
-// ============================================
+// ════════════════════════════════════════════════════════════════
+//  Header — .dc-header look
+// ════════════════════════════════════════════════════════════════
+
+.d-header {
+  background: var(--sktvd-surface);
+  border-bottom: 1px solid var(--sktvd-line);
+  box-shadow: none;
+}
+
+// Hide the uploaded raster logo entirely — the brand mark is rendered as a
+// text wordmark by the sktvd-club-1-logo-badge connector instead.
+.d-header #site-logo,
+.home-logo-wrapper-outlet {
+  display: none !important;
+}
+
+// Hide default Discourse auth buttons (we replace with custom connector)
+.d-header {
+  .login-button,
+  .sign-up-button {
+    display: none !important;
+  }
+}
+
+// ─── Text logo (rendered by connector in before-header-panel) ───
+.before-header-panel-outlet {
+  display: inline-flex;
+  align-items: center;
+}
+
+.sktvd-club-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  margin-right: 6px;
+
+  &:hover { text-decoration: none; }
+}
+
+.sktvd-club-logo-icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--sktvd-forest) 0%, oklch(0.32 0.06 145) 100%);
+  color: oklch(0.95 0.05 95);
+  display: grid;
+  place-items: center;
+}
+
+.sktvd-club-logo-word {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  color: var(--sktvd-ink);
+  line-height: 1;
+}
+
+.sktvd-club-logo-dot { color: var(--sktvd-ochre); }
+
+// "КЛУБ" badge — sits after the wordmark
+.sktvd-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  background: var(--sktvd-ink);
+  color: var(--sktvd-bg);
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--sktvd-font-ui);
+  line-height: 1.2;
+}
+
+// ─── Header icon buttons — rounded, soft hover ───
+.d-header {
+  .icons .icon,
+  .icons > li > .btn,
+  .header-sidebar-toggle .btn {
+    border-radius: var(--sktvd-r-sm);
+
+    &:hover,
+    &:focus {
+      background: var(--sktvd-bg-sunk);
+      color: var(--sktvd-ink);
+    }
+  }
+
+  // Current-user avatar — subtle ring on hover
+  #current-user .avatar {
+    border-radius: 100px;
+  }
+}
+
+// Search field inside the header dropdown
+.d-header .search-menu .search-input,
+.search-menu-container input[type="search"] {
+  border-radius: var(--sktvd-r-md);
+  border-color: var(--sktvd-line);
+  background: var(--sktvd-bg-elev);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Welcome banner — Discourse 3.x greeting block (compact + on-brand)
+// ════════════════════════════════════════════════════════════════
+
+.welcome-banner {
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-lg);
+  padding: 26px 28px;
+  margin-bottom: 18px;
+
+  .welcome-banner__title {
+    font-family: var(--sktvd-font-display);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    color: var(--sktvd-ink);
+    margin-bottom: 14px;
+  }
+
+  // Search box inside the banner
+  .search-menu .search-input,
+  .welcome-banner__search-menu input {
+    border-radius: var(--sktvd-r-md);
+    border-color: var(--sktvd-line);
+    background: var(--sktvd-bg-elev);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Discovery navigation bar (Свежие / Новые / Лучшие / Категории)
+// ════════════════════════════════════════════════════════════════
+
+.navigation-container {
+  border-bottom: 1px solid var(--sktvd-line);
+}
+
+#navigation-bar.nav-pills > li > a {
+  font-family: var(--sktvd-font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--sktvd-ink-3);
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  transition: color 0.12s;
+
+  &:hover {
+    color: var(--sktvd-ink);
+    background: transparent;
+  }
+}
+
+#navigation-bar.nav-pills > li.active > a,
+#navigation-bar.nav-pills > li > a.active {
+  color: var(--sktvd-ink);
+  background: transparent;
+  border-bottom-color: var(--sktvd-forest);
+}
+
+// Category / tag breadcrumb dropdowns
+.navigation-container .category-breadcrumb .select-kit-header,
+.category-breadcrumb .select-kit-header {
+  border-radius: var(--sktvd-r-sm);
+  border-color: var(--sktvd-line);
+  background: var(--sktvd-surface);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Left sidebar — .dc-sidebar look
+// ════════════════════════════════════════════════════════════════
+
+.sidebar-wrapper {
+  background: var(--sktvd-bg);
+  border-right: 1px solid var(--sktvd-line);
+
+  .sidebar-section-header,
+  .sidebar-section-header-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sktvd-ink-3);
+  }
+
+  .sidebar-section-link {
+    border-radius: var(--sktvd-r-sm);
+    font-size: 13px;
+    color: var(--sktvd-ink-2);
+
+    &:hover { background: var(--sktvd-bg-sunk); color: var(--sktvd-ink); }
+
+    &.active {
+      background: var(--sktvd-ink);
+      color: var(--sktvd-bg);
+
+      .sidebar-section-link-prefix,
+      .sidebar-section-link-content-text { color: var(--sktvd-bg); }
+    }
+  }
+
+  // Unread / count badge
+  .sidebar-section-link-content-badge {
+    font-family: var(--sktvd-font-mono);
+    font-size: 11px;
+    color: var(--sktvd-ink-mute);
+  }
+
+  .sidebar-section-link-prefix.icon .d-icon {
+    color: var(--sktvd-forest);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Topic list (Latest / category topics) — .dc-toplist look
+// ════════════════════════════════════════════════════════════════
+
+.topic-list {
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-lg);
+  overflow: hidden;
+  background: var(--sktvd-surface);
+  border-collapse: separate;
+  border-spacing: 0;
+
+  .topic-list-header {
+    background: var(--sktvd-bg-elev);
+
+    th {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sktvd-ink-3);
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--sktvd-line);
+    }
+  }
+
+  .topic-list-item {
+    border-top: 1px solid var(--sktvd-line);
+    transition: background 0.1s;
+
+    &:first-child { border-top: 0; }
+    &:hover { background: var(--sktvd-bg-elev); }
+
+    td { padding: 14px; vertical-align: top; }
+  }
+
+  // ─── Topic title — display serif font ───
+  .link-top-line {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .link-top-line .title,
+  a.title.raw-topic-link,
+  a.title {
+    font-family: var(--sktvd-font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--sktvd-ink);
+    font-size: 15.5px;
+    line-height: 1.32;
+
+    &:hover { color: var(--sktvd-forest-ink); }
+    &:visited { color: var(--sktvd-ink-2); }
+  }
+
+  // ─── Pinned / status icons ───
+  .topic-statuses .topic-status .d-icon {
+    color: var(--sktvd-ochre-deep);
+  }
+
+  // ─── Bottom line (category badge + tags) ───
+  .link-bottom-line {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
+  // ─── Excerpt preview text ───
+  .topic-excerpt {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--sktvd-ink-2);
+  }
+
+  .topic-excerpt-more { color: var(--sktvd-forest-ink); font-weight: 600; }
+
+  // ─── Reply / view counts — monospace tabular numerals ───
+  .num .number,
+  .badge-posts .number {
+    font-family: var(--sktvd-font-mono);
+    font-feature-settings: 'tnum';
+    font-weight: 700;
+    color: var(--sktvd-ink-2);
+  }
+
+  .views .number { color: var(--sktvd-ink-3); }
+
+  .activity,
+  .post-activity .relative-date {
+    color: var(--sktvd-ink-3);
+    font-size: 12px;
+  }
+
+  // ─── Poster avatars — rounded ───
+  .posters a img.avatar {
+    border-radius: 100px;
+    box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06);
+  }
+}
+
+// Hot-thread accent on the reply count
+.topic-list .posts-map.heatmap-high .number { color: var(--sktvd-terracotta); }
+.topic-list .posts-map.heatmap-med  .number { color: var(--sktvd-ochre-deep); }
+
+// ─── Category badge — small pill (mockup .dc-cat-pill) ───
+.badge-category__wrapper .badge-category {
+  font-family: var(--sktvd-font-ui);
+  font-weight: 600;
+}
+
+.badge-category__name { letter-spacing: -0.005em; }
+
+// ════════════════════════════════════════════════════════════════
+//  Categories page — .dc-cat-grid / .dc-cat-box look
+// ════════════════════════════════════════════════════════════════
+
+.category-list {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  border: 0;
+
+  .category-list-header th {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sktvd-ink-3);
+    border: 0;
+    padding: 0 14px 4px;
+  }
+
+  // Each category row → a card
+  tbody tr {
+    background: var(--sktvd-surface);
+    box-shadow: var(--sktvd-shadow-sm);
+    transition: box-shadow 0.15s;
+
+    &:hover { box-shadow: var(--sktvd-shadow-md); }
+
+    td {
+      border-top: 1px solid var(--sktvd-line);
+      border-bottom: 1px solid var(--sktvd-line);
+      padding: 18px 20px;
+      vertical-align: top;
+    }
+
+    td.category {
+      border-left: 1px solid var(--sktvd-line);
+      border-radius: var(--sktvd-r-md) 0 0 var(--sktvd-r-md);
+      // Coloured stripe = category badge colour
+      box-shadow: inset 6px 0 0 0 var(--category-badge-color, var(--sktvd-forest));
+      padding-left: 26px;
+    }
+
+    td.topics,
+    td:last-child {
+      border-right: 1px solid var(--sktvd-line);
+      border-radius: 0 var(--sktvd-r-md) var(--sktvd-r-md) 0;
+      text-align: center;
+      color: var(--sktvd-ink-2);
+    }
+  }
+
+  // Category name — display serif
+  .category-name,
+  .category-text-title .category-name {
+    font-family: var(--sktvd-font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--sktvd-ink);
+  }
+
+  .category-description {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--sktvd-ink-2);
+    margin-top: 4px;
+  }
+
+  // Topic count number
+  td.topics .ember-view,
+  td.topics {
+    font-family: var(--sktvd-font-mono);
+    font-feature-settings: 'tnum';
+  }
+}
+
+// ─── Subcategory pills ───
+.category-list .subcategories,
+.subcategories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.subcategories .subcategory {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  background: var(--sktvd-bg-elev);
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-sm);
+  font-size: 12px;
+  transition: background 0.12s, border-color 0.12s;
+
+  &:hover {
+    background: var(--sktvd-bg-sunk);
+    border-color: var(--sktvd-line-strong);
+  }
+
+  .badge-category__name { font-weight: 600; color: var(--sktvd-ink-2); }
+  .category__badges { font-family: var(--sktvd-font-mono); }
+}
+
+// Latest-topics column (categories_and_latest_topics layout)
+.latest-topic-list .latest-topic-list-item {
+  border-top: 1px solid var(--sktvd-line);
+
+  .topic-title a {
+    font-family: var(--sktvd-font-display);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--sktvd-ink);
+
+    &:hover { color: var(--sktvd-forest-ink); }
+  }
+}
+
+// ─── Category page heading → .dc-cat-header look ───
+.category-heading,
+.category-list-header {
+  .category-title-header {
+    padding: 22px 26px;
+    background: var(--sktvd-surface);
+    border: 1px solid var(--sktvd-line);
+    border-radius: var(--sktvd-r-md);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 8px;
+      background: var(--category-badge-color, var(--sktvd-forest));
+    }
+  }
+
+  h1, .category-title {
+    font-family: var(--sktvd-font-display);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Topic page (thread) — .dc-topic / .dc-post look
+// ════════════════════════════════════════════════════════════════
+
+#topic-title h1,
+.topic-post .cooked h1 {
+  font-family: var(--sktvd-font-display);
+}
+
+#topic-title h1 a.fancy-title {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+// Topic category line under the title
+#topic-title .topic-category .badge-category__wrapper {
+  font-size: 13px;
+}
+
+// ─── Individual posts ───
+.topic-post {
+  article.boxed {
+    border-top: 1px solid var(--sktvd-line);
+    padding-top: 22px;
+  }
+
+  &:first-of-type article.boxed {
+    border-top: 0;
+    padding-top: 4px;
+  }
+}
+
+// Author name — bold ink
+.topic-meta-data .names {
+  .first.username,
+  .username a,
+  span.first a {
+    font-weight: 700;
+    color: var(--sktvd-ink);
+  }
+}
+
+// Post timestamp / numbers
+.topic-meta-data .post-infos,
+.topic-meta-data .post-info {
+  color: var(--sktvd-ink-3);
+  font-size: 12px;
+}
+
+.topic-meta-data .post-infos .post-date {
+  font-family: var(--sktvd-font-mono);
+}
+
+// Post body
+.topic-body .cooked {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--sktvd-ink);
+
+  p { margin: 0 0 14px; }
+  strong { color: var(--sktvd-ink); font-weight: 700; }
+
+  // Inline blockquotes / aside
+  blockquote,
+  aside.quote {
+    border-left: 3px solid var(--sktvd-line-strong);
+    background: var(--sktvd-bg-elev);
+    border-radius: 0 var(--sktvd-r-sm) var(--sktvd-r-sm) 0;
+  }
+}
+
+// ─── Post action bar (like / share / reply) ───
+.post-menu-area,
+.post__menu-area {
+  .post-controls .btn,
+  .actions .btn {
+    border-radius: var(--sktvd-r-sm);
+    color: var(--sktvd-ink-3);
+    transition: background 0.12s, color 0.12s;
+
+    &:hover {
+      background: var(--sktvd-bg-sunk);
+      color: var(--sktvd-ink);
+    }
+  }
+
+  // Reply button — forest accent on hover
+  .actions .create.btn:hover,
+  .post-controls .reply.btn:hover {
+    background: var(--sktvd-forest-soft);
+    color: var(--sktvd-forest-ink);
+  }
+
+  // Liked heart
+  .actions .like-count.highlight-action .d-icon,
+  .actions button.has-like .d-icon {
+    color: var(--sktvd-terracotta);
+  }
+}
+
+// ─── Topic map (OP stats block) ───
+.topic-map,
+.topic-map.--op {
+  border-radius: var(--sktvd-r-md);
+  border-color: var(--sktvd-line);
+  background: var(--sktvd-bg-elev);
+
+  .topic-map__stats .number,
+  .topic-map__stat .number {
+    font-family: var(--sktvd-font-mono);
+    font-feature-settings: 'tnum';
+    font-weight: 700;
+    color: var(--sktvd-ink);
+  }
+}
+
+// Suggested / related topics footer
+.topic-list.--latest .topic-list-item,
+#suggested-topics .topic-list-item {
+  td { padding: 12px 14px; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Timeline scrubber (right rail) — .dc-timeline look
+// ════════════════════════════════════════════════════════════════
+
+.topic-timeline {
+  .timeline-scrollarea {
+    border-color: var(--sktvd-line);
+  }
+
+  .timeline-handle .timeline-handle__inner,
+  .timeline-handle {
+    background: var(--sktvd-forest);
+  }
+
+  .timeline-scroller-content .start-date,
+  .timeline-scroller-content .now-date,
+  .timeline-date-wrapper {
+    font-size: 11px;
+    color: var(--sktvd-ink-3);
+  }
+
+  // The "current / total post" counter
+  .timeline-replies {
+    font-family: var(--sktvd-font-mono);
+    font-feature-settings: 'tnum';
+    font-weight: 700;
+    color: var(--sktvd-ink-2);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Composer dock (slide-up bottom) — .dc-composer-dock look
+// ════════════════════════════════════════════════════════════════
+
+#reply-control {
+  border-top: 1px solid var(--sktvd-line);
+  box-shadow: 0 -10px 30px -8px rgb(60 40 20 / 0.18);
+  background: var(--sktvd-surface);
+
+  // Title input — display serif font, large
+  #reply-title,
+  .title-input input {
+    font-family: var(--sktvd-font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  // Markdown editing area — monospace
+  .d-editor-input {
+    font-family: var(--sktvd-font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  // Live preview pane
+  .d-editor-preview-wrapper {
+    background: var(--sktvd-bg-elev);
+    border-radius: var(--sktvd-r-sm);
+
+    .d-editor-preview {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  // Editor toolbar
+  .d-editor-button-bar {
+    background: var(--sktvd-bg-elev);
+    border-bottom: 1px solid var(--sktvd-line);
+
+    .btn {
+      border-radius: var(--sktvd-r-sm);
+      color: var(--sktvd-ink-3);
+
+      &:hover { background: var(--sktvd-bg-sunk); color: var(--sktvd-ink); }
+    }
+  }
+
+  // Reply-control top grip / header
+  .reply-to,
+  .reply-details {
+    color: var(--sktvd-ink-2);
+    font-size: 13px;
+  }
+
+  // Category + tag pickers in the composer
+  .category-input .select-kit-header,
+  .mini-tag-chooser .select-kit-header {
+    border-radius: var(--sktvd-r-sm);
+    border-color: var(--sktvd-line);
+  }
+
+  // Primary "create topic / reply" button
+  .save-or-cancel .btn-primary {
+    background: var(--sktvd-forest);
+    border-color: var(--sktvd-forest);
+    border-radius: var(--sktvd-r-md);
+
+    &:hover, &:focus {
+      background: var(--sktvd-forest-ink);
+      border-color: var(--sktvd-forest-ink);
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Verified badges (rendered by theme component)
+// ════════════════════════════════════════════════════════════════
+
 .sktvd-verified-badge {
   display: inline-flex;
   align-items: center;
@@ -140,58 +853,61 @@ h1, h2, h3 {
   }
 }
 
-// ============================================
-// Guest login wall (.dc-loginwall)
-// Shown when guest tries to access a closed category/topic
-// ============================================
-.sktvd-loginwall {
-  max-width: 480px;
-  margin: 60px auto;
-  text-align: center;
-  background: var(--sktvd-surface);
-  border: 1px solid var(--sktvd-line);
-  border-radius: 16px;
-  padding: 44px 36px;
-  box-shadow: var(--sktvd-shadow-md);
+// ════════════════════════════════════════════════════════════════
+//  Custom header auth buttons (Регистрация + Вход) — connector
+// ════════════════════════════════════════════════════════════════
 
-  &-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 18px;
-    background: var(--sktvd-forest-soft);
-    color: var(--sktvd-forest-ink);
-    border-radius: 16px;
-    display: grid;
-    place-items: center;
-  }
+.sktvd-club-header-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
 
-  &-title {
-    font-family: var(--sktvd-font-display);
-    font-size: 24px;
+  .btn {
+    padding: 7px 14px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: -0.015em;
-    margin: 0 0 10px;
-    color: var(--sktvd-ink);
+    border-radius: var(--sktvd-r-md);
+    transition: background .12s, border-color .12s;
   }
 
-  &-desc {
-    font-size: 14px;
+  .sktvd-club-btn-register {
+    background: transparent;
     color: var(--sktvd-ink-2);
-    line-height: 1.55;
-    margin: 0 0 22px;
+    border: 1px solid var(--sktvd-line-strong);
+
+    &:hover {
+      background: var(--sktvd-bg-sunk);
+      color: var(--sktvd-ink);
+      border-color: var(--sktvd-ink-3);
+    }
   }
 
-  &-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
+  .sktvd-club-btn-login {
+    background: var(--sktvd-forest);
+    color: oklch(0.97 0.012 85);
+    border: 1px solid var(--sktvd-forest);
+
+    &:hover {
+      background: var(--sktvd-forest-ink);
+      border-color: var(--sktvd-forest-ink);
+    }
   }
 }
 
-// ============================================
-// Admin banner (.dc-banner) — top-of-page announcement
-// ============================================
+@media (max-width: 480px) {
+  .sktvd-club-header-auth {
+    gap: 4px;
+    margin-left: 4px;
+    .btn { padding: 6px 10px; font-size: 12px; }
+  }
+  .sktvd-club-logo-word { font-size: 18px; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Admin banner (.sktvd-banner) — connector, above-main-container
+// ════════════════════════════════════════════════════════════════
+
 .sktvd-banner {
   background: linear-gradient(135deg, var(--sktvd-forest) 0%, var(--sktvd-forest-ink) 70%, oklch(0.18 0.05 90) 100%);
   color: oklch(0.95 0.02 80);
@@ -246,380 +962,59 @@ h1, h2, h3 {
   }
 }
 
-// ============================================
-// Custom header auth buttons (Регистрация + Вход)
-// Replaces default Discourse login/signup buttons.
-// ============================================
-
-// Hide default Discourse auth buttons (we replace with custom)
-.d-header {
-  .login-button,
-  .sign-up-button {
-    display: none !important;
-  }
-}
-
-.sktvd-club-header-auth {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: 12px;
-
-  .btn {
-    padding: 7px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: var(--sktvd-r-md);
-    transition: background .12s, border-color .12s;
-  }
-
-  .sktvd-club-btn-register {
-    background: transparent;
-    color: var(--sktvd-ink-2);
-    border: 1px solid var(--sktvd-line-strong);
-
-    &:hover {
-      background: var(--sktvd-bg-sunk);
-      color: var(--sktvd-ink);
-      border-color: var(--sktvd-ink-3);
-    }
-  }
-
-  .sktvd-club-btn-login {
-    background: var(--sktvd-forest);
-    color: oklch(0.97 0.012 85);
-    border: 1px solid var(--sktvd-forest);
-
-    &:hover {
-      background: var(--sktvd-forest-ink);
-      border-color: var(--sktvd-forest-ink);
-    }
-  }
-}
-
-// Mobile: stack vertically or hide one
-@media (max-width: 480px) {
-  .sktvd-club-header-auth {
-    gap: 4px;
-    .btn { padding: 6px 10px; font-size: 12px; }
-  }
-}
-
 // ════════════════════════════════════════════════════════════════
-//  Phase E — restyle of native Discourse DOM
-//
-//  Strategy: we target Discourse's OWN selectors (.topic-list,
-//  .category-list, .topic-timeline, #reply-control, .sidebar-wrapper)
-//  and restyle them. No template overrides — this survives every
-//  `./launcher rebuild app` and Discourse upgrade.
-//
-//  Reference look: docs/Club_Skotovody/club/club-styles.css
+//  Guest login wall (.sktvd-loginwall)
 // ════════════════════════════════════════════════════════════════
 
-// ───────────────────────────────────────────────
-// Topic list (Latest / category topic table) → .dc-toplist look
-// ───────────────────────────────────────────────
-.topic-list {
+.sktvd-loginwall {
+  max-width: 480px;
+  margin: 60px auto;
+  text-align: center;
+  background: var(--sktvd-surface);
   border: 1px solid var(--sktvd-line);
-  border-radius: var(--sktvd-r-lg);
-  overflow: hidden;
-  background: var(--sktvd-surface);
-  border-collapse: separate;
-  border-spacing: 0;
+  border-radius: 16px;
+  padding: 44px 36px;
+  box-shadow: var(--sktvd-shadow-md);
 
-  .topic-list-header {
-    background: var(--sktvd-bg-elev);
-
-    th {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--sktvd-ink-3);
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--sktvd-line);
-    }
+  &-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    background: var(--sktvd-forest-soft);
+    color: var(--sktvd-forest-ink);
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
   }
 
-  .topic-list-item {
-    border-top: 1px solid var(--sktvd-line);
-    transition: background 0.1s;
-
-    &:hover { background: var(--sktvd-bg-elev); }
-
-    td { padding: 14px; vertical-align: top; }
-  }
-
-  // Topic title — display serif font, like the mockup
-  .link-top-line .title,
-  a.title {
+  &-title {
     font-family: var(--sktvd-font-display);
+    font-size: 24px;
     font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--sktvd-ink);
-    font-size: 15px;
-
-    &:hover { color: var(--sktvd-forest-ink); }
-    &:visited { color: var(--sktvd-ink-2); }
-  }
-
-  // Reply / view counts — monospace tabular numerals
-  .num .number,
-  .badge-posts .number {
-    font-family: var(--sktvd-font-mono);
-    font-feature-settings: 'tnum';
-    font-weight: 700;
-    color: var(--sktvd-ink-2);
-  }
-
-  .activity { color: var(--sktvd-ink-3); font-size: 12px; }
-}
-
-// "Many replies" hot-thread accent
-.topic-list .posts-map.heatmap-high .number { color: var(--sktvd-terracotta); }
-.topic-list .posts-map.heatmap-med  .number { color: var(--sktvd-ochre-deep); }
-
-// ───────────────────────────────────────────────
-// Categories page → .dc-cat-grid / .dc-cat-box look
-// Works with the `categories_with_featured_topics` layout
-// (.category-list table). Colored left stripe = category color.
-// ───────────────────────────────────────────────
-.category-list {
-  border: 0;
-
-  .category-list-item {
-    background: var(--sktvd-surface);
-    border: 1px solid var(--sktvd-line);
-    border-radius: var(--sktvd-r-md);
-    margin-bottom: 12px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.15s, box-shadow 0.15s;
-
-    // Colored left stripe — uses the category badge color var that
-    // Discourse exposes on the badge element.
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 6px;
-      background: var(--sktvd-category-color, var(--sktvd-forest));
-      z-index: 1;
-    }
-
-    &:hover {
-      border-color: var(--sktvd-line-strong);
-      box-shadow: var(--sktvd-shadow-md);
-    }
-
-    td { padding: 18px 20px 18px 24px; border: 0; }
-  }
-
-  .category-name {
-    font-family: var(--sktvd-font-display);
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: var(--sktvd-ink);
-  }
-
-  .category-description {
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--sktvd-ink-2);
-  }
-
-  .latest .featured-topic a.title {
-    font-family: var(--sktvd-font-ui);
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--sktvd-ink);
-  }
-}
-
-// Bridge: copy each category badge's color into a token the stripe reads.
-.category-list-item .badge-category {
-  --sktvd-category-color: var(--category-badge-color, var(--sktvd-forest));
-}
-
-// ───────────────────────────────────────────────
-// Category page heading → .dc-cat-header look
-// ───────────────────────────────────────────────
-.category-heading,
-.category-list-header {
-  .category-title-header {
-    padding: 22px 26px;
-    background: var(--sktvd-surface);
-    border: 1px solid var(--sktvd-line);
-    border-radius: var(--sktvd-r-md);
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 8px;
-      background: var(--sktvd-category-color, var(--sktvd-forest));
-    }
-  }
-
-  h1, .category-title {
-    font-family: var(--sktvd-font-display);
-    font-weight: 700;
     letter-spacing: -0.015em;
-  }
-}
-
-// ───────────────────────────────────────────────
-// Topic page — title + posts → .dc-topic look
-// ───────────────────────────────────────────────
-#topic-title h1,
-.topic-post .cooked h1 {
-  font-family: var(--sktvd-font-display);
-}
-
-#topic-title h1 a.fancy-title {
-  font-family: var(--sktvd-font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.topic-body .cooked {
-  font-size: 15px;
-  line-height: 1.65;
-}
-
-// ───────────────────────────────────────────────
-// Timeline scrubber (right rail) → .dc-timeline look
-// ───────────────────────────────────────────────
-.topic-timeline {
-  .timeline-scrollarea {
-    border-color: var(--sktvd-line);
+    margin: 0 0 10px;
+    color: var(--sktvd-ink);
   }
 
-  .timeline-handle .timeline-handle__inner,
-  .timeline-handle {
-    background: var(--sktvd-forest);
-  }
-
-  .timeline-scroller-content .start-date,
-  .timeline-scroller-content .now-date,
-  .timeline-date-wrapper {
-    font-size: 11px;
-    color: var(--sktvd-ink-3);
-  }
-
-  // The "current / total post" counter
-  .timeline-replies {
-    font-family: var(--sktvd-font-mono);
-    font-feature-settings: 'tnum';
-    font-weight: 700;
+  &-desc {
+    font-size: 14px;
     color: var(--sktvd-ink-2);
-  }
-}
-
-// ───────────────────────────────────────────────
-// Composer dock (slide-up bottom) → .dc-composer-dock look
-// ───────────────────────────────────────────────
-#reply-control {
-  border-top: 1px solid var(--sktvd-line);
-  box-shadow: 0 -10px 30px -8px rgb(60 40 20 / 0.18);
-  background: var(--sktvd-surface);
-
-  // Title input — display serif font, large
-  #reply-title,
-  .title-input input {
-    font-family: var(--sktvd-font-display);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    line-height: 1.55;
+    margin: 0 0 22px;
   }
 
-  // Markdown editing area — monospace
-  .d-editor-input {
-    font-family: var(--sktvd-font-mono);
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .d-editor-preview-wrapper {
-    background: var(--sktvd-bg-elev);
-    border-radius: var(--sktvd-r-sm);
-  }
-
-  // Editor toolbar
-  .d-editor-button-bar {
-    background: var(--sktvd-bg-elev);
-    border-bottom: 1px solid var(--sktvd-line);
-  }
-
-  // Primary "create topic / reply" button reuses .btn-primary forest
-  .save-or-cancel .btn-primary {
-    background: var(--sktvd-forest);
-    border-color: var(--sktvd-forest);
-
-    &:hover, &:focus {
-      background: var(--sktvd-forest-ink);
-      border-color: var(--sktvd-forest-ink);
-    }
-  }
-}
-
-// ───────────────────────────────────────────────
-// Left sidebar → .dc-sidebar look
-// ───────────────────────────────────────────────
-.sidebar-wrapper {
-  background: var(--sktvd-bg);
-  border-right: 1px solid var(--sktvd-line);
-
-  .sidebar-section-header,
-  .sidebar-section-header-text {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--sktvd-ink-3);
-  }
-
-  .sidebar-section-link {
-    border-radius: var(--sktvd-r-sm);
-    font-size: 13px;
-    color: var(--sktvd-ink-2);
-
-    &:hover { background: var(--sktvd-bg-sunk); color: var(--sktvd-ink); }
-
-    &.active {
-      background: var(--sktvd-ink);
-      color: var(--sktvd-bg);
-
-      .sidebar-section-link-prefix,
-      .sidebar-section-link-content-text { color: var(--sktvd-bg); }
-    }
-  }
-
-  // Unread / count badge
-  .sidebar-section-link-content-badge {
-    font-family: var(--sktvd-font-mono);
-    font-size: 11px;
-    color: var(--sktvd-ink-mute);
-  }
-
-  // Category color squares in the "Categories" section
-  .sidebar-section-link-prefix.icon .d-icon {
-    color: var(--sktvd-forest);
+  &-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
 
 // ════════════════════════════════════════════════════════════════
-//  Phase E — new UI elements rendered by theme JS connectors
-//  (these have no Discourse-native equivalent)
+//  Guest landing hero (.sktvd-landing) — connector
 // ════════════════════════════════════════════════════════════════
 
-// ───────────────────────────────────────────────
-// Guest landing hero (.sktvd-landing) — anonymous home page
-// Rendered by connectors/discovery-list-container-top
-// ───────────────────────────────────────────────
 .sktvd-landing {
   background: linear-gradient(155deg,
     oklch(0.22 0.018 60) 0%,
@@ -694,6 +1089,8 @@ h1, h2, h3 {
       background: oklch(1 0 0 / 0.12);
       color: inherit;
       border: 1px solid oklch(1 0 0 / 0.2);
+
+      &:hover { background: oklch(1 0 0 / 0.2); }
     }
   }
 
@@ -727,9 +1124,10 @@ h1, h2, h3 {
   }
 }
 
-// ───────────────────────────────────────────────
-// Locked-categories teaser (.sktvd-cat-teaser) — guest only
-// ───────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════
+//  Locked-categories teaser (.sktvd-cat-teaser) — connector
+// ════════════════════════════════════════════════════════════════
+
 .sktvd-cat-teaser {
   margin-bottom: 20px;
   padding: 20px 22px;
@@ -784,9 +1182,10 @@ h1, h2, h3 {
   }
 }
 
-// ───────────────────────────────────────────────
-// Announcement slider (.sktvd-slider) → .club-slider look
-// ───────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════
+//  Announcement slider (.sktvd-slider) — connector
+// ════════════════════════════════════════════════════════════════
+
 .sktvd-slider {
   position: relative;
   border-radius: var(--sktvd-r-lg);
@@ -903,9 +1302,10 @@ h1, h2, h3 {
   to   { opacity: 1; transform: none; }
 }
 
-// ───────────────────────────────────────────────
-// Responsive — mockup mobile fallbacks
-// ───────────────────────────────────────────────
+// ════════════════════════════════════════════════════════════════
+//  Responsive — mobile fallbacks
+// ════════════════════════════════════════════════════════════════
+
 @media (max-width: 767px) {
   .sktvd-landing { padding: 28px 24px; }
   .sktvd-landing-inner { grid-template-columns: 1fr; gap: 22px; }
@@ -914,94 +1314,14 @@ h1, h2, h3 {
   .sktvd-slider-slide { grid-template-columns: 1fr; padding: 28px 24px; }
   .sktvd-slider-watermark { display: none; }
   .sktvd-slider-title { font-size: 22px; }
-}
 
-// ════════════════════════════════════════════════════════════════
-//  Phase E v2 — header & discovery-nav restyle → .dc-header look
-// ════════════════════════════════════════════════════════════════
+  .welcome-banner { padding: 20px; }
+  .welcome-banner .welcome-banner__title { font-size: 21px; }
 
-.d-header {
-  background: var(--sktvd-surface);
-  border-bottom: 1px solid var(--sktvd-line);
-  box-shadow: none;
-}
+  // Topic list — drop the posters/views columns on small screens
+  .topic-list .posters,
+  .topic-list .views { display: none; }
 
-// Logo sizing — keep it tidy next to the КЛУБ badge
-.d-header #site-logo.logo-big {
-  max-height: 30px;
-  width: auto;
-}
-
-// "КЛУБ" badge — rendered by the home-logo-after connector
-.sktvd-logo-badge {
-  display: inline-flex;
-  align-items: center;
-  margin-left: 8px;
-  padding: 3px 8px;
-  background: var(--sktvd-forest);
-  color: oklch(0.97 0.012 85);
-  border-radius: 5px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-family: var(--sktvd-font-ui);
-  line-height: 1.2;
-}
-
-// Header icon buttons — rounded, soft hover
-.d-header .icons .icon,
-.d-header .icons > li > .btn {
-  border-radius: var(--sktvd-r-sm);
-
-  &:hover,
-  &:focus {
-    background: var(--sktvd-bg-sunk);
-    color: var(--sktvd-ink);
-  }
-}
-
-// Search field inside the header dropdown
-.d-header .search-menu .search-input,
-.search-menu-container input[type="search"] {
-  border-radius: var(--sktvd-r-md);
-  border-color: var(--sktvd-line);
-  background: var(--sktvd-bg-elev);
-}
-
-// ─── Discovery navigation bar (Свежие / Новые / Лучшие / …) ───
-.navigation-container {
-  background: var(--sktvd-bg-elev);
-  border-bottom: 1px solid var(--sktvd-line);
-}
-
-#navigation-bar.nav-pills > li > a {
-  font-family: var(--sktvd-font-ui);
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--sktvd-ink-3);
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  transition: color 0.12s;
-
-  &:hover {
-    color: var(--sktvd-ink);
-    background: transparent;
-  }
-}
-
-#navigation-bar.nav-pills > li.active > a,
-#navigation-bar.nav-pills > li > a.active {
-  color: var(--sktvd-ink);
-  background: transparent;
-  border-bottom-color: var(--sktvd-forest);
-}
-
-// "Создать тему" stays on the forest CTA colour (inherits .btn-primary)
-
-// Category / tag breadcrumb dropdowns — soften to match
-.navigation-container .category-breadcrumb .select-kit-header {
-  border-radius: var(--sktvd-r-sm);
-  border-color: var(--sktvd-line);
-  background: var(--sktvd-surface);
+  // Categories — single-column card stack
+  .category-list tbody tr td { padding: 14px 16px; }
 }
