@@ -120,11 +120,10 @@ h1, h2, h3 {
   box-shadow: none;
 }
 
-// Hide the uploaded raster logo entirely — the brand mark is rendered as a
-// text wordmark by the sktvd-club-1-logo-badge connector instead.
-.d-header #site-logo,
-.home-logo-wrapper-outlet {
-  display: none !important;
+// Native uploaded logo (#site-logo) — admin uploads it via Customize → Logo.
+.d-header #site-logo {
+  max-height: 34px;
+  width: auto;
 }
 
 // Hide default Discourse auth buttons (we replace with custom connector)
@@ -165,7 +164,7 @@ h1, h2, h3 {
 .floating-search-input .search-banner-inner {
   background: var(--sktvd-bg-elev);
   border: 1px solid var(--sktvd-line);
-  border-radius: var(--sktvd-r-md);
+  border-radius: 8px; // spec §3.B1 — search field radius 8
 
   &:focus-within {
     border-color: var(--sktvd-forest);
@@ -205,42 +204,11 @@ h1, h2, h3 {
   display: none !important;
 }
 
-.sktvd-club-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  text-decoration: none;
-  margin-right: 6px;
-
-  &:hover { text-decoration: none; }
-}
-
-.sktvd-club-logo-icon {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--sktvd-forest) 0%, oklch(0.32 0.06 145) 100%);
-  color: oklch(0.95 0.05 95);
-  display: grid;
-  place-items: center;
-}
-
-.sktvd-club-logo-word {
-  font-family: var(--sktvd-font-display);
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-  color: var(--sktvd-ink);
-  line-height: 1;
-}
-
-.sktvd-club-logo-dot { color: var(--sktvd-ochre); }
-
-// "КЛУБ" badge — sits after the wordmark
+// "КЛУБ" badge — sits right after the native #site-logo image
 .sktvd-logo-badge {
   display: inline-flex;
   align-items: center;
+  margin-left: 8px;
   padding: 3px 8px;
   background: var(--sktvd-ink);
   color: var(--sktvd-bg);
