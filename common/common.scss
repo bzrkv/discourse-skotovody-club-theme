@@ -159,8 +159,9 @@ h1, h2, h3 {
 }
 
 // In-header search field — ONE clean rounded border on the outer wrapper.
-// (.search-banner-inner wraps .search-menu — bordering both gave a doubled
-// edge; the inner element is reset to borderless/transparent.)
+// Every inner element (.search-menu, its container, the advanced-search
+// toggle) is reset borderless/transparent so there is no doubled edge or
+// stray divider; the box border lives only on .search-banner-inner.
 .floating-search-input .search-banner-inner {
   background: var(--sktvd-bg-elev);
   border: 1px solid var(--sktvd-line);
@@ -173,19 +174,32 @@ h1, h2, h3 {
 }
 
 .floating-search-input .search-menu,
-.floating-search-input .search-menu .search-input {
+.floating-search-input .search-menu-container,
+.floating-search-input .search-input,
+.floating-search-input .search-input--header {
   background: transparent;
   border: 0;
   box-shadow: none;
 }
 
-.floating-search-input input,
-.floating-search-input .search-term {
+// Magnifier — readable ink, not the faint default grey
+.floating-search-input .search-icon .d-icon {
+  color: var(--sktvd-ink-3);
+}
+
+// Input text — one UI font
+.floating-search-input input {
   background: transparent;
   border: 0;
   font-family: var(--sktvd-font-ui);
   font-size: 13.5px;
   color: var(--sktvd-ink);
+}
+
+// Hide the advanced-search toggle — the mockup search has none, and it left
+// a stray divider line. Advanced search stays reachable on the /search page.
+.floating-search-input .show-advanced-search {
+  display: none;
 }
 
 .sktvd-club-logo {
