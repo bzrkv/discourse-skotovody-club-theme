@@ -65,6 +65,7 @@ export default class SktvdNav extends Component {
         label: "Закладки",
         href: "/bookmarks",
         match: ["/bookmarks"],
+        icon: "bookmark",
       },
     ].filter(Boolean);
 
@@ -72,6 +73,7 @@ export default class SktvdNav extends Component {
       label: t.label,
       href: t.href,
       count: t.count,
+      icon: t.icon,
       active: t.match.some(
         (m) => url === m || (m !== "/" && url.startsWith(m + "/"))
       ),
@@ -120,6 +122,7 @@ export default class SktvdNav extends Component {
                 href={{tab.href}}
                 class="sktvd-nav-tab {{if tab.active 'is-active'}}"
               >
+                {{#if tab.icon}}{{icon tab.icon}}{{/if}}
                 <span>{{tab.label}}</span>
                 {{#if tab.count}}
                   <span class="sktvd-nav-count">{{tab.count}}</span>
