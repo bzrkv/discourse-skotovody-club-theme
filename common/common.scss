@@ -577,6 +577,14 @@ body.has-sidebar-page .sktvd-nav-inner {
   .sidebar-section-link-prefix.icon .d-icon {
     color: var(--sktvd-forest);
   }
+
+  // Category links — drop the badge prefix entirely (colour square, emoji
+  // image, restricted-lock glyph). Every category name already carries its
+  // own emoji as text, so the prefix only added visual noise — square +
+  // emoji together read as cacophony (review 2026-05-20).
+  a.sidebar-section-link[href*="/c/"] .sidebar-section-link-prefix {
+    display: none;
+  }
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -671,6 +679,10 @@ body.has-sidebar-page .sktvd-nav-inner {
       &:visited { color: inherit; }
     }
 
+    // Drop the badge marker — emoji-image and restricted-lock glyph. The
+    // category name already carries its own emoji as text, so a separate
+    // marker just reads as visual noise — square + emoji together are
+    // cacophony (review 2026-05-20: keep emoji-in-name only).
     .badge-category {
       display: inline-flex;
       align-items: center;
@@ -678,15 +690,6 @@ body.has-sidebar-page .sktvd-nav-inner {
 
       .emoji,
       > svg { display: none; }
-
-      &::before {
-        content: "";
-        flex-shrink: 0;
-        width: 9px;
-        height: 9px;
-        border-radius: 2px;
-        background: var(--category-badge-color, var(--sktvd-ink-mute));
-      }
     }
 
     .badge-category__name {
@@ -748,6 +751,14 @@ body.has-sidebar-page .sktvd-nav-inner {
   .post-activity .relative-date {
     color: var(--sktvd-ink-3);
     font-size: 12px;
+  }
+
+  // Counts / activity align to the row's top line. Discourse pads these
+  // anchors 15px top & bottom, which vertically-centred the number and
+  // dropped it well below the topic title (review 2026-05-20).
+  .num a,
+  .activity a {
+    padding-top: 0 !important;
   }
 
   // ─── Poster avatars — stack with role rings (spec §5.E3) ───
