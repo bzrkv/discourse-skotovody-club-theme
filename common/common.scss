@@ -351,22 +351,11 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
-// ─── Category / tag filter dropdowns — clean consistent pills ───
-.category-breadcrumb .select-kit-header {
-  border-radius: var(--sktvd-r-md);
-  border: 1px solid var(--sktvd-line);
-  background: var(--sktvd-surface);
-  font-family: var(--sktvd-font-ui);
-
-  .name,
-  .select-kit-selected-name {
-    font-family: var(--sktvd-font-ui);
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--sktvd-ink-2);
-  }
-
-  &:hover { border-color: var(--sktvd-line-strong); }
+// ─── Category / tag breadcrumb dropdowns — hidden ───
+// The mockup nav row has no breadcrumb dropdowns; filtering is done with the
+// custom "Фильтры" button. Hide them on every discovery / category page.
+.navigation-container .category-breadcrumb {
+  display: none;
 }
 
 // ─── "Создать тему" — forest green primary button ───
