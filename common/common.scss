@@ -1473,6 +1473,81 @@ body.has-sidebar-page .sktvd-banner-inner {
 }
 
 // ════════════════════════════════════════════════════════════════
+//  Notice strip (.sktvd-notice / .sktvd-notice-guest) — connector
+//  HOMEPAGE_SPEC §5.E2 — sits under the slider, above the topic list
+// ════════════════════════════════════════════════════════════════
+
+// Member: warm profile-completion banner.
+.sktvd-notice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  background: linear-gradient(
+    90deg,
+    var(--sktvd-ochre-soft) 0%,
+    var(--sktvd-bg-elev) 70%
+  );
+  border: 1px solid oklch(0.78 0.1 70 / 0.4);
+  border-radius: var(--sktvd-r-md);
+
+  &-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--sktvd-r-sm);
+    background: var(--sktvd-ochre);
+    color: oklch(0.97 0.012 85);
+
+    .d-icon {
+      width: 16px;
+      height: 16px;
+      color: inherit;
+    }
+  }
+
+  &-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--sktvd-ink-2);
+  }
+
+  // Specificity (.sktvd-notice .sktvd-notice-btn = 0-2-0) beats Discourse's
+  // .btn / .btn-primary / .btn-secondary (0-1-0) — no !important needed.
+  &-btn {
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+// Guest: quiet one-liner above the public topic list.
+.sktvd-notice-guest {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--sktvd-ink-3);
+
+  .d-icon {
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--sktvd-ink-2);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
 //  Announcement slider (.sktvd-slider) — connector
 // ════════════════════════════════════════════════════════════════
 
