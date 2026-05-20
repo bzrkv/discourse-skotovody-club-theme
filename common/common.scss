@@ -242,17 +242,18 @@ h1, h2, h3 {
 }
 
 // ─── Custom header icons — bell + bookmark (spec §3.B1) ───
+// Pin every header icon SVG square at 18px so the bell, chat and bookmark
+// are the same visual size (the native chat icon renders oversized otherwise).
+.sktvd-header-icon-link .d-icon,
+.d-header li.chat-header-icon .d-icon {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  font-size: 18px;
+}
+
 .sktvd-header-icon-link {
   position: relative;
-
-  // The SVG must not stretch as a flex child — pin it square so the bell /
-  // bookmark keep their aspect and sit centred in the 45×45 button.
-  .d-icon {
-    flex: none;
-    width: 1em;
-    height: 1em;
-    font-size: 18px;
-  }
 }
 
 .sktvd-header-icon-badge {
