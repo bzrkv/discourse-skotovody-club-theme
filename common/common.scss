@@ -1416,12 +1416,12 @@ h1, h2, h3 {
   position: relative;
   border-radius: var(--sktvd-r-lg);
   overflow: hidden;
-  min-height: 300px;
+  min-height: 340px;
   box-shadow: var(--sktvd-shadow-md);
   margin-bottom: 18px;
 
   &-slide {
-    min-height: 300px;
+    min-height: 340px;
     padding: 42px 46px;
     display: grid;
     grid-template-columns: 1.6fr 1fr;
@@ -1595,6 +1595,31 @@ h1, h2, h3 {
 @keyframes sktvdSliderFade {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: none; }
+}
+
+// Slider auto-rotate progress bar (spec §5.E1)
+.sktvd-slider-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: oklch(0 0 0 / 0.12);
+  z-index: 9;
+}
+
+.sktvd-slider-progress-fill {
+  height: 100%;
+  width: 0;
+  background: oklch(0.85 0.13 80);
+  animation: sktvdSliderProgress 7s linear forwards;
+
+  &.is-paused { animation-play-state: paused; }
+}
+
+@keyframes sktvdSliderProgress {
+  from { width: 0; }
+  to   { width: 100%; }
 }
 
 // ════════════════════════════════════════════════════════════════

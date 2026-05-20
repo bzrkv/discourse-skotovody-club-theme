@@ -1,12 +1,10 @@
-// Connector for the `discovery-list-container-top` plugin outlet — the
-// auto-rotating hero slider (.sktvd-slider) above the topic list.
+// Connector for the `discovery-list-container-top` plugin outlet — the hero
+// slider (.sktvd-slider), block E1 of HOMEPAGE_SPEC.
 //
-// Written as a modern .gjs glimmer component (not the deprecated
-// .hbs + setupComponent connector API): @tracked state + native click
-// handlers, so rotation and the dots/arrows actually update reactively.
-//
-// Slides come from the `slides` theme setting (type: objects) — content the
-// admin curates, independent of forum topics, so the hero shows from day one.
+// .gjs glimmer component: @tracked state + native handlers. Slides are
+// authored in the `slides` theme setting (type: objects). Auto-rotates every
+// 7s, pauses on hover and resumes on leave (spec §5.E1); a progress bar
+// tracks the 7s cycle.
 
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -20,21 +18,18 @@ const ROTATE_MS = 7000;
 export default class SktvdSlider extends Component {
   slides = Array.isArray(settings.slides) ? settings.slides : [];
   @tracked index = 0;
+  @tracked paused = false;
+  // Bumped whenever the 7s progress bar should restart (slide change / resume).
+  @tracked cycle = 0;
 
   constructor() {
     super(...arguments);
-    if (this.enabled && this.slides.length > 1) {
-      this._timer = setInterval(() => {
-        this.index = (this.index + 1) % this.slides.length;
-      }, ROTATE_MS);
-    }
+    this.#start();
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
-    if (this._timer) {
-      clearInterval(this._timer);
-    }
+    this.#stop();
   }
 
   get enabled() {
@@ -45,30 +40,74 @@ export default class SktvdSlider extends Component {
     return this.slides[this.index];
   }
 
-  @action
-  goTo(i) {
-    this.index = i;
-    this.#pause();
+  get multiple() {
+    return this.slides.length > 1;
   }
 
-  @action
-  step(delta) {
-    const n = this.slides.length;
-    this.index = (this.index + delta + n) % n;
-    this.#pause();
+  // Keyed {{#each}} over this recreates the progress fill so its CSS
+  // animation restarts from 0.
+  get progressKey() {
+    return [this.cycle];
   }
 
-  // Stop auto-rotation once the visitor interacts with the slider.
-  #pause() {
+  #start() {
+    if (this.enabled && this.multiple && !this._timer) {
+      this._timer = setInterval(() => {
+        this.index = (this.index + 1) % this.slides.length;
+        this.cycle++;
+      }, ROTATE_MS);
+    }
+  }
+
+  #stop() {
     if (this._timer) {
       clearInterval(this._timer);
       this._timer = null;
     }
   }
 
+  #restart() {
+    this.#stop();
+    if (!this.paused) {
+      this.#start();
+    }
+  }
+
+  @action
+  goTo(i) {
+    this.index = i;
+    this.cycle++;
+    this.#restart();
+  }
+
+  @action
+  step(delta) {
+    const n = this.slides.length;
+    this.index = (this.index + delta + n) % n;
+    this.cycle++;
+    this.#restart();
+  }
+
+  @action
+  pause() {
+    this.paused = true;
+    this.#stop();
+  }
+
+  @action
+  resume() {
+    this.paused = false;
+    this.cycle++;
+    this.#start();
+  }
+
   <template>
     {{#if this.enabled}}
-      <div class="sktvd-slider">
+      <div
+        class="sktvd-slider"
+        {{on "mouseenter" this.pause}}
+        {{on "mouseleave" this.resume}}
+      >
         <div class="sktvd-slider-slide --{{this.current.kind}}">
           <div class="sktvd-slider-main">
             {{#if this.current.tag}}
@@ -100,7 +139,7 @@ export default class SktvdSlider extends Component {
           {{/if}}
         </div>
 
-        {{#if (gt this.slides.length 1)}}
+        {{#if this.multiple}}
           <button
             type="button"
             class="sktvd-slider-arrow prev"
@@ -123,6 +162,14 @@ export default class SktvdSlider extends Component {
                 aria-label="Слайд"
                 {{on "click" (fn this.goTo i)}}
               ></button>
+            {{/each}}
+          </div>
+
+          <div class="sktvd-slider-progress">
+            {{#each this.progressKey key="@identity" as |k|}}
+              <div
+                class="sktvd-slider-progress-fill {{if this.paused 'is-paused'}}"
+              ></div>
             {{/each}}
           </div>
         {{/if}}
