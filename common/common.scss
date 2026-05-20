@@ -354,16 +354,22 @@ h1, h2, h3 {
   font-family: var(--sktvd-font-ui);
   font-weight: 600;
   font-size: 14px;
-  color: var(--sktvd-ink-3);
   text-decoration: none;
   white-space: nowrap;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color 0.12s, border-color 0.12s;
 
+  // :visited must be set explicitly — Discourse colours a:visited with
+  // --tertiary (green), and a:visited (0-1-1) out-specifies .sktvd-nav-tab
+  // (0-1-0), so visited tabs would render green without this.
+  &,
+  &:visited { color: var(--sktvd-ink-3); }
+
   &:hover { color: var(--sktvd-ink); }
 
-  &.is-active {
+  &.is-active,
+  &.is-active:visited {
     color: var(--sktvd-ink);
     border-bottom-color: var(--sktvd-forest);
   }
@@ -403,10 +409,13 @@ h1, h2, h3 {
   font-size: 13px;
   background: var(--sktvd-forest);
   border: 1px solid var(--sktvd-forest);
-  color: oklch(0.97 0.012 85);
   border-radius: var(--sktvd-r-md);
   padding: 8px 14px;
   text-decoration: none;
+
+  // :visited explicit — see .sktvd-nav-tab note
+  &,
+  &:visited { color: oklch(0.97 0.012 85); }
 
   .d-icon { color: oklch(0.97 0.012 85); }
 
@@ -481,8 +490,10 @@ h1, h2, h3 {
   border-radius: var(--sktvd-r-sm);
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--sktvd-ink-2);
   text-decoration: none;
+
+  &,
+  &:visited { color: var(--sktvd-ink-2); }
 
   &:hover {
     background: var(--sktvd-bg-sunk);
@@ -1202,9 +1213,11 @@ h1, h2, h3 {
 
   &-cta {
     flex-shrink: 0;
-    color: oklch(0.85 0.13 80);
     font-weight: 700;
     text-decoration: underline;
+
+    &,
+    &:visited { color: oklch(0.85 0.13 80); }
   }
 }
 
