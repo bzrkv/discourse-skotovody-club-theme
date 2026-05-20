@@ -147,8 +147,8 @@ h1, h2, h3 {
   }
   .floating-search-input-wrapper {
     order: 2;
-    flex: 0 1 440px;
-    max-width: 440px;
+    flex: 1 1 380px;
+    max-width: 380px;
     margin-left: 8px;
   }
   .panel {
@@ -323,19 +323,20 @@ h1, h2, h3 {
   display: none;
 }
 
+// View-nav (.dc-viewnav per spec §3.B2): bg-elev strip, 44px tall.
 .sktvd-nav {
-  background: var(--sktvd-surface);
+  background: var(--sktvd-bg-elev);
   border-bottom: 1px solid var(--sktvd-line);
 }
 
 .sktvd-nav-inner {
-  max-width: 1264px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  min-height: 52px;
+  gap: 14px;
+  min-height: 44px;
 }
 
 .sktvd-nav-tabs {
@@ -347,14 +348,15 @@ h1, h2, h3 {
 .sktvd-nav-tab {
   display: inline-flex;
   align-items: center;
-  height: 52px;
+  height: 44px;
   padding: 0 14px;
   font-family: var(--sktvd-font-ui);
   font-weight: 600;
   font-size: 14px;
   color: var(--sktvd-ink-3);
   text-decoration: none;
-  border-bottom: 3px solid transparent;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
   transition: color 0.12s, border-color 0.12s;
 
   &:hover { color: var(--sktvd-ink); }
@@ -1117,7 +1119,7 @@ h1, h2, h3 {
   overflow: hidden;
 
   &-inner {
-    max-width: 1264px;
+    max-width: 1280px;
     margin: 0 auto;
     display: flex;
     align-items: center;

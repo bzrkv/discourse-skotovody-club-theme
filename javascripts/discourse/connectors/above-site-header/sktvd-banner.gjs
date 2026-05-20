@@ -1,10 +1,10 @@
-// Connector for the `below-site-header` plugin outlet — the global
-// dismissable announcement banner (.sktvd-banner).
+// Connector for the `above-site-header` plugin outlet — the global
+// dismissable announcement banner (.sktvd-banner), block "A" of HOMEPAGE_SPEC.
 //
-// It lives in below-site-header (full-width, above #main-outlet-wrapper) so it
-// spans the whole screen above the sidebar, matching the mockup order:
-//   header → nav → banner → [sidebar | content].
-// The numeric prefix (sktvd-2-…) sorts it after the sktvd-1-nav connector.
+// Per the spec the page is A → B → C: banner ABOVE the header, full screen
+// width. `above-site-header` renders above the sticky site header, so the
+// banner scrolls away while the header stays — standard Discourse global
+// notice placement.
 //
 // Written as a .gjs glimmer component so the dismiss button works (the old
 // .hbs + (action) connector API is deprecated and its handlers were dead).
@@ -59,7 +59,7 @@ export default class SktvdBanner extends Component {
     {{#if this.visible}}
       <div class="sktvd-banner">
         <div class="sktvd-banner-inner">
-          <span class="sktvd-banner-pill">Клуб</span>
+          <span class="sktvd-banner-pill">Новости</span>
           <div class="sktvd-banner-text">{{this.bannerText}}</div>
           {{#if this.ctaUrl}}
             <a href={{this.ctaUrl}} class="sktvd-banner-cta">{{this.ctaText}}</a>
