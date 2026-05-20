@@ -1317,12 +1317,13 @@ h1, h2, h3 {
     .btn { font-size: 13.5px; padding: 9px 18px; border-radius: var(--sktvd-r-md); }
   }
 
-  &-cta-alt {
+  // Specificity (.sktvd-slider .sktvd-slider-cta-alt) beats Discourse's .btn
+  & &-cta-alt {
     background: oklch(1 0 0 / 0.14);
-    color: inherit;
+    color: oklch(0.96 0.02 80);
     border: 1px solid oklch(1 0 0 / 0.24);
 
-    &:hover { background: oklch(1 0 0 / 0.24); color: inherit; }
+    &:hover { background: oklch(1 0 0 / 0.24); color: oklch(0.98 0.02 80); }
   }
 
   &-watermark {
@@ -1404,8 +1405,9 @@ h1, h2, h3 {
   &-slide.--partner .sktvd-slider-cta-alt {
     background: oklch(0.22 0.018 60 / 0.08);
     border-color: oklch(0.22 0.018 60 / 0.2);
+    color: var(--sktvd-ink);
 
-    &:hover { background: oklch(0.22 0.018 60 / 0.16); }
+    &:hover { background: oklch(0.22 0.018 60 / 0.16); color: var(--sktvd-ink); }
   }
 }
 
