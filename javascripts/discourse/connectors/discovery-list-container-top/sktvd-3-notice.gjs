@@ -8,9 +8,11 @@
 //   - Guest:  a quiet one-liner explaining that only «Новости и анонсы» is
 //     public and the rest is members-only.
 //
-// File name `sktvd-2b-notice` places it alphabetically between
-// `sktvd-2-slider` and `sktvd-3-teaser`, so the outlet renders it in the
-// right slot (connectors in one outlet sort by file name).
+// File name `sktvd-3-notice` places it after `sktvd-2-slider` and before
+// `sktvd-4-teaser`, so the outlet renders it in the right slot. Discourse
+// orders connectors by name with a locale-aware compare that ignores
+// hyphens (`sktvd-2b-x` would collate *before* `sktvd-2-x`), hence the plain
+// 1/2/3/4 numbering rather than a `2b`-style suffix.
 //
 // Interactive → `.gjs` glimmer component (`.hbs` + `(action)` is deprecated).
 
