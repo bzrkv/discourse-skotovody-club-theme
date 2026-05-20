@@ -311,86 +311,97 @@ h1, h2, h3 {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  Discovery navigation bar (Свежие / Новые / Лучшие / Категории)
+//  Discovery navigation strip (.sktvd-nav) — full-width, below header
+//
+//  Rendered by the `below-site-header` connector so it spans the whole
+//  screen ABOVE the sidebar (header → nav → banner → [sidebar | content]).
+//  Discourse's native nav (.list-controls) lives inside the content column,
+//  right of the sidebar, and can never be full-width — so it is hidden.
 // ════════════════════════════════════════════════════════════════
 
-.navigation-container {
+.list-controls {
+  display: none;
+}
+
+.sktvd-nav {
+  background: var(--sktvd-surface);
   border-bottom: 1px solid var(--sktvd-line);
 }
 
-// ─── Nav pills — one consistent UI font, clear active underline ───
-#navigation-bar.nav-pills > li > a {
+.sktvd-nav-inner {
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 52px;
+}
+
+.sktvd-nav-tabs {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.sktvd-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 14px;
   font-family: var(--sktvd-font-ui);
   font-weight: 600;
   font-size: 14px;
   color: var(--sktvd-ink-3);
+  text-decoration: none;
   border-bottom: 3px solid transparent;
-  border-radius: 0;
-  padding-bottom: 9px;
   transition: color 0.12s, border-color 0.12s;
 
-  &:hover {
+  &:hover { color: var(--sktvd-ink); }
+
+  &.is-active {
     color: var(--sktvd-ink);
-    background: transparent;
+    border-bottom-color: var(--sktvd-forest);
   }
 }
 
-// Active tab — solid forest underline (the "зелёная полоска")
-#navigation-bar.nav-pills > li.active > a,
-#navigation-bar.nav-pills > li > a.active,
-#navigation-bar.nav-pills > li.active > a.active {
-  color: var(--sktvd-ink);
-  background: transparent;
-  border-bottom: 3px solid var(--sktvd-forest);
+.sktvd-nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-// Per-tab count badge (Новые 12, Непрочитанные 4)
-#navigation-bar.nav-pills .badge-notification,
-#navigation-bar.nav-pills .topics-count {
-  font-family: var(--sktvd-font-mono);
-  font-weight: 700;
-}
-
-// Custom "Теги" item (extra-nav-item connector) — placed before "Закладки"
-// by pushing the bookmarks tab to the end of the flex row.
-#navigation-bar.nav-pills .nav-item_bookmarks {
-  order: 1;
-}
-
-// ─── Category / tag breadcrumb dropdowns — hidden ───
-// The mockup nav row has no breadcrumb dropdowns; filtering is done with the
-// custom "Фильтры" button. Hide them on every discovery / category page.
-.navigation-container .category-breadcrumb {
-  display: none;
-}
-
-// ─── "Создать тему" — forest green primary button ───
-// The button is a d-combo-button (main button + dropdown caret); both parts
-// and the icon are recoloured to the brand green.
-.navigation-controls .d-combo-button .btn,
-#create-topic {
+// "Создать тему" — forest green primary button
+.sktvd-nav-create {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--sktvd-font-ui);
   font-weight: 600;
+  font-size: 13px;
   background: var(--sktvd-forest);
-  border-color: var(--sktvd-forest);
+  border: 1px solid var(--sktvd-forest);
   color: oklch(0.97 0.012 85);
+  border-radius: var(--sktvd-r-md);
+  padding: 8px 14px;
+  text-decoration: none;
 
-  .d-icon,
-  .d-button-label { color: oklch(0.97 0.012 85); }
+  .d-icon { color: oklch(0.97 0.012 85); }
 
   &:hover,
   &:focus {
     background: var(--sktvd-forest-ink);
     border-color: var(--sktvd-forest-ink);
     color: oklch(0.98 0.012 85);
+    text-decoration: none;
   }
 }
 
-// ─── "Фильтры" — custom connector button + category panel ───
-.sktvd-filters {
+// ─── "Фильтры" — button + category panel (inside the nav strip) ───
+.sktvd-nav-filters {
   position: relative;
   display: inline-flex;
-  margin-right: 8px;
 }
 
 .sktvd-filters-btn {
@@ -1106,7 +1117,7 @@ h1, h2, h3 {
   overflow: hidden;
 
   &-inner {
-    max-width: 1100px;
+    max-width: 1264px;
     margin: 0 auto;
     display: flex;
     align-items: center;

@@ -1,10 +1,10 @@
-// Connector for the `discovery-list-container-top` plugin outlet — the global
+// Connector for the `below-site-header` plugin outlet — the global
 // dismissable announcement banner (.sktvd-banner).
 //
-// It lives in discovery-list-container-top (NOT above-main-container) on
-// purpose: the mockup order is header → nav → banner → slider → topic list,
-// and this outlet renders below the navigation row. The numeric prefix
-// (sktvd-0-…) sorts it before the landing/slider/teaser connectors.
+// It lives in below-site-header (full-width, above #main-outlet-wrapper) so it
+// spans the whole screen above the sidebar, matching the mockup order:
+//   header → nav → banner → [sidebar | content].
+// The numeric prefix (sktvd-2-…) sorts it after the sktvd-1-nav connector.
 //
 // Written as a .gjs glimmer component so the dismiss button works (the old
 // .hbs + (action) connector API is deprecated and its handlers were dead).
