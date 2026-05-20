@@ -1,0 +1,19 @@
+{{#unless this.dismissed}}
+  <div class="sktvd-banner">
+    <div class="sktvd-banner-inner">
+      <span class="sktvd-banner-pill">Клуб</span>
+      <div class="sktvd-banner-text">{{html-safe this.bannerText}}</div>
+      {{#if this.ctaUrl}}
+        <a href={{this.ctaUrl}} class="sktvd-banner-cta">{{this.ctaText}}</a>
+      {{/if}}
+      <button
+        type="button"
+        class="sktvd-banner-close"
+        title="Скрыть"
+        {{on "click" (action "dismiss")}}
+      >
+        {{d-icon "xmark"}}
+      </button>
+    </div>
+  </div>
+{{/unless}}

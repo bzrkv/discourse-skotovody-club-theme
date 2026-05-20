@@ -1,0 +1,44 @@
+{{#if this.slides}}
+  <div class="sktvd-slider">
+    <div class="sktvd-slider-slide">
+      <div>
+        <span class="sktvd-slider-tag">Анонс</span>
+        <h2 class="sktvd-slider-title">{{this.current.title}}</h2>
+        {{#if this.current.excerpt}}
+          <p class="sktvd-slider-desc">{{this.current.excerpt}}</p>
+        {{/if}}
+        <a href={{this.current.url}} class="btn btn-primary">
+          Открыть тему {{d-icon "arrow-right"}}
+        </a>
+      </div>
+      <div class="sktvd-slider-watermark">КЛУБ</div>
+    </div>
+
+    {{#if (gt this.slides.length 1)}}
+      <button
+        type="button"
+        class="sktvd-slider-arrow prev"
+        aria-label="Предыдущий слайд"
+        {{on "click" (action "step" -1)}}
+      >‹</button>
+      <button
+        type="button"
+        class="sktvd-slider-arrow next"
+        aria-label="Следующий слайд"
+        {{on "click" (action "step" 1)}}
+      >›</button>
+
+      <div class="sktvd-slider-dots">
+        {{#each this.slides as |slide i|}}
+          <button
+            type="button"
+            class="sktvd-slider-dot"
+            aria-current={{if (eq i this.index) "true" "false"}}
+            aria-label="Слайд"
+            {{on "click" (action "goTo" i)}}
+          ></button>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

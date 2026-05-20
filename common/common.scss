@@ -195,9 +195,32 @@ h1, h2, h3 {
 .sktvd-banner {
   background: linear-gradient(135deg, var(--sktvd-forest) 0%, var(--sktvd-forest-ink) 70%, oklch(0.18 0.05 90) 100%);
   color: oklch(0.95 0.02 80);
-  padding: 18px 24px;
+  padding: 14px 24px;
   position: relative;
   overflow: hidden;
+
+  &-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &-close {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--sktvd-r-sm);
+    background: oklch(1 0 0 / 0.1);
+    color: oklch(0.95 0.02 80);
+    border: 0;
+    cursor: pointer;
+
+    &:hover { background: oklch(1 0 0 / 0.2); }
+  }
 
   &-pill {
     background: var(--sktvd-ochre);
@@ -282,17 +305,613 @@ h1, h2, h3 {
   }
 }
 
-// ============================================
-// TODO Phase E full implementation
-// ============================================
-// - .dc-toplist (custom Latest topic list table)
-// - .dc-cat-grid (categories grid with colored left edge)
-// - .dc-topic-layout + .dc-timeline (thread page right-rail scrubber)
-// - .dc-composer-dock (bottom slide-up composer)
-// - .dc-sidebar (left rail with category counts)
-// - .dc-landing (public guest hero)
-// - .dc-cat-box[data-locked] (blur preview for guests)
-// - Slider (homepage announcement carousel)
-// - Light/Dark mode switching UI
+// ════════════════════════════════════════════════════════════════
+//  Phase E — restyle of native Discourse DOM
 //
-// Reference: docs/Club_Skotovody/club/club-styles.css (Claude Design)
+//  Strategy: we target Discourse's OWN selectors (.topic-list,
+//  .category-list, .topic-timeline, #reply-control, .sidebar-wrapper)
+//  and restyle them. No template overrides — this survives every
+//  `./launcher rebuild app` and Discourse upgrade.
+//
+//  Reference look: docs/Club_Skotovody/club/club-styles.css
+// ════════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────
+// Topic list (Latest / category topic table) → .dc-toplist look
+// ───────────────────────────────────────────────
+.topic-list {
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-lg);
+  overflow: hidden;
+  background: var(--sktvd-surface);
+  border-collapse: separate;
+  border-spacing: 0;
+
+  .topic-list-header {
+    background: var(--sktvd-bg-elev);
+
+    th {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sktvd-ink-3);
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--sktvd-line);
+    }
+  }
+
+  .topic-list-item {
+    border-top: 1px solid var(--sktvd-line);
+    transition: background 0.1s;
+
+    &:hover { background: var(--sktvd-bg-elev); }
+
+    td { padding: 14px; vertical-align: top; }
+  }
+
+  // Topic title — display serif font, like the mockup
+  .link-top-line .title,
+  a.title {
+    font-family: var(--sktvd-font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--sktvd-ink);
+    font-size: 15px;
+
+    &:hover { color: var(--sktvd-forest-ink); }
+    &:visited { color: var(--sktvd-ink-2); }
+  }
+
+  // Reply / view counts — monospace tabular numerals
+  .num .number,
+  .badge-posts .number {
+    font-family: var(--sktvd-font-mono);
+    font-feature-settings: 'tnum';
+    font-weight: 700;
+    color: var(--sktvd-ink-2);
+  }
+
+  .activity { color: var(--sktvd-ink-3); font-size: 12px; }
+}
+
+// "Many replies" hot-thread accent
+.topic-list .posts-map.heatmap-high .number { color: var(--sktvd-terracotta); }
+.topic-list .posts-map.heatmap-med  .number { color: var(--sktvd-ochre-deep); }
+
+// ───────────────────────────────────────────────
+// Categories page → .dc-cat-grid / .dc-cat-box look
+// Works with the `categories_with_featured_topics` layout
+// (.category-list table). Colored left stripe = category color.
+// ───────────────────────────────────────────────
+.category-list {
+  border: 0;
+
+  .category-list-item {
+    background: var(--sktvd-surface);
+    border: 1px solid var(--sktvd-line);
+    border-radius: var(--sktvd-r-md);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+
+    // Colored left stripe — uses the category badge color var that
+    // Discourse exposes on the badge element.
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 6px;
+      background: var(--sktvd-category-color, var(--sktvd-forest));
+      z-index: 1;
+    }
+
+    &:hover {
+      border-color: var(--sktvd-line-strong);
+      box-shadow: var(--sktvd-shadow-md);
+    }
+
+    td { padding: 18px 20px 18px 24px; border: 0; }
+  }
+
+  .category-name {
+    font-family: var(--sktvd-font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--sktvd-ink);
+  }
+
+  .category-description {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--sktvd-ink-2);
+  }
+
+  .latest .featured-topic a.title {
+    font-family: var(--sktvd-font-ui);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--sktvd-ink);
+  }
+}
+
+// Bridge: copy each category badge's color into a token the stripe reads.
+.category-list-item .badge-category {
+  --sktvd-category-color: var(--category-badge-color, var(--sktvd-forest));
+}
+
+// ───────────────────────────────────────────────
+// Category page heading → .dc-cat-header look
+// ───────────────────────────────────────────────
+.category-heading,
+.category-list-header {
+  .category-title-header {
+    padding: 22px 26px;
+    background: var(--sktvd-surface);
+    border: 1px solid var(--sktvd-line);
+    border-radius: var(--sktvd-r-md);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 8px;
+      background: var(--sktvd-category-color, var(--sktvd-forest));
+    }
+  }
+
+  h1, .category-title {
+    font-family: var(--sktvd-font-display);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+}
+
+// ───────────────────────────────────────────────
+// Topic page — title + posts → .dc-topic look
+// ───────────────────────────────────────────────
+#topic-title h1,
+.topic-post .cooked h1 {
+  font-family: var(--sktvd-font-display);
+}
+
+#topic-title h1 a.fancy-title {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.topic-body .cooked {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+// ───────────────────────────────────────────────
+// Timeline scrubber (right rail) → .dc-timeline look
+// ───────────────────────────────────────────────
+.topic-timeline {
+  .timeline-scrollarea {
+    border-color: var(--sktvd-line);
+  }
+
+  .timeline-handle .timeline-handle__inner,
+  .timeline-handle {
+    background: var(--sktvd-forest);
+  }
+
+  .timeline-scroller-content .start-date,
+  .timeline-scroller-content .now-date,
+  .timeline-date-wrapper {
+    font-size: 11px;
+    color: var(--sktvd-ink-3);
+  }
+
+  // The "current / total post" counter
+  .timeline-replies {
+    font-family: var(--sktvd-font-mono);
+    font-feature-settings: 'tnum';
+    font-weight: 700;
+    color: var(--sktvd-ink-2);
+  }
+}
+
+// ───────────────────────────────────────────────
+// Composer dock (slide-up bottom) → .dc-composer-dock look
+// ───────────────────────────────────────────────
+#reply-control {
+  border-top: 1px solid var(--sktvd-line);
+  box-shadow: 0 -10px 30px -8px rgb(60 40 20 / 0.18);
+  background: var(--sktvd-surface);
+
+  // Title input — display serif font, large
+  #reply-title,
+  .title-input input {
+    font-family: var(--sktvd-font-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  // Markdown editing area — monospace
+  .d-editor-input {
+    font-family: var(--sktvd-font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .d-editor-preview-wrapper {
+    background: var(--sktvd-bg-elev);
+    border-radius: var(--sktvd-r-sm);
+  }
+
+  // Editor toolbar
+  .d-editor-button-bar {
+    background: var(--sktvd-bg-elev);
+    border-bottom: 1px solid var(--sktvd-line);
+  }
+
+  // Primary "create topic / reply" button reuses .btn-primary forest
+  .save-or-cancel .btn-primary {
+    background: var(--sktvd-forest);
+    border-color: var(--sktvd-forest);
+
+    &:hover, &:focus {
+      background: var(--sktvd-forest-ink);
+      border-color: var(--sktvd-forest-ink);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────
+// Left sidebar → .dc-sidebar look
+// ───────────────────────────────────────────────
+.sidebar-wrapper {
+  background: var(--sktvd-bg);
+  border-right: 1px solid var(--sktvd-line);
+
+  .sidebar-section-header,
+  .sidebar-section-header-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sktvd-ink-3);
+  }
+
+  .sidebar-section-link {
+    border-radius: var(--sktvd-r-sm);
+    font-size: 13px;
+    color: var(--sktvd-ink-2);
+
+    &:hover { background: var(--sktvd-bg-sunk); color: var(--sktvd-ink); }
+
+    &.active {
+      background: var(--sktvd-ink);
+      color: var(--sktvd-bg);
+
+      .sidebar-section-link-prefix,
+      .sidebar-section-link-content-text { color: var(--sktvd-bg); }
+    }
+  }
+
+  // Unread / count badge
+  .sidebar-section-link-content-badge {
+    font-family: var(--sktvd-font-mono);
+    font-size: 11px;
+    color: var(--sktvd-ink-mute);
+  }
+
+  // Category color squares in the "Categories" section
+  .sidebar-section-link-prefix.icon .d-icon {
+    color: var(--sktvd-forest);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Phase E — new UI elements rendered by theme JS connectors
+//  (these have no Discourse-native equivalent)
+// ════════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────
+// Guest landing hero (.sktvd-landing) — anonymous home page
+// Rendered by connectors/discovery-list-container-top
+// ───────────────────────────────────────────────
+.sktvd-landing {
+  background: linear-gradient(155deg,
+    oklch(0.22 0.018 60) 0%,
+    oklch(0.18 0.025 100) 60%,
+    oklch(0.16 0.035 145) 100%);
+  color: oklch(0.95 0.02 80);
+  border-radius: var(--sktvd-r-lg);
+  padding: 44px 48px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 85% 20%, oklch(0.85 0.13 80 / 0.18) 0%, transparent 50%),
+      radial-gradient(circle at 10% 90%, oklch(0.55 0.12 145 / 0.22) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  &-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+
+  &-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    background: oklch(1 0 0 / 0.12);
+    border: 1px solid oklch(1 0 0 / 0.18);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  &-title {
+    font-family: var(--sktvd-font-display);
+    font-weight: 600;
+    font-size: 40px;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    margin: 0 0 14px;
+
+    em { font-style: normal; color: oklch(0.85 0.13 80); }
+  }
+
+  &-sub {
+    font-size: 15px;
+    line-height: 1.55;
+    opacity: 0.86;
+    margin: 0 0 22px;
+    max-width: 560px;
+  }
+
+  &-cta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .btn { font-size: 14px; padding: 10px 18px; }
+    .sktvd-landing-cta-secondary {
+      background: oklch(1 0 0 / 0.12);
+      color: inherit;
+      border: 1px solid oklch(1 0 0 / 0.2);
+    }
+  }
+
+  &-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  &-stat {
+    padding: 14px 16px;
+    background: oklch(1 0 0 / 0.07);
+    border: 1px solid oklch(1 0 0 / 0.12);
+    border-radius: var(--sktvd-r-md);
+  }
+
+  &-stat-num {
+    font-family: var(--sktvd-font-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  &-stat-lab {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+}
+
+// ───────────────────────────────────────────────
+// Locked-categories teaser (.sktvd-cat-teaser) — guest only
+// ───────────────────────────────────────────────
+.sktvd-cat-teaser {
+  margin-bottom: 20px;
+  padding: 20px 22px;
+  background: var(--sktvd-bg-elev);
+  border: 1px dashed var(--sktvd-line-strong);
+  border-radius: var(--sktvd-r-md);
+
+  &-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  &-title {
+    font-family: var(--sktvd-font-display);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+  }
+
+  &-desc {
+    font-size: 13px;
+    color: var(--sktvd-ink-2);
+    line-height: 1.5;
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  &-item {
+    padding: 12px 14px;
+    background: var(--sktvd-surface);
+    border: 1px solid var(--sktvd-line);
+    border-radius: var(--sktvd-r-sm);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--sktvd-ink);
+
+    .sktvd-cat-teaser-dot {
+      width: 10px; height: 10px;
+      flex-shrink: 0;
+    }
+    .sktvd-cat-teaser-lock { margin-left: auto; opacity: 0.5; }
+  }
+}
+
+// ───────────────────────────────────────────────
+// Announcement slider (.sktvd-slider) → .club-slider look
+// ───────────────────────────────────────────────
+.sktvd-slider {
+  position: relative;
+  border-radius: var(--sktvd-r-lg);
+  overflow: hidden;
+  min-height: 320px;
+  box-shadow: var(--sktvd-shadow-md);
+  margin-bottom: 18px;
+
+  &-slide {
+    min-height: 320px;
+    padding: 40px 44px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 32px;
+    align-items: center;
+    background: linear-gradient(155deg,
+      oklch(0.22 0.04 145) 0%,
+      oklch(0.18 0.06 165) 60%,
+      oklch(0.15 0.05 185) 100%);
+    color: oklch(0.95 0.02 80);
+    animation: sktvdSliderFade 0.5s ease both;
+  }
+
+  &-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    background: oklch(0.85 0.13 80);
+    color: oklch(0.32 0.10 60);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  &-title {
+    font-family: var(--sktvd-font-display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin: 0 0 12px;
+  }
+
+  &-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    opacity: 0.85;
+    margin: 0 0 22px;
+    max-width: 540px;
+  }
+
+  &-watermark {
+    text-align: right;
+    font-family: var(--sktvd-font-display);
+    font-size: 120px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: oklch(0.85 0.13 80);
+    opacity: 0.20;
+    line-height: 1;
+  }
+
+  &-dots {
+    position: absolute;
+    bottom: 16px;
+    right: 22px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  &-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 100px;
+    background: oklch(1 0 0 / 0.35);
+    cursor: pointer;
+    transition: background 0.15s, width 0.2s;
+
+    &:hover { background: oklch(1 0 0 / 0.6); }
+    &[aria-current="true"] { background: oklch(0.85 0.13 80); width: 24px; }
+  }
+
+  &-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: oklch(1 0 0 / 0.18);
+    backdrop-filter: blur(8px);
+    border: 0;
+    color: oklch(0.95 0.02 80);
+    font-size: 22px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    z-index: 10;
+
+    &:hover { background: oklch(1 0 0 / 0.3); }
+    &.prev { left: 14px; }
+    &.next { right: 14px; }
+  }
+}
+
+@keyframes sktvdSliderFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+// ───────────────────────────────────────────────
+// Responsive — mockup mobile fallbacks
+// ───────────────────────────────────────────────
+@media (max-width: 767px) {
+  .sktvd-landing { padding: 28px 24px; }
+  .sktvd-landing-inner { grid-template-columns: 1fr; gap: 22px; }
+  .sktvd-landing-title { font-size: 30px; }
+  .sktvd-cat-teaser-grid { grid-template-columns: 1fr 1fr; }
+  .sktvd-slider-slide { grid-template-columns: 1fr; padding: 28px 24px; }
+  .sktvd-slider-watermark { display: none; }
+  .sktvd-slider-title { font-size: 22px; }
+}

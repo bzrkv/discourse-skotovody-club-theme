@@ -1,0 +1,27 @@
+<div class="sktvd-cat-teaser">
+  <div class="sktvd-cat-teaser-head">
+    <div>
+      <div class="sktvd-cat-teaser-title">
+        Ещё 8 разделов открыты участникам Клуба
+      </div>
+      <div class="sktvd-cat-teaser-desc">
+        Породы, корма, ветеринария, техника и документы — закрытая часть форума
+        с фильтрацией спама. Подайте заявку, чтобы участвовать в обсуждениях.
+      </div>
+    </div>
+    <a href={{this.pricingUrl}} class="btn btn-primary">Подать заявку</a>
+  </div>
+
+  <div class="sktvd-cat-teaser-grid">
+    {{#each this.closedCategories as |cat|}}
+      <div class="sktvd-cat-teaser-item">
+        <span
+          class="sktvd-cat-teaser-dot"
+          style={{html-safe (concat "background:" cat.color)}}
+        ></span>
+        <span>{{cat.name}}</span>
+        <span class="sktvd-cat-teaser-lock">{{d-icon "lock"}}</span>
+      </div>
+    {{/each}}
+  </div>
+</div>
