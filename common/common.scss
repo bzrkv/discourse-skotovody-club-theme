@@ -608,6 +608,7 @@ body.has-sidebar-page .sktvd-nav-inner {
   .topic-list-item {
     border-top: 1px solid var(--sktvd-line);
     transition: background 0.1s;
+    cursor: pointer; // spec §5.E3 — whole row is clickable
 
     &:first-child { border-top: 0; }
     &:hover { background: var(--sktvd-bg-elev); }
@@ -647,7 +648,7 @@ body.has-sidebar-page .sktvd-nav-inner {
     color: var(--sktvd-ochre-deep);
   }
 
-  // ─── Bottom line (category badge + tags) ───
+  // ─── Bottom line (category pill + tags) — spec §5.E3 meta row ───
   .link-bottom-line {
     margin-top: 6px;
     display: flex;
@@ -655,6 +656,70 @@ body.has-sidebar-page .sktvd-nav-inner {
     gap: 8px;
     flex-wrap: wrap;
     font-size: 12px;
+
+    // CatPill — colour square + name. The native emoji/lock marker is
+    // hidden; the 9×9 square is drawn from the category colour, which
+    // Discourse exposes as --category-badge-color on the badge wrapper.
+    .badge-category__wrapper {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.1s;
+
+      &:hover { background: var(--sktvd-bg-sunk); }
+      &:visited { color: inherit; }
+    }
+
+    .badge-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      .emoji,
+      > svg { display: none; }
+
+      &::before {
+        content: "";
+        flex-shrink: 0;
+        width: 9px;
+        height: 9px;
+        border-radius: 2px;
+        background: var(--category-badge-color, var(--sktvd-ink-mute));
+      }
+    }
+
+    .badge-category__name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--sktvd-ink-2);
+    }
+
+    // Tags — bg-sunk pills, each prefixed with a × marker (spec §5.E3)
+    .discourse-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    a.discourse-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--sktvd-ink-2);
+      background: var(--sktvd-bg-sunk);
+      padding: 2px 8px;
+      border-radius: 4px;
+
+      &::before {
+        content: "\00D7"; // multiplication sign — native Discourse tag marker
+        margin-right: 3px;
+        color: var(--sktvd-ink-mute);
+      }
+
+      &:hover { color: var(--sktvd-ink); }
+      &:visited { color: var(--sktvd-ink-2); } // a:visited otherwise renders green
+    }
   }
 
   // ─── Excerpt preview text ───
@@ -685,10 +750,40 @@ body.has-sidebar-page .sktvd-nav-inner {
     font-size: 12px;
   }
 
-  // ─── Poster avatars — rounded ───
-  .posters a img.avatar {
-    border-radius: 100px;
-    box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.06);
+  // ─── Poster avatars — stack with role rings (spec §5.E3) ───
+  .posters {
+    text-align: left;
+
+    a { display: inline-block; }
+    a + a { margin-left: 4px; }
+
+    img.avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 100px;
+    }
+  }
+
+  // OP — the sole poster, or the first of several — gets a 2px ochre ring.
+  .posters a.single img.avatar,
+  .posters a:first-child:not(.latest) img.avatar {
+    box-shadow: 0 0 0 2px var(--sktvd-ochre);
+  }
+
+  // Last replier, when distinct from the OP — a 2px forest ring.
+  .posters a.latest:not(.single) img.avatar {
+    box-shadow: 0 0 0 2px var(--sktvd-forest);
+  }
+
+  // ─── New / unread post badges — native restyle (spec §5.E3) ───
+  .topic-post-badges .badge-notification {
+    font-size: 11px;
+    font-weight: 700;
+
+    &.unread-posts {
+      background: var(--sktvd-forest);
+      color: oklch(0.97 0.012 85);
+    }
   }
 }
 
