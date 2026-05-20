@@ -30,7 +30,7 @@ class BellIcon extends Component {
     <li class="header-dropdown-toggle sktvd-header-icon">
       <a
         href="/my/notifications"
-        class="icon btn-flat sktvd-header-icon-link"
+        class="btn no-text icon btn-flat sktvd-header-icon-link"
         title="Уведомления"
       >
         {{icon "bell"}}
@@ -46,7 +46,7 @@ const BookmarkIcon = <template>
   <li class="header-dropdown-toggle sktvd-header-icon">
     <a
       href="/my/activity/bookmarks"
-      class="icon btn-flat sktvd-header-icon-link"
+      class="btn no-text icon btn-flat sktvd-header-icon-link"
       title="Закладки"
     >
       {{icon "bookmark"}}

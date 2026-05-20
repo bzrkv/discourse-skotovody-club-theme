@@ -323,14 +323,21 @@ h1, h2, h3 {
   border-bottom: 1px solid var(--sktvd-line);
 }
 
+// Track Discourse's content wrap so the nav aligns with the page in BOTH
+// sidebar states: .wrap is --d-max-width normally, and widens by
+// --d-sidebar-width when body.has-sidebar-page (sidebar visible).
 .sktvd-nav-inner {
-  max-width: 1280px;
+  max-width: var(--d-max-width);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 0.67em;
   display: flex;
   align-items: center;
   gap: 14px;
   min-height: 44px;
+}
+
+body.has-sidebar-page .sktvd-nav-inner {
+  max-width: calc(var(--d-sidebar-width) + var(--d-max-width));
 }
 
 .sktvd-nav-tabs {
@@ -1144,7 +1151,7 @@ h1, h2, h3 {
 .sktvd-banner {
   background: linear-gradient(135deg, var(--sktvd-forest) 0%, var(--sktvd-forest-ink) 70%, oklch(0.18 0.05 90) 100%);
   color: oklch(0.95 0.02 80);
-  padding: 18px 24px;
+  padding: 18px 0;
   position: relative;
   overflow: hidden;
 
@@ -1159,10 +1166,12 @@ h1, h2, h3 {
     pointer-events: none;
   }
 
+  // Inner tracks Discourse's .wrap so the banner aligns with the page
   &-inner {
     position: relative;
-    max-width: 1280px;
+    max-width: var(--d-max-width);
     margin: 0 auto;
+    padding: 0 0.67em;
     display: flex;
     align-items: center;
     gap: 18px;
@@ -1213,6 +1222,12 @@ h1, h2, h3 {
     &,
     &:visited { color: oklch(0.85 0.13 80); }
   }
+}
+
+// When the sidebar is visible the content wrap widens — keep the banner
+// inner aligned with it (same rule as .sktvd-nav-inner).
+body.has-sidebar-page .sktvd-banner-inner {
+  max-width: calc(var(--d-sidebar-width) + var(--d-max-width));
 }
 
 // ════════════════════════════════════════════════════════════════
