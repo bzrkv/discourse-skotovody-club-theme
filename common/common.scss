@@ -637,9 +637,9 @@ body.has-sidebar-page .sktvd-nav-inner {
     &:hover { color: var(--sktvd-forest-ink); }
   }
 
-  // Visited topics — dim slightly (the mockup keeps titles readable)
+  // Visited topics — keep titles dark (the mockup does not dim them)
   .topic-list-item.visited a.title:not(.badge-notification) {
-    color: var(--sktvd-ink-3);
+    color: var(--sktvd-ink);
   }
 
   // ─── Pinned / status icons ───
