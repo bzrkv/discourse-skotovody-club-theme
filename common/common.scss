@@ -229,7 +229,7 @@ h1, h2, h3 {
 .sktvd-club-logo-word {
   font-family: var(--sktvd-font-display);
   font-weight: 600;
-  font-size: 21px;
+  font-size: 22px;
   letter-spacing: -0.02em;
   color: var(--sktvd-ink);
   line-height: 1;
@@ -244,7 +244,7 @@ h1, h2, h3 {
   padding: 3px 8px;
   background: var(--sktvd-ink);
   color: var(--sktvd-bg);
-  border-radius: 5px;
+  border-radius: 4px;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -253,12 +253,12 @@ h1, h2, h3 {
   line-height: 1.2;
 }
 
-// ─── Header icon buttons — rounded, soft hover ───
+// ─── Header icon buttons — rounded 8px, soft hover (spec §3.B1) ───
 .d-header {
   .icons .icon,
   .icons > li > .btn,
   .header-sidebar-toggle .btn {
-    border-radius: var(--sktvd-r-sm);
+    border-radius: 8px;
 
     &:hover,
     &:focus {
@@ -479,12 +479,16 @@ h1, h2, h3 {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  Left sidebar — .dc-sidebar look
+//  Left sidebar (HOMEPAGE_SPEC §4) — 220px, no background
 // ════════════════════════════════════════════════════════════════
 
+:root {
+  --d-sidebar-width: 220px;
+}
+
 .sidebar-wrapper {
-  background: var(--sktvd-bg);
-  border-right: 1px solid var(--sktvd-line);
+  background: transparent;
+  border-right: 0;
 
   .sidebar-section-header,
   .sidebar-section-header-text {
@@ -1111,25 +1115,38 @@ h1, h2, h3 {
 //  Admin banner (.sktvd-banner) — connector, above-main-container
 // ════════════════════════════════════════════════════════════════
 
+// HOMEPAGE_SPEC §2 — block A. Global banner.
 .sktvd-banner {
   background: linear-gradient(135deg, var(--sktvd-forest) 0%, var(--sktvd-forest-ink) 70%, oklch(0.18 0.05 90) 100%);
   color: oklch(0.95 0.02 80);
-  padding: 14px 24px;
+  padding: 18px 24px;
   position: relative;
   overflow: hidden;
 
+  // Radial ochre highlight (right) + diagonal hatch
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 90% 20%, oklch(0.85 0.13 80 / 0.18) 0%, transparent 60%),
+      repeating-linear-gradient(135deg, transparent 0 40px, oklch(1 0 0 / 0.03) 40px 41px);
+    pointer-events: none;
+  }
+
   &-inner {
+    position: relative;
     max-width: 1280px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
   }
 
   &-close {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     display: grid;
     place-items: center;
     border-radius: var(--sktvd-r-sm);
@@ -1141,9 +1158,11 @@ h1, h2, h3 {
     &:hover { background: oklch(1 0 0 / 0.2); }
   }
 
+  // Pill «Новости» — ochre per spec §2
   &-pill {
-    background: var(--sktvd-ochre);
-    color: var(--sktvd-ochre-deep);
+    flex-shrink: 0;
+    background: oklch(0.85 0.13 80);
+    color: oklch(0.32 0.10 60);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.1em;
@@ -1155,11 +1174,15 @@ h1, h2, h3 {
   &-text {
     flex: 1;
     font-size: 13.5px;
+    font-weight: 400;
     line-height: 1.55;
+
+    strong { font-weight: 700; }
   }
 
   &-cta {
-    color: var(--sktvd-ochre);
+    flex-shrink: 0;
+    color: oklch(0.85 0.13 80);
     font-weight: 700;
     text-decoration: underline;
   }
