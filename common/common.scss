@@ -915,3 +915,93 @@ h1, h2, h3 {
   .sktvd-slider-watermark { display: none; }
   .sktvd-slider-title { font-size: 22px; }
 }
+
+// ════════════════════════════════════════════════════════════════
+//  Phase E v2 — header & discovery-nav restyle → .dc-header look
+// ════════════════════════════════════════════════════════════════
+
+.d-header {
+  background: var(--sktvd-surface);
+  border-bottom: 1px solid var(--sktvd-line);
+  box-shadow: none;
+}
+
+// Logo sizing — keep it tidy next to the КЛУБ badge
+.d-header #site-logo.logo-big {
+  max-height: 30px;
+  width: auto;
+}
+
+// "КЛУБ" badge — rendered by the home-logo-after connector
+.sktvd-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 3px 8px;
+  background: var(--sktvd-forest);
+  color: oklch(0.97 0.012 85);
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--sktvd-font-ui);
+  line-height: 1.2;
+}
+
+// Header icon buttons — rounded, soft hover
+.d-header .icons .icon,
+.d-header .icons > li > .btn {
+  border-radius: var(--sktvd-r-sm);
+
+  &:hover,
+  &:focus {
+    background: var(--sktvd-bg-sunk);
+    color: var(--sktvd-ink);
+  }
+}
+
+// Search field inside the header dropdown
+.d-header .search-menu .search-input,
+.search-menu-container input[type="search"] {
+  border-radius: var(--sktvd-r-md);
+  border-color: var(--sktvd-line);
+  background: var(--sktvd-bg-elev);
+}
+
+// ─── Discovery navigation bar (Свежие / Новые / Лучшие / …) ───
+.navigation-container {
+  background: var(--sktvd-bg-elev);
+  border-bottom: 1px solid var(--sktvd-line);
+}
+
+#navigation-bar.nav-pills > li > a {
+  font-family: var(--sktvd-font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--sktvd-ink-3);
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  transition: color 0.12s;
+
+  &:hover {
+    color: var(--sktvd-ink);
+    background: transparent;
+  }
+}
+
+#navigation-bar.nav-pills > li.active > a,
+#navigation-bar.nav-pills > li > a.active {
+  color: var(--sktvd-ink);
+  background: transparent;
+  border-bottom-color: var(--sktvd-forest);
+}
+
+// "Создать тему" stays on the forest CTA colour (inherits .btn-primary)
+
+// Category / tag breadcrumb dropdowns — soften to match
+.navigation-container .category-breadcrumb .select-kit-header {
+  border-radius: var(--sktvd-r-sm);
+  border-color: var(--sktvd-line);
+  background: var(--sktvd-surface);
+}
