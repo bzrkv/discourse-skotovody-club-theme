@@ -198,8 +198,11 @@ h1, h2, h3 {
 
 // Hide the advanced-search toggle — the mockup search has none, and it left
 // a stray divider line. Advanced search stays reachable on the /search page.
+// !important is required: Discourse core shows it via a 6-class selector
+// (.header-search--enabled .floating-search-input … .show-advanced-search)
+// which out-specifies any plain theme rule.
 .floating-search-input .show-advanced-search {
-  display: none;
+  display: none !important;
 }
 
 .sktvd-club-logo {
