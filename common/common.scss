@@ -351,6 +351,12 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
+// Custom "Теги" item (extra-nav-item connector) — placed before "Закладки"
+// by pushing the bookmarks tab to the end of the flex row.
+#navigation-bar.nav-pills .nav-item_bookmarks {
+  order: 1;
+}
+
 // ─── Category / tag breadcrumb dropdowns — hidden ───
 // The mockup nav row has no breadcrumb dropdowns; filtering is done with the
 // custom "Фильтры" button. Hide them on every discovery / category page.
