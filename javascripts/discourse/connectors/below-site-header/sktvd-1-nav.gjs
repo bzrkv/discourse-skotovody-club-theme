@@ -1,12 +1,13 @@
 // Connector for the `below-site-header` plugin outlet — the full-width
-// discovery navigation strip (the mockup's `dc-viewnav`).
+// discovery navigation strip (HOMEPAGE_SPEC §3.B2 — the mockup's dc-viewnav).
 //
-// WHY here: Discourse's native discovery nav lives inside #main-outlet, to the
-// RIGHT of the sidebar, so it can never be full-width. The `below-site-header`
-// outlet renders between the site header and #main-outlet-wrapper — i.e.
-// full-width, ABOVE the sidebar. The mockup layout is:
-//   header → nav (full width) → banner (full width) → [sidebar | content]
-// so the nav and banner go here; the native .list-controls nav is CSS-hidden.
+// WHY here: Discourse's native discovery nav lives inside #main-outlet, right
+// of the sidebar, so it can never be full-width. `below-site-header` renders
+// between the site header and #main-outlet-wrapper — full-width. The native
+// .list-controls nav is CSS-hidden.
+//
+// Tabs (spec order): Свежие · Новые [count] · Непрочитанные [count] · Лучшие ·
+// Категории · Теги · Закладки. Right side: Фильтры (ghost) + Создать тему.
 
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
@@ -21,17 +22,23 @@ export default class SktvdNav extends Component {
   @service router;
   @service site;
   @service currentUser;
+  @service topicTrackingState;
   @tracked filtersOpen = false;
 
-  // Render only on discovery-style pages (latest/new/top/categories/tags),
-  // matching where the mockup shows the viewnav.
   get onDiscovery() {
     const r = this.router.currentRouteName || "";
     return (
-      r.startsWith("discovery") ||
-      r.startsWith("tags") ||
-      r.startsWith("tag.")
+      r.startsWith("discovery") || r.startsWith("tags") || r.startsWith("tag.")
     );
+  }
+
+  #count(method) {
+    try {
+      const n = this.topicTrackingState?.[method]?.();
+      return typeof n === "number" && n > 0 ? n : null;
+    } catch (e) {
+      return null;
+    }
   }
 
   get tabs() {
@@ -39,16 +46,32 @@ export default class SktvdNav extends Component {
     const member = !!this.currentUser;
     const defs = [
       { label: "Свежие", href: "/latest", match: ["/", "/latest"] },
-      member && { label: "Новые", href: "/new", match: ["/new"] },
+      member && {
+        label: "Новые",
+        href: "/new",
+        match: ["/new"],
+        count: this.#count("countNew"),
+      },
+      member && {
+        label: "Непрочитанные",
+        href: "/unread",
+        match: ["/unread"],
+        count: this.#count("countUnread"),
+      },
       { label: "Лучшие", href: "/top", match: ["/top"] },
       { label: "Категории", href: "/categories", match: ["/categories"] },
       { label: "Теги", href: "/tags", match: ["/tags", "/tag"] },
-      member && { label: "Закладки", href: "/bookmarks", match: ["/bookmarks"] },
+      member && {
+        label: "Закладки",
+        href: "/bookmarks",
+        match: ["/bookmarks"],
+      },
     ].filter(Boolean);
 
     return defs.map((t) => ({
       label: t.label,
       href: t.href,
+      count: t.count,
       active: t.match.some(
         (m) => url === m || (m !== "/" && url.startsWith(m + "/"))
       ),
@@ -96,7 +119,12 @@ export default class SktvdNav extends Component {
               <a
                 href={{tab.href}}
                 class="sktvd-nav-tab {{if tab.active 'is-active'}}"
-              >{{tab.label}}</a>
+              >
+                <span>{{tab.label}}</span>
+                {{#if tab.count}}
+                  <span class="sktvd-nav-count">{{tab.count}}</span>
+                {{/if}}
+              </a>
             {{/each}}
           </nav>
 
@@ -104,10 +132,10 @@ export default class SktvdNav extends Component {
             <div class="sktvd-nav-filters">
               <button
                 type="button"
-                class="btn sktvd-filters-btn {{if this.filtersOpen 'is-open'}}"
+                class="sktvd-filters-btn {{if this.filtersOpen 'is-open'}}"
                 {{on "click" this.toggleFilters}}
               >
-                {{icon "sliders"}}
+                {{icon "filter"}}
                 <span>Фильтры</span>
               </button>
               {{#if this.filtersOpen}}

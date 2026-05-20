@@ -348,6 +348,7 @@ h1, h2, h3 {
 .sktvd-nav-tab {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   height: 44px;
   padding: 0 14px;
   font-family: var(--sktvd-font-ui);
@@ -355,6 +356,7 @@ h1, h2, h3 {
   font-size: 14px;
   color: var(--sktvd-ink-3);
   text-decoration: none;
+  white-space: nowrap;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color 0.12s, border-color 0.12s;
@@ -365,6 +367,23 @@ h1, h2, h3 {
     color: var(--sktvd-ink);
     border-bottom-color: var(--sktvd-forest);
   }
+}
+
+// Per-tab count badge (Новые 12, Непрочитанные 4) — spec §3.B2
+.sktvd-nav-count {
+  font-family: var(--sktvd-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: var(--sktvd-bg-sunk);
+  color: var(--sktvd-ink-3);
+}
+
+.sktvd-nav-tab.is-active .sktvd-nav-count {
+  background: var(--sktvd-forest-soft);
+  color: var(--sktvd-forest-ink);
 }
 
 .sktvd-nav-right {
@@ -406,6 +425,7 @@ h1, h2, h3 {
   display: inline-flex;
 }
 
+// Ghost button per spec §3.B2 — no border, transparent, hover fill.
 .sktvd-filters-btn {
   display: inline-flex;
   align-items: center;
@@ -415,17 +435,17 @@ h1, h2, h3 {
   font-size: 13px;
   background: transparent;
   color: var(--sktvd-ink-2);
-  border: 1px solid var(--sktvd-line);
-  border-radius: var(--sktvd-r-md);
-  padding: 7px 12px;
+  border: 0;
+  border-radius: var(--sktvd-r-sm);
+  padding: 7px 10px;
+  cursor: pointer;
 
-  .d-icon { color: var(--sktvd-ink-3); }
+  .d-icon { color: var(--sktvd-ink-3); font-size: 14px; }
 
   &:hover,
   &.is-open {
     background: var(--sktvd-bg-sunk);
     color: var(--sktvd-ink);
-    border-color: var(--sktvd-line-strong);
   }
 }
 
