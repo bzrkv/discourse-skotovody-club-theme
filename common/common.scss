@@ -391,6 +391,85 @@ h1, h2, h3 {
   }
 }
 
+// ─── "Фильтры" — custom connector button + category panel ───
+.sktvd-filters {
+  position: relative;
+  display: inline-flex;
+  margin-right: 8px;
+}
+
+.sktvd-filters-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sktvd-font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  background: transparent;
+  color: var(--sktvd-ink-2);
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-md);
+  padding: 7px 12px;
+
+  .d-icon { color: var(--sktvd-ink-3); }
+
+  &:hover,
+  &.is-open {
+    background: var(--sktvd-bg-sunk);
+    color: var(--sktvd-ink);
+    border-color: var(--sktvd-line-strong);
+  }
+}
+
+.sktvd-filters-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 100;
+  min-width: 264px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-md);
+  box-shadow: var(--sktvd-shadow-lg);
+  padding: 8px;
+}
+
+.sktvd-filters-panel-head {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sktvd-ink-3);
+  padding: 6px 10px 8px;
+}
+
+.sktvd-filters-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: var(--sktvd-r-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--sktvd-ink-2);
+  text-decoration: none;
+
+  &:hover {
+    background: var(--sktvd-bg-sunk);
+    color: var(--sktvd-ink);
+  }
+}
+
+.sktvd-filters-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  background: var(--sktvd-line-strong);
+}
+
 // ════════════════════════════════════════════════════════════════
 //  Left sidebar — .dc-sidebar look
 // ════════════════════════════════════════════════════════════════
