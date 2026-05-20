@@ -1,12 +1,12 @@
 enable_guest_landing:
   default: true
   type: bool
-  description: "Показывать .dc-landing hero на главной для неавторизованных юзеров"
+  description: "Показывать .sktvd-landing hero на главной для неавторизованных юзеров"
 
 enable_admin_banner:
-  default: false
+  default: true
   type: bool
-  description: "Показывать .dc-banner глобальный анонс сверху"
+  description: "Показывать .sktvd-banner глобальный анонс сверху"
 
 admin_banner_text:
   default: "Открыт Клуб Скотоводов. Это закрытое профессиональное сообщество — для регистрации заполните заявку."
@@ -26,19 +26,57 @@ admin_banner_cta_url:
 enable_slider:
   default: true
   type: bool
-  description: "Slider анонсов на главной (pull свежих топиков с тегом 'announcement' из /news)"
+  description: "Показывать slider-герой на главной (контент — в настройке slides)"
 
-slider_tag:
-  default: "announcement"
-  type: string
-  description: "Discourse tag для топиков, которые показываются в slider"
-
-slider_count:
-  default: 3
-  type: integer
-  min: 1
-  max: 10
-  description: "Сколько слайдов показывать (max 10)"
+slides:
+  type: objects
+  description: "Слайды героя-слайдера. Каждый слайд: тип (анонс/событие/партнёр), заголовок, описание, кнопки."
+  default:
+    - kind: announce
+      tag: "Новости Клуба"
+      title: "Открыт Клуб Скотоводов — закрытое профессиональное сообщество"
+      description: "Площадка для тех, кто работает с мясным скотом каждый день. Без рекламы, ботов и спама — только практический опыт."
+      cta_text: "Подать заявку"
+      cta_url: "https://skotovody.com/klub/"
+      cta_alt_text: "Узнать о Клубе"
+      cta_alt_url: "https://skotovody.com/klub/"
+      watermark: "КЛУБ"
+    - kind: announce
+      tag: "Анонс"
+      title: "Документы 2.0 — шаблоны под изменения ВетИС с 1 июня"
+      description: "Обновлённые шаблоны договоров, ветпаспортов и чек-листов. Авторы — практикующие юристы и ветврачи."
+      cta_text: "Открыть раздел"
+      cta_url: "/c/documents"
+      watermark: "ДОК"
+  schema:
+    name: slide
+    properties:
+      kind:
+        type: enum
+        default: announce
+        choices:
+          - announce
+          - event
+          - partner
+      tag:
+        type: string
+      title:
+        type: string
+        required: true
+      description:
+        type: string
+      cta_text:
+        type: string
+      cta_url:
+        type: string
+      cta_alt_text:
+        type: string
+      cta_alt_url:
+        type: string
+      event_when:
+        type: string
+      watermark:
+        type: string
 
 pricing_url:
   default: "https://skotovody.com/klub/"

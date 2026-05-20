@@ -1235,29 +1235,45 @@ h1, h2, h3 {
   position: relative;
   border-radius: var(--sktvd-r-lg);
   overflow: hidden;
-  min-height: 320px;
+  min-height: 300px;
   box-shadow: var(--sktvd-shadow-md);
   margin-bottom: 18px;
 
   &-slide {
-    min-height: 320px;
-    padding: 40px 44px;
+    min-height: 300px;
+    padding: 42px 46px;
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 32px;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 28px;
     align-items: center;
+    animation: sktvdSliderFade 0.45s ease both;
+
+    // Default — announce: dark forest gradient
     background: linear-gradient(155deg,
-      oklch(0.22 0.04 145) 0%,
-      oklch(0.18 0.06 165) 60%,
-      oklch(0.15 0.05 185) 100%);
+      oklch(0.24 0.04 145) 0%,
+      oklch(0.19 0.05 160) 60%,
+      oklch(0.16 0.04 180) 100%);
     color: oklch(0.95 0.02 80);
-    animation: sktvdSliderFade 0.5s ease both;
+
+    // Event slide — warm ochre / hay
+    &.--event {
+      background: linear-gradient(135deg, var(--sktvd-ochre-soft) 0%, var(--sktvd-hay) 100%);
+      color: var(--sktvd-ink);
+    }
+
+    // Partner slide — cool blue
+    &.--partner {
+      background: linear-gradient(135deg, oklch(0.93 0.04 230) 0%, oklch(0.87 0.05 245) 100%);
+      color: oklch(0.24 0.05 240);
+    }
   }
+
+  &-main { min-width: 0; }
 
   &-tag {
     display: inline-flex;
     align-items: center;
-    padding: 3px 9px;
+    padding: 4px 10px;
     background: oklch(0.85 0.13 80);
     color: oklch(0.32 0.10 60);
     border-radius: 4px;
@@ -1270,25 +1286,49 @@ h1, h2, h3 {
 
   &-title {
     font-family: var(--sktvd-font-display);
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 600;
     letter-spacing: -0.02em;
-    line-height: 1.12;
+    line-height: 1.1;
     margin: 0 0 12px;
+    color: inherit;
   }
 
   &-desc {
-    font-size: 14px;
+    font-size: 14.5px;
     line-height: 1.55;
-    opacity: 0.85;
-    margin: 0 0 22px;
-    max-width: 540px;
+    opacity: 0.86;
+    margin: 0 0 14px;
+    max-width: 560px;
+  }
+
+  &-when {
+    font-size: 13.5px;
+    font-weight: 700;
+    margin: 0 0 18px;
+  }
+
+  &-cta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+
+    .btn { font-size: 13.5px; padding: 9px 18px; border-radius: var(--sktvd-r-md); }
+  }
+
+  &-cta-alt {
+    background: oklch(1 0 0 / 0.14);
+    color: inherit;
+    border: 1px solid oklch(1 0 0 / 0.24);
+
+    &:hover { background: oklch(1 0 0 / 0.24); color: inherit; }
   }
 
   &-watermark {
     text-align: right;
     font-family: var(--sktvd-font-display);
-    font-size: 120px;
+    font-size: 116px;
     font-weight: 700;
     letter-spacing: -0.05em;
     color: oklch(0.85 0.13 80);
@@ -1339,6 +1379,33 @@ h1, h2, h3 {
     &:hover { background: oklch(1 0 0 / 0.3); }
     &.prev { left: 14px; }
     &.next { right: 14px; }
+  }
+
+  // Light slides (event / partner) — dark arrows + dots for contrast
+  &:has(.--event) &-arrow,
+  &:has(.--partner) &-arrow {
+    background: oklch(0.22 0.018 60 / 0.16);
+    color: var(--sktvd-ink);
+
+    &:hover { background: oklch(0.22 0.018 60 / 0.3); }
+  }
+
+  &:has(.--event) &-dot,
+  &:has(.--partner) &-dot {
+    background: oklch(0.22 0.018 60 / 0.25);
+
+    &:hover { background: oklch(0.22 0.018 60 / 0.5); }
+    &[aria-current="true"] { background: var(--sktvd-terracotta); }
+  }
+
+  // Event watermark — terracotta; cta-alt on light slides
+  &-slide.--event .sktvd-slider-watermark { color: var(--sktvd-terracotta); }
+  &-slide.--event .sktvd-slider-cta-alt,
+  &-slide.--partner .sktvd-slider-cta-alt {
+    background: oklch(0.22 0.018 60 / 0.08);
+    border-color: oklch(0.22 0.018 60 / 0.2);
+
+    &:hover { background: oklch(0.22 0.018 60 / 0.16); }
   }
 }
 

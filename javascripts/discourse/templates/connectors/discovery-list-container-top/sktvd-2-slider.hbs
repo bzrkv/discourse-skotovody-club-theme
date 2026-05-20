@@ -1,17 +1,34 @@
 {{#if this.slides}}
   <div class="sktvd-slider">
-    <div class="sktvd-slider-slide">
-      <div>
-        <span class="sktvd-slider-tag">Анонс</span>
-        <h2 class="sktvd-slider-title">{{this.current.title}}</h2>
-        {{#if this.current.excerpt}}
-          <p class="sktvd-slider-desc">{{this.current.excerpt}}</p>
+    <div class="sktvd-slider-slide --{{this.current.kind}}">
+      <div class="sktvd-slider-main">
+        {{#if this.current.tag}}
+          <span class="sktvd-slider-tag">{{this.current.tag}}</span>
         {{/if}}
-        <a href={{this.current.url}} class="btn btn-primary">
-          Открыть тему {{d-icon "arrow-right"}}
-        </a>
+        <h2 class="sktvd-slider-title">{{this.current.title}}</h2>
+        {{#if this.current.description}}
+          <p class="sktvd-slider-desc">{{this.current.description}}</p>
+        {{/if}}
+        {{#if this.current.event_when}}
+          <p class="sktvd-slider-when">{{this.current.event_when}}</p>
+        {{/if}}
+        <div class="sktvd-slider-cta">
+          {{#if this.current.cta_url}}
+            <a href={{this.current.cta_url}} class="btn btn-primary">
+              {{this.current.cta_text}}
+            </a>
+          {{/if}}
+          {{#if this.current.cta_alt_url}}
+            <a
+              href={{this.current.cta_alt_url}}
+              class="btn sktvd-slider-cta-alt"
+            >{{this.current.cta_alt_text}}</a>
+          {{/if}}
+        </div>
       </div>
-      <div class="sktvd-slider-watermark">КЛУБ</div>
+      {{#if this.current.watermark}}
+        <div class="sktvd-slider-watermark">{{this.current.watermark}}</div>
+      {{/if}}
     </div>
 
     {{#if (gt this.slides.length 1)}}
