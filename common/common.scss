@@ -384,7 +384,11 @@ h1, h2, h3 {
     line-height: 1.32;
 
     &:hover { color: var(--sktvd-forest-ink); }
-    &:visited { color: var(--sktvd-ink-2); }
+  }
+
+  // Visited topics — dim slightly (the mockup keeps titles readable)
+  .topic-list-item.visited a.title:not(.badge-notification) {
+    color: var(--sktvd-ink-3);
   }
 
   // ─── Pinned / status icons ───
@@ -894,13 +898,19 @@ h1, h2, h3 {
   }
 }
 
-@media (max-width: 480px) {
+// Narrow screens — collapse the wordmark to an icon + badge so the logo,
+// auth buttons and search icon all fit on one header row.
+@media (max-width: 550px) {
   .sktvd-club-header-auth {
     gap: 4px;
     margin-left: 4px;
-    .btn { padding: 6px 10px; font-size: 12px; }
+    .btn { padding: 6px 9px; font-size: 12px; }
   }
-  .sktvd-club-logo-word { font-size: 18px; }
+  .sktvd-club-logo {
+    gap: 6px;
+    margin-right: 2px;
+  }
+  .sktvd-club-logo-word { display: none; }
 }
 
 // ════════════════════════════════════════════════════════════════
