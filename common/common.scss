@@ -173,12 +173,23 @@ h1, h2, h3 {
 }
 
 .floating-search-input .search-menu,
-.floating-search-input .search-menu-container,
-.floating-search-input .search-input,
-.floating-search-input .search-input--header {
+.floating-search-input .search-menu-container {
   background: transparent;
   border: 0;
   box-shadow: none;
+}
+
+// The visible field is the inner .search-input--header — Discourse gives it
+// its own background, a 4px radius and a 2px focus OUTLINE. That background
+// covered the outer 8px corners, and the outline was the thick focus line.
+// !important is required to beat Discourse's multi-class selectors.
+.floating-search-input .search-input,
+.floating-search-input .search-input--header {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 // Magnifier — readable ink, not the faint default grey
