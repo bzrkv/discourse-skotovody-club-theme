@@ -135,10 +135,46 @@ h1, h2, h3 {
   }
 }
 
-// ─── Text logo (rendered by connector in before-header-panel) ───
-.before-header-panel-outlet {
-  display: inline-flex;
-  align-items: center;
+// ─── Header layout — hamburger · logo · search · (gap) · icons ───
+// search_experience=search_field injects .floating-search-input-wrapper into
+// the header flex row. Without explicit order it lands before the logo
+// connector and shoves the logo to the right — so we order the flex children.
+.d-header .contents {
+  .before-header-panel-outlet {
+    order: 1;
+    display: inline-flex;
+    align-items: center;
+  }
+  .floating-search-input-wrapper {
+    order: 2;
+    flex: 0 1 440px;
+    max-width: 440px;
+    margin-left: 8px;
+  }
+  .panel {
+    order: 3;
+    margin-left: auto;
+  }
+  .after-header-panel-outlet { order: 4; }
+}
+
+// In-header search field — compact, on-brand
+.floating-search-input .search-banner-inner,
+.floating-search-input-wrapper .search-menu {
+  background: var(--sktvd-bg-elev);
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-md);
+
+  &:focus-within {
+    border-color: var(--sktvd-forest);
+    background: var(--sktvd-surface);
+  }
+
+  input {
+    background: transparent;
+    border: 0;
+    font-size: 13px;
+  }
 }
 
 .sktvd-club-logo {
