@@ -245,7 +245,14 @@ h1, h2, h3 {
 .sktvd-header-icon-link {
   position: relative;
 
-  .d-icon { font-size: 18px; }
+  // The SVG must not stretch as a flex child — pin it square so the bell /
+  // bookmark keep their aspect and sit centred in the 45×45 button.
+  .d-icon {
+    flex: none;
+    width: 1em;
+    height: 1em;
+    font-size: 18px;
+  }
 }
 
 .sktvd-header-icon-badge {
@@ -327,6 +334,7 @@ h1, h2, h3 {
 // sidebar states: .wrap is --d-max-width normally, and widens by
 // --d-sidebar-width when body.has-sidebar-page (sidebar visible).
 .sktvd-nav-inner {
+  box-sizing: border-box;
   max-width: var(--d-max-width);
   margin: 0 auto;
   padding: 0 0.67em;
@@ -1168,6 +1176,7 @@ body.has-sidebar-page .sktvd-nav-inner {
 
   // Inner tracks Discourse's .wrap so the banner aligns with the page
   &-inner {
+    box-sizing: border-box;
     position: relative;
     max-width: var(--d-max-width);
     margin: 0 auto;
