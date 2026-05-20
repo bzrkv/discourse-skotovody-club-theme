@@ -158,9 +158,10 @@ h1, h2, h3 {
   .after-header-panel-outlet { order: 4; }
 }
 
-// In-header search field — compact, on-brand
-.floating-search-input .search-banner-inner,
-.floating-search-input-wrapper .search-menu {
+// In-header search field — ONE clean rounded border on the outer wrapper.
+// (.search-banner-inner wraps .search-menu — bordering both gave a doubled
+// edge; the inner element is reset to borderless/transparent.)
+.floating-search-input .search-banner-inner {
   background: var(--sktvd-bg-elev);
   border: 1px solid var(--sktvd-line);
   border-radius: var(--sktvd-r-md);
@@ -169,12 +170,22 @@ h1, h2, h3 {
     border-color: var(--sktvd-forest);
     background: var(--sktvd-surface);
   }
+}
 
-  input {
-    background: transparent;
-    border: 0;
-    font-size: 13px;
-  }
+.floating-search-input .search-menu,
+.floating-search-input .search-menu .search-input {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.floating-search-input input,
+.floating-search-input .search-term {
+  background: transparent;
+  border: 0;
+  font-family: var(--sktvd-font-ui);
+  font-size: 13.5px;
+  color: var(--sktvd-ink);
 }
 
 .sktvd-club-logo {
@@ -290,14 +301,16 @@ h1, h2, h3 {
   border-bottom: 1px solid var(--sktvd-line);
 }
 
+// ─── Nav pills — one consistent UI font, clear active underline ───
 #navigation-bar.nav-pills > li > a {
   font-family: var(--sktvd-font-ui);
   font-weight: 600;
   font-size: 14px;
   color: var(--sktvd-ink-3);
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
   border-radius: 0;
-  transition: color 0.12s;
+  padding-bottom: 9px;
+  transition: color 0.12s, border-color 0.12s;
 
   &:hover {
     color: var(--sktvd-ink);
@@ -305,19 +318,60 @@ h1, h2, h3 {
   }
 }
 
+// Active tab — solid forest underline (the "зелёная полоска")
 #navigation-bar.nav-pills > li.active > a,
-#navigation-bar.nav-pills > li > a.active {
+#navigation-bar.nav-pills > li > a.active,
+#navigation-bar.nav-pills > li.active > a.active {
   color: var(--sktvd-ink);
   background: transparent;
-  border-bottom-color: var(--sktvd-forest);
+  border-bottom: 3px solid var(--sktvd-forest);
 }
 
-// Category / tag breadcrumb dropdowns
-.navigation-container .category-breadcrumb .select-kit-header,
+// Per-tab count badge (Новые 12, Непрочитанные 4)
+#navigation-bar.nav-pills .badge-notification,
+#navigation-bar.nav-pills .topics-count {
+  font-family: var(--sktvd-font-mono);
+  font-weight: 700;
+}
+
+// ─── Category / tag filter dropdowns — clean consistent pills ───
 .category-breadcrumb .select-kit-header {
-  border-radius: var(--sktvd-r-sm);
-  border-color: var(--sktvd-line);
+  border-radius: var(--sktvd-r-md);
+  border: 1px solid var(--sktvd-line);
   background: var(--sktvd-surface);
+  font-family: var(--sktvd-font-ui);
+
+  .name,
+  .select-kit-selected-name {
+    font-family: var(--sktvd-font-ui);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--sktvd-ink-2);
+  }
+
+  &:hover { border-color: var(--sktvd-line-strong); }
+}
+
+// ─── "Создать тему" — forest green primary button ───
+// The button is a d-combo-button (main button + dropdown caret); both parts
+// and the icon are recoloured to the brand green.
+.navigation-controls .d-combo-button .btn,
+#create-topic {
+  font-family: var(--sktvd-font-ui);
+  font-weight: 600;
+  background: var(--sktvd-forest);
+  border-color: var(--sktvd-forest);
+  color: oklch(0.97 0.012 85);
+
+  .d-icon,
+  .d-button-label { color: oklch(0.97 0.012 85); }
+
+  &:hover,
+  &:focus {
+    background: var(--sktvd-forest-ink);
+    border-color: var(--sktvd-forest-ink);
+    color: oklch(0.98 0.012 85);
+  }
 }
 
 // ════════════════════════════════════════════════════════════════
