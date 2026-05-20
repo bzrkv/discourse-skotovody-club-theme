@@ -241,6 +241,32 @@ h1, h2, h3 {
   }
 }
 
+// ─── Custom header icons — bell + bookmark (spec §3.B1) ───
+.sktvd-header-icon-link {
+  position: relative;
+
+  .d-icon { font-size: 18px; }
+}
+
+.sktvd-header-icon-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  background: var(--sktvd-terracotta);
+  color: oklch(0.97 0.012 85);
+  border: 2px solid var(--sktvd-surface);
+  border-radius: 100px;
+  font-family: var(--sktvd-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
 // Search field inside the header dropdown
 .d-header .search-menu .search-input,
 .search-menu-container input[type="search"] {
