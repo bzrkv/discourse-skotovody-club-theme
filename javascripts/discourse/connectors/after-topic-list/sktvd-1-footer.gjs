@@ -46,7 +46,15 @@ export default class SktvdListFooter extends Component {
     }
     this.#loadStats();
     // eslint-disable-next-line no-console
-    console.log("[sktvd-e5] outletArgs keys:", Object.keys(this.args.outletArgs || {}), this.args.outletArgs);
+    {
+      const oa = this.args.outletArgs || {};
+      const desc = Object.keys(oa).map((k) => {
+        const v = oa[k];
+        const t = Array.isArray(v) ? `array[${v.length}]` : (v && v.length !== undefined ? `len=${v.length}` : typeof v);
+        return `${k}:${t}`;
+      }).join(" | ");
+      console.log("[sktvd-e5] KEYS=" + desc);
+    }
     // Defer one frame so the topic-list rows are in the DOM to be counted.
     requestAnimationFrame(() => this.#trackRows());
   }
