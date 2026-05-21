@@ -815,6 +815,45 @@ body.has-sidebar-page .sktvd-nav-inner {
 .badge-category__name { letter-spacing: -0.005em; }
 
 // ════════════════════════════════════════════════════════════════
+//  Topic-list footer (member) — HOMEPAGE_SPEC §5.E5 — connector
+// ════════════════════════════════════════════════════════════════
+
+// E5a — "Показано N тем"
+.sktvd-list-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 18px 4px 0;
+}
+
+.sktvd-list-footer-count {
+  font-size: 12px;
+  color: var(--sktvd-ink-3);
+}
+
+// E5b — "В Клубе" stat strip
+.sktvd-club-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: var(--sktvd-r-md);
+  font-size: 13px;
+  color: var(--sktvd-ink-2);
+}
+
+.sktvd-club-stats-label {
+  font-weight: 700;
+  color: var(--sktvd-ink);
+}
+
+// ════════════════════════════════════════════════════════════════
 //  Categories page — .dc-cat-grid / .dc-cat-box look
 // ════════════════════════════════════════════════════════════════
 
