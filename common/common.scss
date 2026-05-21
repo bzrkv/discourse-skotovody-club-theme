@@ -578,12 +578,17 @@ body.has-sidebar-page .sktvd-nav-inner {
     color: var(--sktvd-forest);
   }
 
-  // Category links — drop the badge prefix entirely (colour square, emoji
-  // image, restricted-lock glyph). Every category name already carries its
-  // own emoji as text, so the prefix only added visual noise — square +
-  // emoji together read as cacophony (review 2026-05-20).
-  a.sidebar-section-link[href*="/c/"] .sidebar-section-link-prefix {
-    display: none;
+  // Category links — drop the colour-square / emoji-image badge, but keep
+  // the restricted-lock glyph: it marks closed categories and is the one
+  // useful part of the prefix (review 2026-05-21). The category name
+  // carries its own emoji as text.
+  // `[href^="/c/"]` (starts-with) matches categories only — chat channels
+  // are `/chat/c/…` and must keep their prefix icon.
+  a.sidebar-section-link[href^="/c/"] {
+    .prefix-square,
+    .sidebar-section-link-prefix img.emoji {
+      display: none;
+    }
   }
 }
 
@@ -683,17 +688,22 @@ body.has-sidebar-page .sktvd-nav-inner {
       &:visited { color: inherit; }
     }
 
-    // Drop the badge marker — emoji-image and restricted-lock glyph. The
-    // category name already carries its own emoji as text, so a separate
-    // marker just reads as visual noise — square + emoji together are
-    // cacophony (review 2026-05-20: keep emoji-in-name only).
+    // Hide the emoji-image badge (the category name carries its emoji as
+    // text). The restricted-lock glyph is kept — it marks closed categories
+    // (review 2026-05-21). Open categories have no svg, so flex `gap` just
+    // collapses for them.
     .badge-category {
       display: inline-flex;
       align-items: center;
       gap: 6px;
 
-      .emoji,
-      > svg { display: none; }
+      .emoji { display: none; }
+
+      > svg {
+        width: 11px;
+        height: 11px;
+        color: var(--sktvd-ink-mute);
+      }
     }
 
     .badge-category__name {
