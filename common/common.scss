@@ -2016,8 +2016,11 @@ body.sktvd-membership-route {
   .sktvd-landing-shell,
   .sktvd-banner { display: none; }
 
-  // content area full-width — the membership page owns its own layout
+  // content area full-width — the membership page owns its own layout.
+  // #main-outlet-wrapper is a grid with a sidebar column; hiding the
+  // sidebar leaves the empty column, so collapse the grid to block.
   #main-outlet-wrapper {
+    display: block;
     max-width: none;
     margin: 0;
     padding: 0;
