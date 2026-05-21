@@ -1599,6 +1599,8 @@ body.has-sidebar-page .sktvd-banner-inner {
     gap: 8px;
   }
 
+  // Whole card is a link to the application page (spec §7 — a guest
+  // clicking a closed category is routed to join the club).
   &-item {
     padding: 12px 14px;
     background: var(--sktvd-surface);
@@ -1609,12 +1611,26 @@ body.has-sidebar-page .sktvd-banner-inner {
     gap: 10px;
     font-size: 13px;
     font-weight: 700;
-    color: var(--sktvd-ink);
+    text-decoration: none;
+    transition: border-color 0.12s, background 0.12s;
+
+    &,
+    &:visited { color: var(--sktvd-ink); } // a:visited otherwise renders green
+
+    &:hover {
+      border-color: var(--sktvd-line-strong);
+      background: var(--sktvd-bg-elev);
+    }
 
     .sktvd-cat-teaser-emoji {
       flex-shrink: 0;
       font-size: 15px;
       line-height: 1;
+    }
+    .sktvd-cat-teaser-item-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .sktvd-cat-teaser-lock { margin-left: auto; opacity: 0.5; }
   }

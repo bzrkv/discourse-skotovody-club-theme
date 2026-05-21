@@ -14,11 +14,11 @@
 
   <div class="sktvd-cat-teaser-grid">
     {{#each this.closedCategories as |cat|}}
-      <div class="sktvd-cat-teaser-item">
+      <a href={{this.pricingUrl}} class="sktvd-cat-teaser-item">
         <span class="sktvd-cat-teaser-emoji">{{cat.emoji}}</span>
-        <span>{{cat.name}}</span>
+        <span class="sktvd-cat-teaser-item-name">{{cat.name}}</span>
         <span class="sktvd-cat-teaser-lock">{{d-icon "lock"}}</span>
-      </div>
+      </a>
     {{/each}}
   </div>
 </div>
