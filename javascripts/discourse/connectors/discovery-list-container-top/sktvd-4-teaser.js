@@ -8,15 +8,17 @@
 // is a hand-maintained list that mirrors seeds/categories. Keep it in sync if
 // the taxonomy changes.
 
+// Emoji mirror the real categories' emoji style_type (see
+// scripts/category-emoji-apply.rb). Keep in sync if the taxonomy changes.
 const CLOSED_CATEGORIES = [
-  { name: "💬 Общий разговор", color: "#5B5247" },
-  { name: "🐄 Породы и генетика", color: "#4A6B4A" },
-  { name: "🌾 Корма и пастбище", color: "#7A8245" },
-  { name: "🩺 Ветеринария", color: "#37503B" },
-  { name: "🚜 Техника", color: "#5C677E" },
-  { name: "💰 Купи-продай", color: "#8C6E2F" },
-  { name: "❓ Вопросы новичков", color: "#5B7BA5" },
-  { name: "📚 Документы", color: "#665845" },
+  { emoji: "💬", name: "Общий разговор" },
+  { emoji: "🐄", name: "Породы и генетика" },
+  { emoji: "🌾", name: "Корма и пастбище" },
+  { emoji: "🩺", name: "Ветеринария" },
+  { emoji: "🚜", name: "Техника" },
+  { emoji: "💰", name: "Купи-продай" },
+  { emoji: "❓", name: "Вопросы новичков" },
+  { emoji: "📚", name: "Документы" },
 ];
 
 export default {

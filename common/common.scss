@@ -1611,9 +1611,10 @@ body.has-sidebar-page .sktvd-banner-inner {
     font-weight: 700;
     color: var(--sktvd-ink);
 
-    .sktvd-cat-teaser-dot {
-      width: 10px; height: 10px;
+    .sktvd-cat-teaser-emoji {
       flex-shrink: 0;
+      font-size: 15px;
+      line-height: 1;
     }
     .sktvd-cat-teaser-lock { margin-left: auto; opacity: 0.5; }
   }
@@ -1944,6 +1945,12 @@ body.has-sidebar-page .sktvd-banner-inner {
     padding: 6px 0.67em;
     border-top: 1px solid var(--sktvd-line);
   }
+
+  // E2 notice — let the buttons drop to a second row so the text isn't
+  // crushed into a narrow 4-line column next to them.
+  .sktvd-notice { flex-wrap: wrap; }
+  .sktvd-notice-text { flex: 1 1 calc(100% - 46px); }
+  .sktvd-notice .sktvd-notice-btn:first-of-type { margin-left: auto; }
 
   .welcome-banner { padding: 20px; }
   .welcome-banner .welcome-banner__title { font-size: 21px; }
