@@ -19,7 +19,7 @@ admin_banner_cta_text:
   description: "Текст CTA-ссылки в admin banner"
 
 admin_banner_cta_url:
-  default: "https://skotovody.com/klub-zayavka/"
+  default: "https://skotovody.com/club-zayavka/"
   type: string
   description: "Куда ведёт CTA — обычно application form на skotovody.com"
 
@@ -47,16 +47,16 @@ slides:
       description: "Хозяйства Центра России собираются на демо-площадке: техника, расколы, генетика, обмен опытом. Бесплатно для участников клуба."
       event_when: "14 июня, 09:00 · Брянск, КФХ «Лесное»"
       cta_text: "Записаться"
-      cta_url: "https://skotovody.com/klub/"
+      cta_url: "https://skotovody.com/club/"
       cta_alt_text: "Программа"
-      cta_alt_url: "https://skotovody.com/klub/"
+      cta_alt_url: "https://skotovody.com/club/"
       watermark: "14"
     - kind: partner
       tag: "Genex Russia · Реклама"
       title: "Семя быков-производителей с верифицированным EPD"
       description: "Скидка 15% участникам клуба до конца июня. Доставка по всем регионам, поддержка ИО-специалистов."
       cta_text: "Узнать больше"
-      cta_url: "https://skotovody.com/klub/"
+      cta_url: "https://skotovody.com/club/"
       watermark: "GENEX"
     - kind: announce
       tag: "Анонс"
@@ -98,7 +98,7 @@ slides:
         type: string
 
 pricing_url:
-  default: "https://skotovody.com/klub/"
+  default: "https://skotovody.com/club/"
   type: string
   description: "URL pricing-страницы на skotovody.com — куда ведут CTA «Подать заявку» из guest landing"
 

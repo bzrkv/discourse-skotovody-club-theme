@@ -11,6 +11,7 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
+import { service } from "@ember/service";
 import { on } from "@ember/modifier";
 import { htmlSafe } from "@ember/template";
 import icon from "discourse/helpers/d-icon";
@@ -18,6 +19,8 @@ import icon from "discourse/helpers/d-icon";
 const STORAGE_KEY = "sktvd_banner_dismissed";
 
 export default class SktvdBanner extends Component {
+  @service currentUser;
+  @service router;
   @tracked dismissed = this.#storedDismissed();
 
   #storedDismissed() {
@@ -28,8 +31,21 @@ export default class SktvdBanner extends Component {
     }
   }
 
+  // The banner is a "join the club" CTA — it only makes sense for an
+  // unauthenticated visitor on the homepage. A logged-in member is already
+  // in the club; showing them «Подать заявку» is nonsense (review 2026-05-21).
+  get onHomepage() {
+    const url = (this.router.currentURL || "/").split("?")[0];
+    return url === "/" || url === "/latest";
+  }
+
   get visible() {
-    return settings.enable_admin_banner && !this.dismissed;
+    return (
+      settings.enable_admin_banner &&
+      !this.dismissed &&
+      !this.currentUser &&
+      this.onHomepage
+    );
   }
 
   get bannerText() {
