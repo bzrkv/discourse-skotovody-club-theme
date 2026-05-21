@@ -1452,6 +1452,20 @@ body.has-sidebar-page .sktvd-banner-inner {
 //  Guest landing hero (.sktvd-landing) — connector
 // ════════════════════════════════════════════════════════════════
 
+// Full-width shell — the hero spans BOTH columns (sidebar + main), per
+// spec §E0. Same width logic as .sktvd-nav-inner: --d-max-width normally,
+// widened by the sidebar when body.has-sidebar-page.
+.sktvd-landing-shell {
+  box-sizing: border-box;
+  max-width: var(--d-max-width);
+  margin: 0 auto;
+  padding: 16px 0.67em 0;
+}
+
+body.has-sidebar-page .sktvd-landing-shell {
+  max-width: calc(var(--d-sidebar-width) + var(--d-max-width));
+}
+
 .sktvd-landing {
   background: linear-gradient(155deg,
     oklch(0.22 0.018 60) 0%,
