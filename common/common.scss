@@ -2000,3 +2000,34 @@ body.has-sidebar-page .sktvd-landing-shell {
   .sktvd-banner-text { order: 3; flex: 1 1 100%; font-size: 13px; }
   .sktvd-banner-cta { order: 4; }
 }
+
+// ════════════════════════════════════════════════════════════════
+//  /membership — standalone full-width marketing page
+//  Route is served by the sktvd-club-bridge plugin; here the theme
+//  strips the surrounding Discourse discovery chrome. Body class is
+//  toggled by api-initializers/sktvd-membership-bodyclass.js.
+// ════════════════════════════════════════════════════════════════
+body.sktvd-membership-route {
+  // standalone page — no sidebar
+  .sidebar-wrapper { display: none; }
+
+  // no guest-landing / admin-banner connectors (they live in
+  // below-site-header and would otherwise bleed onto this page)
+  .sktvd-landing-shell,
+  .sktvd-banner { display: none; }
+
+  // content area full-width — the membership page owns its own layout
+  #main-outlet-wrapper {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  #main-outlet { padding: 0; }
+
+  // the plugin page already spans #main-outlet — drop its full-bleed
+  // breakout margins (they overshoot here and cause horizontal scroll)
+  .sktvd-mb {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
