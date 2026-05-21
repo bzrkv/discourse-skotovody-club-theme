@@ -5,6 +5,10 @@
 // user-menu; the spec/mockup wants them as standalone header icons, so we
 // register them through the headerIcons API. The bell shows the unread
 // notification count; both navigate to the matching personal pages.
+//
+// All three glyphs use the regular (outline) FontAwesome variants to match
+// the mockup — including the native chat icon, remapped comment → far-comment
+// so it isn't a heavy solid blob next to the outline bell/bookmark.
 
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
@@ -33,7 +37,7 @@ class BellIcon extends Component {
         class="btn no-text icon btn-flat sktvd-header-icon-link"
         title="Уведомления"
       >
-        {{icon "bell"}}
+        {{icon "far-bell"}}
         {{#if this.count}}
           <span class="sktvd-header-icon-badge">{{this.count}}</span>
         {{/if}}
@@ -49,12 +53,17 @@ const BookmarkIcon = <template>
       class="btn no-text icon btn-flat sktvd-header-icon-link"
       title="Закладки"
     >
-      {{icon "bookmark"}}
+      {{icon "far-bookmark"}}
     </a>
   </li>
 </template>;
 
 export default apiInitializer((api) => {
+  // Native chat header icon uses the solid `comment` glyph — remap it to the
+  // outline `far-comment` so it matches the mockup and the outline bell /
+  // bookmark. Global remap, but `comment` is effectively chat-only here.
+  api.replaceIcon("comment", "far-comment");
+
   if (!api.getCurrentUser()) {
     return;
   }
