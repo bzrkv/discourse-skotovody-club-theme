@@ -59,10 +59,11 @@ const BookmarkIcon = <template>
 </template>;
 
 export default apiInitializer((api) => {
-  // Native chat header icon uses the solid `comment` glyph — remap it to the
-  // outline `far-comment` so it matches the mockup and the outline bell /
-  // bookmark. Global remap, but `comment` is effectively chat-only here.
-  api.replaceIcon("comment", "far-comment");
+  // The chat plugin renders its header icon as `d-chat` (a built-in alias
+  // that resolves to the solid `comment` glyph). Remap the `d-chat` alias
+  // to the outline `far-comment` so the chat icon matches the mockup and
+  // the outline bell / bookmark.
+  api.replaceIcon("d-chat", "far-comment");
 
   if (!api.getCurrentUser()) {
     return;
