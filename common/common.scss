@@ -594,7 +594,11 @@ body.has-sidebar-page .sktvd-nav-inner {
 .topic-list {
   border: 1px solid var(--sktvd-line);
   border-radius: 12px; // spec §5.E3
-  overflow: hidden;
+  // `clip`, not `hidden`: still clips children to the rounded corners, but
+  // does NOT create a scroll container — `overflow: hidden` here trapped
+  // Discourse's sticky bulk-select header (top:65px), leaving a 66px white
+  // band above the header in bulk-select mode.
+  overflow: clip;
   background: var(--sktvd-surface);
   border-collapse: separate;
   border-spacing: 0;
