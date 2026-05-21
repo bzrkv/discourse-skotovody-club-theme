@@ -45,18 +45,7 @@ export default class SktvdListFooter extends Component {
       return;
     }
     this.#loadStats();
-    // eslint-disable-next-line no-console
-    {
-      const oa = this.args.outletArgs || {};
-      const desc = Object.keys(oa).map((k) => {
-        const v = oa[k];
-        const t = Array.isArray(v) ? `array[${v.length}]` : (v && v.length !== undefined ? `len=${v.length}` : typeof v);
-        return `${k}:${t}`;
-      }).join(" | ");
-      console.log("[sktvd-e5] KEYS=" + desc);
-    }
-    // Defer one frame so the topic-list rows are in the DOM to be counted.
-    requestAnimationFrame(() => this.#trackRows());
+    this.#trackRows();
   }
 
   willDestroy() {
@@ -81,18 +70,24 @@ export default class SktvdListFooter extends Component {
     }
   }
 
-  // Counts the rendered topic rows and keeps the figure fresh when infinite
-  // scroll appends more.
-  #trackRows() {
+  // Counts the rendered topic rows. The `after-topic-list` outlet can build
+  // before the list body exists (initial load shows a loading state), so we
+  // poll a few frames for `.topic-list-body`, then count it and observe it
+  // to keep the figure fresh when infinite scroll appends more rows.
+  #trackRows(attempt = 0) {
+    const body = document.querySelector(".topic-list-body");
+    if (!body) {
+      if (attempt < 40) {
+        requestAnimationFrame(() => this.#trackRows(attempt + 1));
+      }
+      return;
+    }
     const recount = () => {
-      this.shownCount = document.querySelectorAll(".topic-list-item").length;
+      this.shownCount = body.querySelectorAll(".topic-list-item").length;
     };
     recount();
-    const body = document.querySelector(".topic-list-body");
-    if (body) {
-      this._observer = new MutationObserver(recount);
-      this._observer.observe(body, { childList: true });
-    }
+    this._observer = new MutationObserver(recount);
+    this._observer.observe(body, { childList: true });
   }
 
   get shownLabel() {
@@ -114,9 +109,11 @@ export default class SktvdListFooter extends Component {
 
   <template>
     {{#if this.enabled}}
-      <div class="sktvd-list-footer">
-        <span class="sktvd-list-footer-count">{{this.shownLabel}}</span>
-      </div>
+      {{#if this.shownCount}}
+        <div class="sktvd-list-footer">
+          <span class="sktvd-list-footer-count">{{this.shownLabel}}</span>
+        </div>
+      {{/if}}
 
       {{#if this.statsLine}}
         <div class="sktvd-club-stats">
