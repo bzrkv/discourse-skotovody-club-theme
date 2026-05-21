@@ -1920,6 +1920,31 @@ body.has-sidebar-page .sktvd-banner-inner {
   .sktvd-slider-watermark { display: none; }
   .sktvd-slider-title { font-size: 22px; }
 
+  // View-nav — at this width the tabs and the controls can't share one
+  // row (the tabs get crushed into a 109px column and stack vertically,
+  // ballooning the strip to ~180px). Stack into two rows instead: the
+  // tabs become one horizontally-scrollable row, the controls sit below.
+  .sktvd-nav-inner {
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0;
+  }
+  .sktvd-nav-tabs {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 0.67em;
+  }
+  .sktvd-nav-tabs::-webkit-scrollbar { display: none; }
+  .sktvd-nav-right {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-end;
+    padding: 6px 0.67em;
+    border-top: 1px solid var(--sktvd-line);
+  }
+
   .welcome-banner { padding: 20px; }
   .welcome-banner .welcome-banner__title { font-size: 21px; }
 
