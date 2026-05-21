@@ -45,6 +45,8 @@ export default class SktvdListFooter extends Component {
       return;
     }
     this.#loadStats();
+    // eslint-disable-next-line no-console
+    console.log("[sktvd-e5] outletArgs keys:", Object.keys(this.args.outletArgs || {}), this.args.outletArgs);
     // Defer one frame so the topic-list rows are in the DOM to be counted.
     requestAnimationFrame(() => this.#trackRows());
   }
