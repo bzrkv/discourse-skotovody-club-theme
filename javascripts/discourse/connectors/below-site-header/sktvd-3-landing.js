@@ -8,9 +8,9 @@
 // → sktvd-3-landing, i.e. view-nav → banner → hero.
 //
 // Gated by `enable_guest_landing`; logged-in members never see it. The
-// "подать заявку" CTA points at the pricing page on skotovody.com
-// (`pricing_url` setting); the "войти" CTA goes through the skotovody.com
-// SSO login, carrying a return URL.
+// "подать заявку" CTA points at the application form on skotovody.com
+// (`application_url` setting); the "войти" CTA goes through the
+// skotovody.com SSO login, carrying a return URL.
 
 export default {
   shouldRender(args, component) {
@@ -19,7 +19,7 @@ export default {
 
   setupComponent(args, component) {
     component.setProperties({
-      pricingUrl: settings.pricing_url,
+      applicationUrl: settings.application_url,
       loginUrl:
         "https://skotovody.com/?auth=login&from=club&redirect_to=" +
         encodeURIComponent(window.location.href),

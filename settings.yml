@@ -97,10 +97,10 @@ slides:
       watermark:
         type: string
 
-pricing_url:
-  default: "https://skotovody.com/club/"
+application_url:
+  default: "https://skotovody.com/club-zayavka/"
   type: string
-  description: "URL pricing-страницы на skotovody.com — куда ведут CTA «Подать заявку» из guest landing"
+  description: "URL формы заявки на вступление — куда ведут все CTA «Подать заявку» (guest landing, teaser)"
 
 verified_badge_admin_emoji:
   default: "⚙️"

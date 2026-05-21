@@ -29,7 +29,7 @@ export default {
   setupComponent(args, component) {
     component.setProperties({
       closedCategories: CLOSED_CATEGORIES,
-      pricingUrl: settings.pricing_url,
+      applicationUrl: settings.application_url,
     });
   },
 };
