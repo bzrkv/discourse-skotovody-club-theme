@@ -1255,14 +1255,16 @@ body.has-sidebar-page .sktvd-nav-inner {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  Custom header auth buttons (Регистрация + Вход) — connector
+//  Custom header auth buttons (Войти + Подать заявку) — connector
+//  `after-header-panel`. HOMEPAGE_SPEC §3 B1: guest controls in the
+//  right group. The connector sits in after-header-panel (order 4);
+//  .panel's margin-left:auto already pushes this group to the edge.
 // ════════════════════════════════════════════════════════════════
 
 .sktvd-club-header-auth {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: 10px;
 
   .btn {
     padding: 7px 14px;
@@ -1272,7 +1274,8 @@ body.has-sidebar-page .sktvd-nav-inner {
     transition: background .12s, border-color .12s;
   }
 
-  .sktvd-club-btn-register {
+  // «Войти» — ghost
+  .sktvd-club-btn-login {
     background: transparent;
     color: var(--sktvd-ink-2);
     border: 1px solid var(--sktvd-line-strong);
@@ -1284,14 +1287,19 @@ body.has-sidebar-page .sktvd-nav-inner {
     }
   }
 
-  .sktvd-club-btn-login {
+  // «Подать заявку» — primary green (it is an <a>, so pin :visited)
+  .sktvd-club-btn-apply {
     background: var(--sktvd-forest);
     color: oklch(0.97 0.012 85);
     border: 1px solid var(--sktvd-forest);
+    text-decoration: none;
 
+    &:visited { color: oklch(0.97 0.012 85); }
     &:hover {
       background: var(--sktvd-forest-ink);
       border-color: var(--sktvd-forest-ink);
+      color: oklch(0.97 0.012 85);
+      text-decoration: none;
     }
   }
 }
@@ -2033,4 +2041,111 @@ body.sktvd-membership-route {
     margin-left: 0;
     margin-right: 0;
   }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Marketing footer (.sktvd-footer) — connector `below-footer`,
+//  self-gated to the /membership route. LANDING_SPEC §S10.
+// ════════════════════════════════════════════════════════════════
+.sktvd-footer {
+  margin-top: 60px;
+  padding: 60px 24px 40px;
+  border-top: 1px solid var(--sktvd-line);
+  background: var(--sktvd-surface);
+  font-family: var(--sktvd-font-ui);
+}
+
+.sktvd-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.sktvd-footer-cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 36px;
+}
+
+.sktvd-footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.sktvd-footer-logo-word {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-footer-logo-badge {
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--sktvd-ink);
+  color: var(--sktvd-surface);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sktvd-footer-tagline {
+  margin: 0;
+  max-width: 320px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--sktvd-ink-3);
+}
+
+.sktvd-footer-h {
+  margin: 0 0 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sktvd-ink-3);
+}
+
+.sktvd-footer-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sktvd-footer-nav a {
+  font-size: 13px;
+  color: var(--sktvd-ink-2);
+  text-decoration: none;
+
+  &:visited { color: var(--sktvd-ink-2); }
+  &:hover { color: var(--sktvd-forest); text-decoration: none; }
+}
+
+.sktvd-footer-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid var(--sktvd-line);
+  font-size: 12px;
+  color: var(--sktvd-ink-3);
+}
+
+@media (max-width: 900px) {
+  .sktvd-footer { margin-top: 40px; padding: 44px 16px 32px; }
+  .sktvd-footer-cols { grid-template-columns: 1fr 1fr; gap: 28px 24px; }
+  .sktvd-footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 550px) {
+  .sktvd-footer-cols { grid-template-columns: 1fr; }
 }
