@@ -69,18 +69,19 @@ export default class SktvdFooter extends Component {
             <nav class="sktvd-footer-nav">
               <h3 class="sktvd-footer-h">Контакты</h3>
               <ul>
-                <li><a href="tel:+79119000074">+7 (911) 900-00-74</a></li>
-                <li><a href="mailto:hello@skotovody.com">hello@skotovody.com</a></li>
+                <li>
+                  <a href="mailto:welcome@skotovody.com">welcome@skotovody.com</a>
+                </li>
                 <li>
                   <a
-                    href="https://t.me/SkotovodyClubBot"
+                    href="https://t.me/skotovody"
                     rel="noopener"
                     target="_blank"
                   >Telegram</a>
                 </li>
                 <li>
                   <a
-                    href="https://vk.com/skotovody"
+                    href="https://vk.com/meatcattle"
                     rel="noopener"
                     target="_blank"
                   >VK</a>
