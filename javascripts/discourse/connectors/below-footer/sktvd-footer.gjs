@@ -15,9 +15,15 @@ import { service } from "@ember/service";
 
 export default class SktvdFooter extends Component {
   @service router;
+  @service currentUser;
 
   get enabled() {
-    return this.router.currentRouteName === "membership";
+    if (this.router.currentRouteName === "membership") {
+      return true;
+    }
+    // Guest landing: root path ("/"), anonymous visitor only
+    const path = (this.router.currentURL || "").split("?")[0].replace(/\/+$/, "");
+    return path === "" && !this.currentUser;
   }
 
   get applicationUrl() {
