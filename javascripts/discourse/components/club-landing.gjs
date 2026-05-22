@@ -38,6 +38,15 @@ const TRUST = [
   { icon: "file-lines", title: "Без рекламы", sub: "Не продают БАДы и курсы" },
 ];
 
+// Mobile trust grid — shorter labels for the compact 2×2 layout
+// (GUEST_LANDING_UPDATE Часть 2 «Trust-сетка 2×2»)
+const TRUST_MOBILE = [
+  { icon: "calendar-days", title: "С ноября 2019", sub: "Шестой год" },
+  { icon: "shield-halved", title: "По заявке", sub: "Каждый — проверен" },
+  { icon: "wand-magic-sparkles", title: "9 разделов", sub: "От пород до техники" },
+  { icon: "file-lines", title: "Без рекламы", sub: "Только по делу" },
+];
+
 // S4 — categories preview (LANDING_SPEC §S4, HOMEPAGE_SPEC §6)
 // Verbatim from HOMEPAGE_SPEC §6 table. «Новости и анонсы» is the only
 // public category (open: true → «Открыто» badge, links to /c/news).
@@ -190,6 +199,7 @@ export default class ClubLanding extends Component {
   @service site;
 
   trust = TRUST;
+  trustMobile = TRUST_MOBILE;
   why = WHY;
   personas = PERSONAS;
   categories = CATEGORIES;
@@ -257,6 +267,77 @@ export default class ClubLanding extends Component {
   }
 
   <template>
+    {{#if this.site.mobileView}}
+      {{! ════ MOBILE — compact guest landing (GUEST_LANDING_UPDATE Часть 2):
+           hero card · trust 2×2 · public news. Not the 10 desktop sections. }}
+      <div class="sktvd-lm">
+
+        {{! Hero card }}
+        <div class="sktvd-lm-hero">
+          <div class="sktvd-lm-hero-inner">
+            <span class="sktvd-lm-eyebrow">
+              {{icon "shield-halved"}}
+              Закрытое сообщество
+            </span>
+            <h1 class="sktvd-lm-h1">
+              Клуб скотоводов.<br />
+              <span class="sktvd-lm-h1-ochre">Опыт, которого нет в учебниках.</span>
+            </h1>
+            <p class="sktvd-lm-lead">
+              Для тех, кто работает с мясным скотом каждый день.
+            </p>
+            <div class="sktvd-lm-cta">
+              <a href={{this.applicationUrl}} class="sktvd-lm-btn-accent">
+                Подать заявку
+              </a>
+              <a href="/session/sso" class="sktvd-lm-btn-ghost">Войти</a>
+            </div>
+          </div>
+        </div>
+
+        {{! Trust 2×2 grid }}
+        <div class="sktvd-lm-trust">
+          {{#each this.trustMobile as |item|}}
+            <div class="sktvd-lm-trust-card">
+              <span class="sktvd-lm-trust-icon" aria-hidden="true">
+                {{icon item.icon}}
+              </span>
+              <div class="sktvd-lm-trust-body">
+                <div class="sktvd-lm-trust-title">{{item.title}}</div>
+                <div class="sktvd-lm-trust-sub">{{item.sub}}</div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+
+        {{! Public news }}
+        {{#if this.news.length}}
+          <div class="sktvd-lm-news-label">
+            {{icon "globe"}}
+            Открыто публично · Новости и анонсы
+          </div>
+          <div class="sktvd-lm-news">
+            {{#each this.news as |topic|}}
+              <a href="/t/{{topic.slug}}/{{topic.id}}" class="sktvd-lm-news-card">
+                <span class="sktvd-lm-news-chip">
+                  <span class="sktvd-lm-news-chip-dot" aria-hidden="true"></span>
+                  Новости
+                </span>
+                <h3 class="sktvd-lm-news-title">{{topic.title}}</h3>
+                <div class="sktvd-lm-news-meta">
+                  {{#if topic._author}}
+                    <span class="sktvd-lm-news-author">{{topic._author.username}}</span>
+                    <span aria-hidden="true">·</span>
+                  {{/if}}
+                  <span>{{topic.reply_count}} отв.</span>
+                </div>
+              </a>
+            {{/each}}
+          </div>
+        {{/if}}
+
+      </div>
+    {{else}}
     <div class="sktvd-l">
 
       {{! ─── S1 · HERO ─── }}
@@ -600,5 +681,6 @@ export default class ClubLanding extends Component {
       </section>
 
     </div>
+    {{/if}}
   </template>
 }
