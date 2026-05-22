@@ -215,6 +215,10 @@ export default class ClubLanding extends Component {
   // S8 — FAQ accordion state; first item open by default
   @tracked openFaq = 0;
 
+  // Layout branch — desktop 10-section vs mobile compact. Discourse 2026 is
+  // fully responsive (site.mobileView is unreliable), so branch on viewport.
+  @tracked isMobile = false;
+
   @action
   toggleFaq(index) {
     this.openFaq = this.openFaq === index ? -1 : index;
@@ -223,6 +227,19 @@ export default class ClubLanding extends Component {
   constructor() {
     super(...arguments);
     this.#loadNews();
+
+    // Viewport-width layout branch (≤768px → mobile compact layout)
+    if (typeof window !== "undefined" && window.matchMedia) {
+      this._mq = window.matchMedia("(max-width: 768px)");
+      this.isMobile = this._mq.matches;
+      this._mqHandler = (e) => (this.isMobile = e.matches);
+      this._mq.addEventListener("change", this._mqHandler);
+    }
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this._mq?.removeEventListener("change", this._mqHandler);
   }
 
   async #loadNews() {
@@ -267,7 +284,7 @@ export default class ClubLanding extends Component {
   }
 
   <template>
-    {{#if this.site.mobileView}}
+    {{#if this.isMobile}}
       {{! ════ MOBILE — compact guest landing (GUEST_LANDING_UPDATE Часть 2):
            hero card · trust 2×2 · public news. Not the 10 desktop sections. }}
       <div class="sktvd-lm">
