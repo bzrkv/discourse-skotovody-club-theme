@@ -2180,11 +2180,15 @@ body.sktvd-landing-route {
     padding: 0;
   }
   #main-outlet { padding: 0; }
+}
 
-  // ─── Guest header: 3-col layout, centred search, no hamburger ───
-  // GUEST_LANDING_UPDATE §«Шапка (для гостя)». The hamburger is useless
-  // for a guest (no sidebar); the search is absolutely centred so it
-  // stays mid-header regardless of the logo/auth group widths.
+// ─── Guest header: 3-col layout, centred search, no hamburger ───
+// GUEST_LANDING_UPDATE §«Шапка (для гостя)». Applies to BOTH guest
+// marketing surfaces — the landing AND /membership — so the header is
+// consistent. The hamburger is useless for a guest (no sidebar); the
+// search is absolutely centred regardless of the side-group widths.
+body.sktvd-landing-route,
+body.sktvd-membership-route {
   .header-sidebar-toggle { display: none; }
 
   .d-header .contents {
@@ -3898,7 +3902,8 @@ body.sktvd-landing-route {
 // Drop the search, push the hamburger group to the right edge (thumb
 // reach), with the auth buttons compact just left of it.
 @media (max-width: 768px) {
-  body.sktvd-landing-route {
+  body.sktvd-landing-route,
+  body.sktvd-membership-route {
     .d-header .contents { gap: 6px; }
 
     // no search icon in the mobile guest header

@@ -284,12 +284,10 @@ export default class ClubLanding extends Component {
   }
 
   <template>
-    {{#if this.isMobile}}
-      {{! ════ MOBILE — compact guest landing (GUEST_LANDING_UPDATE Часть 2):
-           hero card · trust 2×2 · public news. Not the 10 desktop sections. }}
-      <div class="sktvd-lm">
-
-        {{! Hero card }}
+    <div class="sktvd-l">
+      {{#if this.isMobile}}
+        {{! ─── S1 MOBILE — hero card + trust 2×2 (GUEST_LANDING_UPDATE
+             Часть 2). S2–S9 render shared below, responsive. ─── }}
         <div class="sktvd-lm-hero">
           <div class="sktvd-lm-hero-inner">
             <span class="sktvd-lm-eyebrow">
@@ -327,37 +325,9 @@ export default class ClubLanding extends Component {
           {{/each}}
         </div>
 
-        {{! Public news }}
-        {{#if this.news.length}}
-          <div class="sktvd-lm-news-label">
-            {{icon "globe"}}
-            Открыто публично · Новости и анонсы
-          </div>
-          <div class="sktvd-lm-news">
-            {{#each this.news as |topic|}}
-              <a href="/t/{{topic.slug}}/{{topic.id}}" class="sktvd-lm-news-card">
-                <span class="sktvd-lm-news-chip">
-                  <span class="sktvd-lm-news-chip-dot" aria-hidden="true"></span>
-                  Новости
-                </span>
-                <h3 class="sktvd-lm-news-title">{{topic.title}}</h3>
-                <div class="sktvd-lm-news-meta">
-                  {{#if topic._author}}
-                    <span class="sktvd-lm-news-author">{{topic._author.username}}</span>
-                    <span aria-hidden="true">·</span>
-                  {{/if}}
-                  <span>{{topic.reply_count}} отв.</span>
-                </div>
-              </a>
-            {{/each}}
-          </div>
-        {{/if}}
+      {{else}}
 
-      </div>
-    {{else}}
-    <div class="sktvd-l">
-
-      {{! ─── S1 · HERO ─── }}
+      {{! ─── S1 · HERO (desktop) ─── }}
       <section class="sktvd-l-hero" data-hero-photo>
         {{! Horizontal + vertical scrim for text readability (::before handled in CSS) }}
         <div class="sktvd-l-hero-scrim" aria-hidden="true"></div>
@@ -430,8 +400,9 @@ export default class ClubLanding extends Component {
           </div>
         </div>
       </section>
+      {{/if}}
 
-      {{! ─── S2 · WHY CLOSED ─── }}
+      {{! ─── S2 · WHY CLOSED — shared (desktop + mobile, responsive) ─── }}
       <section class="sktvd-l-why">
         <div class="sktvd-l-wrap">
           <div class="sktvd-l-why-head">
@@ -698,6 +669,5 @@ export default class ClubLanding extends Component {
       </section>
 
     </div>
-    {{/if}}
   </template>
 }
