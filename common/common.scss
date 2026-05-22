@@ -3893,32 +3893,28 @@ body.sktvd-landing-route {
 }
 
 // ─── Mobile guest header (GUEST_LANDING_UPDATE Часть 2) ──────────
-// Overrides the desktop R1 header rules on narrow screens: the guest
-// gets the hamburger back on the RIGHT edge (thumb reach), the search
-// field is dropped, and the auth buttons sit compact left of it.
+// The mobile Discourse header keeps the search icon + hamburger inside
+// .panel > .d-header-icons (NOT the desktop .header-sidebar-toggle).
+// Drop the search, push the hamburger group to the right edge (thumb
+// reach), with the auth buttons compact just left of it.
 @media (max-width: 768px) {
   body.sktvd-landing-route {
     .d-header .contents { gap: 6px; }
 
-    // hamburger — restored for mobile guest, pushed to the right edge
-    .header-sidebar-toggle {
-      display: flex;
-      order: 5;
+    // no search icon in the mobile guest header
+    .d-header-icons .search-dropdown { display: none; }
 
-      .btn {
-        width: 44px;
-        height: 44px;
-      }
-    }
-
-    // no search field in the mobile guest header
-    .floating-search-input-wrapper { display: none; }
-
-    // auth buttons + hamburger hug the right edge
-    .panel { order: 3; }
+    // .panel (= the hamburger; search hidden) → far right, after auth
+    .panel { order: 5; }
     .after-header-panel-outlet {
       order: 4;
       margin-left: auto;
+    }
+
+    // hamburger touch target 44×44
+    .hamburger-dropdown .btn {
+      width: 44px;
+      height: 44px;
     }
   }
 }
