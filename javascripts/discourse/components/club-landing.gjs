@@ -6,6 +6,21 @@
 import Component from "@glimmer/component";
 import icon from "discourse/helpers/d-icon";
 
+// S2 — why a closed community (LANDING_SPEC §S2)
+const WHY = [
+  { icon: "shield", title: "Без рекламы и спама", text: "Внутри клуба не продают БАДы, кредиты и курсы. Только профильные обсуждения и проверенные объявления хозяйств." },
+  { icon: "user", title: "Каждый — кто-то конкретный", text: "Анонимных аккаунтов нет. У каждого участника заполнен профиль: хозяйство, регион, специализация. Это меняет качество разговора." },
+  { icon: "file-lines", title: "Ответы — от практиков", text: "Здесь не теоретизируют. Если кто-то отвечает про КЕ на телёнка — у него за плечами 200 голов и три зимы наблюдений." },
+];
+
+// S3 — who it's for (LANDING_SPEC §S3)
+const PERSONAS = [
+  { name: "Хозяйство", sub: "50–500 голов", count: "2 140", tone: "forest", text: "Сравниваете породы, ищете быка-производителя с EPD, обсуждаете протоколы кормления и ветеринарии." },
+  { name: "Ветеринар", sub: "Региональный или частный", count: "420", tone: "terracotta", text: "Делитесь протоколами вакцинации, отслеживаете вспышки, советуетесь по сложным случаям." },
+  { name: "Зоотехник", sub: "На крупных предприятиях", count: "880", tone: "ochre", text: "Расчёт КЕ, ротация пастбищ, ИО, племучёт — всё по делу, без теории «из учебника»." },
+  { name: "Новичок", sub: "Делает первые шаги", count: "780", tone: "info", text: "Спрашиваете без боязни. Опытные участники подсказывают, а ответы попадают в Базу знаний." },
+];
+
 // S1 stats strip — static marketing figures (LANDING_SPEC §S1)
 const STATS = [
   { num: "4 218", label: "Скотоводов" },
@@ -19,6 +34,8 @@ const APPLICATION_URL = settings.application_url;
 
 export default class ClubLanding extends Component {
   stats = STATS;
+  why = WHY;
+  personas = PERSONAS;
   applicationUrl = APPLICATION_URL;
 
   <template>
@@ -95,7 +112,50 @@ export default class ClubLanding extends Component {
         </div>
       </section>
 
-      {{! S2-S9 added in later tasks }}
+      {{! ─── S2 · WHY CLOSED ─── }}
+      <section class="sktvd-l-why">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-why-head">
+            <p class="sktvd-l-why-eyebrow">Закрытый формат</p>
+            <h2 class="sktvd-l-why-h2">Доступ только для своих — это не снобизм. Это качество ответов.</h2>
+          </div>
+
+          <div class="sktvd-l-why-grid">
+            {{#each this.why as |item|}}
+              <div class="sktvd-l-why-card">
+                <div class="sktvd-l-why-icon" aria-hidden="true">
+                  {{icon item.icon}}
+                </div>
+                <h3 class="sktvd-l-why-h3">{{item.title}}</h3>
+                <p class="sktvd-l-why-text">{{item.text}}</p>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      {{! ─── S3 · WHO FOR ─── }}
+      <section class="sktvd-l-who">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-who-head">
+            <p class="sktvd-l-who-eyebrow">Для кого</p>
+            <h2 class="sktvd-l-who-h2">Подходит, если вы…</h2>
+          </div>
+
+          <div class="sktvd-l-who-grid">
+            {{#each this.personas as |p|}}
+              <div class="sktvd-l-who-card --{{p.tone}}">
+                <span class="sktvd-l-who-pill">{{p.count}} участников</span>
+                <h3 class="sktvd-l-who-name">{{p.name}}</h3>
+                <p class="sktvd-l-who-sub">{{p.sub}}</p>
+                <p class="sktvd-l-who-text">{{p.text}}</p>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      {{! S4-S9 added in later tasks }}
     </div>
   </template>
 }

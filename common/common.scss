@@ -2488,3 +2488,210 @@ body.sktvd-landing-route {
     padding-left: 14px;
   }
 }
+
+// ════════════════════════════════════════════════════════════════
+//  S2 · WHY CLOSED — «Почему закрытое сообщество» (LANDING_SPEC §S2)
+// ════════════════════════════════════════════════════════════════
+
+.sktvd-l-why {
+  padding: 72px 0 24px;
+}
+
+.sktvd-l-why-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.sktvd-l-why-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-terracotta);
+}
+
+.sktvd-l-why-h2 {
+  margin: 0 auto;
+  max-width: 700px;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--sktvd-ink);
+  text-align: center;
+}
+
+// 3-column card grid — 1fr × 3, gap 14
+.sktvd-l-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.sktvd-l-why-card {
+  padding: 24px 26px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 14px;
+}
+
+// Icon block — 44×44 with forest tones
+.sktvd-l-why-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--sktvd-forest-soft);
+  color: var(--sktvd-forest-ink);
+  margin-bottom: 16px;
+  flex-shrink: 0;
+
+  .d-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--sktvd-forest-ink);
+  }
+}
+
+.sktvd-l-why-h3 {
+  margin: 0 0 8px;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-why-text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--sktvd-ink-2);
+}
+
+// ─── S2 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-why-h2 { font-size: 32px; }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-why { padding: 48px 0 20px; }
+  .sktvd-l-why-h2 { font-size: 26px; }
+  .sktvd-l-why-grid { grid-template-columns: 1fr; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  S3 · WHO FOR — «Кому пригодится» (LANDING_SPEC §S3)
+// ════════════════════════════════════════════════════════════════
+
+.sktvd-l-who {
+  padding: 40px 0 24px;
+}
+
+.sktvd-l-who-head {
+  margin-bottom: 24px;
+}
+
+.sktvd-l-who-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-forest);
+}
+
+.sktvd-l-who-h2 {
+  margin: 0;
+  max-width: 600px;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--sktvd-ink);
+}
+
+// 4-column persona card grid — 1fr × 4, gap 12
+.sktvd-l-who-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.sktvd-l-who-card {
+  padding: 22px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 14px;
+
+  // Tone CSS custom props — default to forest, overridden per persona
+  --who-tone-bg:  var(--sktvd-forest-soft);
+  --who-tone-ink: var(--sktvd-forest-ink);
+
+  &.--forest {
+    --who-tone-bg:  var(--sktvd-forest-soft);
+    --who-tone-ink: var(--sktvd-forest-ink);
+  }
+  &.--terracotta {
+    --who-tone-bg:  var(--sktvd-terracotta-soft);
+    --who-tone-ink: var(--sktvd-terracotta);
+  }
+  &.--ochre {
+    --who-tone-bg:  var(--sktvd-ochre-soft);
+    --who-tone-ink: var(--sktvd-ochre-deep);
+  }
+  &.--info {
+    --who-tone-bg:  oklch(0.92 0.04 230);
+    --who-tone-ink: oklch(0.40 0.12 230);
+  }
+}
+
+// Counter pill «N участников» — tone-coloured
+.sktvd-l-who-pill {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 4px 9px;
+  border-radius: 100px;
+  background: var(--who-tone-bg);
+  color: var(--who-tone-ink);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sktvd-l-who-name {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-who-sub {
+  margin: 4px 0 12px;
+  font-size: 12px;
+  color: var(--sktvd-ink-3);
+}
+
+.sktvd-l-who-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sktvd-ink-2);
+}
+
+// ─── S3 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-who-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-who { padding: 32px 0 20px; }
+  .sktvd-l-who-h2 { font-size: 26px; }
+  .sktvd-l-who-grid { grid-template-columns: 1fr; }
+}
