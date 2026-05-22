@@ -2496,38 +2496,27 @@ body.sktvd-membership-route {
 @media (max-width: 720px) {
   .sktvd-l-h1 { font-size: 28px; }
 
-  // On a narrow screen the text column spans the full width and would
-  // overlap the bright right side of the hero photo. Swap the desktop
-  // horizontal scrim (dark-left → transparent-right) for a uniform dark
-  // vertical wash so the text stays readable across the whole photo.
+  // Mobile hero: full-width text leaves no room for a side-by-side
+  // photo, so the photo becomes a band on top. The section's full-area
+  // background photo is dropped; ::before renders the photo band and
+  // the content below sits on a solid dark fill — no scrim needed.
   .sktvd-l-hero {
-    padding-top: 24px;
-    background-position: center;
+    padding-top: 0;
+    background-image: none;
+    background-color: oklch(0.17 0.022 70);
   }
-  .sktvd-l-hero-scrim {
-    background:
-      linear-gradient(
-        180deg,
-        oklch(0.15 0.018 60 / 0.94) 0%,
-        oklch(0.17 0.022 75 / 0.84) 55%,
-        oklch(0.15 0.020 70 / 0.92) 100%
-      ),
-      repeating-linear-gradient(
-        135deg,
-        transparent 0 60px,
-        oklch(1 0 0 / 0.025) 60px 61px
-      );
+  .sktvd-l-hero::before {
+    content: "";
+    display: block;
+    height: 170px;
+    background-image: url($hero-photo);
+    background-size: cover;
+    background-position: center 38%;
   }
+  .sktvd-l-hero-scrim { display: none; }
+  .sktvd-l-hero-body { padding-top: 28px; }
 
-  .sktvd-l-cta-group {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .sktvd-l-btn-accent,
-  .sktvd-l-btn-ghost {
-    width: 100%;
-    justify-content: center;
-  }
+  // CTA buttons stay compact and left-aligned (no full-width override).
   .sktvd-l-trust { margin-left: 0; }
 
   // Trust strip: 2×2 grid on narrow screens
