@@ -2180,6 +2180,25 @@ body.sktvd-landing-route {
     padding: 0;
   }
   #main-outlet { padding: 0; }
+
+  // ─── Guest header: 3-col layout, centred search, no hamburger ───
+  // GUEST_LANDING_UPDATE §«Шапка (для гостя)». The hamburger is useless
+  // for a guest (no sidebar); the search is absolutely centred so it
+  // stays mid-header regardless of the logo/auth group widths.
+  .header-sidebar-toggle { display: none; }
+
+  .d-header .contents {
+    position: relative;
+  }
+  .floating-search-input-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(480px, 50vw);
+    max-width: 480px;
+    margin: 0;
+  }
 }
 
 // ─── ClubLanding shell ───────────────────────────────────────────
