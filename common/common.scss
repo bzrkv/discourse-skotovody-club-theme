@@ -3891,3 +3891,34 @@ body.sktvd-landing-route {
   font-size: 12px;
   color: var(--sktvd-ink-3);
 }
+
+// ─── Mobile guest header (GUEST_LANDING_UPDATE Часть 2) ──────────
+// Overrides the desktop R1 header rules on narrow screens: the guest
+// gets the hamburger back on the RIGHT edge (thumb reach), the search
+// field is dropped, and the auth buttons sit compact left of it.
+@media (max-width: 768px) {
+  body.sktvd-landing-route {
+    .d-header .contents { gap: 6px; }
+
+    // hamburger — restored for mobile guest, pushed to the right edge
+    .header-sidebar-toggle {
+      display: flex;
+      order: 5;
+
+      .btn {
+        width: 44px;
+        height: 44px;
+      }
+    }
+
+    // no search field in the mobile guest header
+    .floating-search-input-wrapper { display: none; }
+
+    // auth buttons + hamburger hug the right edge
+    .panel { order: 3; }
+    .after-header-panel-outlet {
+      order: 4;
+      margin-left: auto;
+    }
+  }
+}
