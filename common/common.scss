@@ -2189,7 +2189,10 @@ body.sktvd-landing-route {
 // search is absolutely centred regardless of the side-group widths.
 body.sktvd-landing-route,
 body.sktvd-membership-route {
-  .header-sidebar-toggle { display: none; }
+  // No hamburger for guests — neither the desktop sidebar toggle nor the
+  // mobile hamburger-menu dropdown. The hamburger is members-only.
+  .header-sidebar-toggle,
+  .hamburger-dropdown { display: none; }
 
   .d-header .contents {
     position: relative;
@@ -3897,10 +3900,9 @@ body.sktvd-membership-route {
 }
 
 // ─── Mobile guest header (GUEST_LANDING_UPDATE Часть 2) ──────────
-// The mobile Discourse header keeps the search icon + hamburger inside
-// .panel > .d-header-icons (NOT the desktop .header-sidebar-toggle).
-// Drop the search, push the hamburger group to the right edge (thumb
-// reach), with the auth buttons compact just left of it.
+// Mobile Discourse header keeps the search icon inside .panel >
+// .d-header-icons. Drop the search; the hamburger is hidden globally
+// for guests (rule above). Auth buttons hug the right edge.
 @media (max-width: 768px) {
   body.sktvd-landing-route,
   body.sktvd-membership-route {
@@ -3909,19 +3911,9 @@ body.sktvd-membership-route {
     // no search icon in the mobile guest header
     .d-header-icons .search-dropdown { display: none; }
 
-    // .panel (= the hamburger; search hidden) → far right, after auth.
-    // Selectors include .d-header .contents to outrank the base
-    // `.d-header .contents .panel { order: 3 }` rule (specificity).
-    .d-header .contents .panel { order: 6; }
+    // auth buttons hug the right edge
     .d-header .contents .after-header-panel-outlet {
-      order: 4;
       margin-left: auto;
-    }
-
-    // hamburger touch target 44×44
-    .hamburger-dropdown .btn {
-      width: 44px;
-      height: 44px;
     }
   }
 }
