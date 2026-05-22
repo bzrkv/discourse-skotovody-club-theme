@@ -143,12 +143,12 @@ export default class ClubLanding extends Component {
           </div>
 
           <div class="sktvd-l-who-grid">
-            {{#each this.personas as |p|}}
-              <div class="sktvd-l-who-card --{{p.tone}}">
-                <span class="sktvd-l-who-pill">{{p.count}} участников</span>
-                <h3 class="sktvd-l-who-name">{{p.name}}</h3>
-                <p class="sktvd-l-who-sub">{{p.sub}}</p>
-                <p class="sktvd-l-who-text">{{p.text}}</p>
+            {{#each this.personas as |persona|}}
+              <div class="sktvd-l-who-card --{{persona.tone}}">
+                <span class="sktvd-l-who-pill">{{persona.count}} участников</span>
+                <h3 class="sktvd-l-who-name">{{persona.name}}</h3>
+                <p class="sktvd-l-who-sub">{{persona.sub}}</p>
+                <p class="sktvd-l-who-text">{{persona.text}}</p>
               </div>
             {{/each}}
           </div>
