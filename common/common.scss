@@ -2189,3 +2189,302 @@ body.sktvd-landing-route {
 .sktvd-l {
   font-family: var(--sktvd-font-ui);
 }
+
+// ════════════════════════════════════════════════════════════════
+//  S1 · HERO + STATS STRIP — ClubLanding (LANDING_SPEC §S1)
+// ════════════════════════════════════════════════════════════════
+
+// Shared inner wrapper — mirrors .sktvd-mb-wrap. Reused by S2-S9.
+.sktvd-l-wrap {
+  box-sizing: border-box;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+// Hero section — full-width dark photo band with gradient fallback.
+// padding: 36px 0 0 per spec (bottom handled by the stats strip).
+.sktvd-l-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 36px 0 0;
+  color: oklch(0.95 0.02 80);
+
+  // Background: warm sunset gradient fallback (real photo wired later via
+  // [data-hero-photo] { background-image: url(...) }).
+  background:
+    linear-gradient(
+      155deg,
+      oklch(0.20 0.022 55) 0%,
+      oklch(0.22 0.030 75) 40%,
+      oklch(0.26 0.045 95) 70%,
+      oklch(0.30 0.055 105) 100%
+    );
+  background-position: center right;
+  background-size: cover;
+}
+
+// Scrim layers — rendered as a sibling div so the hero photo (when added)
+// sits on the section background-image, while scrims are in-flow above it.
+// Layer 1: horizontal — dark left, transparent right (text readability).
+// Layer 2: vertical top/bottom frame.
+// Layer 3: optional diagonal grain.
+.sktvd-l-hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      oklch(0.16 0.018 60 / 0.92) 0%,
+      oklch(0.18 0.025 80 / 0.78) 30%,
+      oklch(0.20 0.04 90 / 0.40) 55%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(0.14 0.016 60 / 0.30) 0%,
+      transparent 18%,
+      transparent 80%,
+      oklch(0.10 0.012 60 / 0.50) 100%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 60px,
+      oklch(1 0 0 / 0.025) 60px 61px
+    );
+}
+
+// Content body — positions the inner content wrapper above the scrim.
+.sktvd-l-hero-body {
+  position: relative;
+  padding-bottom: 32px; // gap before stats strip per spec (margin-top 32px equiv.)
+}
+
+// Left column — text block constrained to 580px.
+.sktvd-l-hero-col {
+  max-width: 580px;
+}
+
+// ─── Eyebrow pill ─────────────────────────────────────────────
+.sktvd-l-eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: oklch(1 0 0 / 0.1);
+  border: 1px solid oklch(1 0 0 / 0.18);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+
+  .d-icon {
+    width: 10px;
+    height: 10px;
+    color: oklch(0.85 0.13 80); // ochre
+    flex-shrink: 0;
+  }
+}
+
+// ─── H1 ───────────────────────────────────────────────────────
+.sktvd-l-h1 {
+  margin: 0 0 16px;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  color: oklch(0.95 0.02 80);
+}
+
+// Ochre span — «со скотом каждый день.»
+.sktvd-l-h1-ochre {
+  color: oklch(0.85 0.13 80);
+}
+
+// ─── Lead paragraph ──────────────────────────────────────────
+.sktvd-l-lead {
+  margin: 0 0 22px;
+  max-width: 520px;
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.85;
+  color: oklch(0.95 0.02 80);
+
+  strong { color: oklch(0.99 0.01 90); font-weight: 600; }
+}
+
+// ─── CTA group ───────────────────────────────────────────────
+.sktvd-l-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+// «Подать заявку» — ochre accent button
+.sktvd-l-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 20px;
+  border-radius: var(--sktvd-r-md);
+  background: oklch(0.85 0.13 80);
+  border: 1px solid oklch(0.85 0.13 80);
+  color: oklch(0.20 0.02 60);
+  font-family: var(--sktvd-font-ui);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: opacity 0.12s;
+
+  // pin :visited — Discourse a:visited renders green otherwise
+  &:visited { color: oklch(0.20 0.02 60); }
+  &:hover { opacity: 0.88; text-decoration: none; color: oklch(0.20 0.02 60); }
+
+  .d-icon { width: 14px; height: 14px; color: oklch(0.20 0.02 60); }
+}
+
+// «Тарифы клуба» — ghost-on-dark button
+.sktvd-l-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 20px;
+  border-radius: var(--sktvd-r-md);
+  background: oklch(1 0 0 / 0.12);
+  border: 1px solid oklch(1 0 0 / 0.2);
+  color: oklch(0.95 0.02 80);
+  font-family: var(--sktvd-font-ui);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  transition: background 0.12s;
+
+  &:visited { color: oklch(0.95 0.02 80); }
+  &:hover { background: oklch(1 0 0 / 0.20); text-decoration: none; color: oklch(0.98 0.01 85); }
+}
+
+// ─── Trust-row ────────────────────────────────────────────────
+.sktvd-l-trust {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: 0.82;
+  color: oklch(0.95 0.02 80);
+}
+
+// Stacked avatar circles — solid-colour placeholders (24×24, -7px overlap).
+.sktvd-l-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.sktvd-l-av {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  border: 2px solid oklch(0.20 0.04 80);
+  flex-shrink: 0;
+
+  & + & { margin-left: -7px; }
+
+  &--1 { background: oklch(0.62 0.10 65); }  // ochre
+  &--2 { background: oklch(0.42 0.08 145); } // forest
+  &--3 { background: oklch(0.55 0.13 35); }  // terracotta
+  &--4 { background: oklch(0.50 0.06 60); }  // neutral warm
+}
+
+.sktvd-l-trust-text {
+  color: oklch(0.95 0.02 80);
+}
+
+// Ochre number «1 284»
+.sktvd-l-trust-num {
+  color: oklch(0.85 0.13 80);
+  font-weight: 700;
+}
+
+// ─── Stats strip ──────────────────────────────────────────────
+// Dark semi-transparent band below the hero content.
+.sktvd-l-stats-strip {
+  padding: 14px 0;
+  background: oklch(0 0 0 / 0.32);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid oklch(1 0 0 / 0.1);
+}
+
+.sktvd-l-stats-inner {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+}
+
+.sktvd-l-stat {
+  // border-left separator from 2nd cell onward — applied via .has-border
+  &.has-border {
+    border-left: 1px solid oklch(1 0 0 / 0.1);
+    padding-left: 20px;
+  }
+}
+
+.sktvd-l-stat-num {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: oklch(0.95 0.02 80);
+  line-height: 1;
+}
+
+.sktvd-l-stat-lab {
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: oklch(0.95 0.02 80 / 0.6);
+}
+
+// ─── S1 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-h1 { font-size: 36px; }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-h1 { font-size: 28px; }
+
+  .sktvd-l-cta-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .sktvd-l-btn-accent,
+  .sktvd-l-btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+  .sktvd-l-trust { margin-left: 0; }
+
+  // Stats strip: 2-column grid with scroll fallback at very small sizes
+  .sktvd-l-stats-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  // All cells get separator treatment in the 2-col layout — reset and re-apply
+  .sktvd-l-stat.has-border {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .sktvd-l-stat:nth-child(even) {
+    border-left: 1px solid oklch(1 0 0 / 0.1);
+    padding-left: 14px;
+  }
+}
