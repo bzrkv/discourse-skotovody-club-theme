@@ -130,6 +130,27 @@ const CATEGORIES = [
   },
 ];
 
+// S6 — testimonials (LANDING_SPEC §S6). Static marketing copy.
+const TESTIMONIALS = [
+  { name: "Марина Власова", role: "Ветврач к.б.н.", loc: "Калмыкия", quote: "За год здесь я разобрала больше реальных случаев нодулярного дерматита, чем в любой профессиональной рассылке. Коллеги делятся протоколами без оговорок." },
+  { name: "Павел Кузнецов", role: "Хозяйство «Лесное»", loc: "Брянская обл.", quote: "Брал стадо в 60 голов первый раз. Получил подробный разбор «ангус vs герефорд» под мою географию от четырёх человек — каждый с практикой не меньше 5 лет." },
+  { name: "Сергей Дроздов", role: "Генетик-консультант", loc: "Алтайский край", quote: "Сюда идут с конкретными вопросами по EPD — не «что такое CE», а «как читать перцентили под мою линию». Это уровень разговора, которого мне не хватало." },
+];
+
+// S7 — how to join (LANDING_SPEC §S7)
+const STEPS = [
+  { n: "01", title: "Заявка", text: "Заполняете короткую форму: хозяйство, регион, специализация, ссылка на инстаграм или сайт, если есть. Это 2 минуты." },
+  { n: "02", title: "Проверка", text: "Команда клуба смотрит вашу заявку и связывается, если нужны уточнения. Решение — в течение одного рабочего дня." },
+  { n: "03", title: "Доступ", text: "Открываются все 9 разделов. Можно создавать темы, отвечать, отмечать закладки, писать в личные сообщения и пользоваться Базой знаний." },
+];
+
+// S7.5 — pricing teaser mini-cards (LANDING_SPEC §S7.5)
+const TEASER_TIERS = [
+  { tag: "Основной", name: "Действительный", sub: "Фермер · КФХ · ЛПХ", price: "15 000 ₽/год", tone: "forest" },
+  { tag: "Бизнес", name: "Ассоциированный", sub: "Поставщики", price: "30 000 ₽/год", tone: "ochre" },
+  { tag: "По приглашению", name: "Почётный", sub: "Эксперты · студенты", price: "0 ₽", tone: "terracotta" },
+];
+
 const APPLICATION_URL = settings.application_url;
 
 export default class ClubLanding extends Component {
@@ -140,6 +161,9 @@ export default class ClubLanding extends Component {
   personas = PERSONAS;
   categories = CATEGORIES;
   applicationUrl = APPLICATION_URL;
+  testimonials = TESTIMONIALS;
+  steps = STEPS;
+  teaserTiers = TEASER_TIERS;
 
   // S5 — public news fetch
   @tracked news = null;
@@ -395,7 +419,89 @@ export default class ClubLanding extends Component {
         </section>
       {{/if}}
 
-      {{! S6-S9 added in later tasks }}
+      {{! ─── S6 · TESTIMONIALS ─── }}
+      <section class="sktvd-l-quotes">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-quotes-head">
+            <p class="sktvd-l-quotes-eyebrow">Голоса участников</p>
+            <h2 class="sktvd-l-quotes-h2">Кто уже в клубе и зачем</h2>
+          </div>
+
+          <div class="sktvd-l-quotes-grid">
+            {{#each this.testimonials as |quote|}}
+              <div class="sktvd-l-quote-card">
+                <div class="sktvd-l-quote-mark" aria-hidden="true">"</div>
+                <p class="sktvd-l-quote-text">{{quote.quote}}</p>
+                <footer class="sktvd-l-quote-footer">
+                  {{! Initials avatar — placeholder colour circle }}
+                  <span class="sktvd-l-quote-av" aria-hidden="true">
+                    {{! first letter of name }}
+                  </span>
+                  <div class="sktvd-l-quote-author">
+                    <span class="sktvd-l-quote-name">{{quote.name}}</span>
+                    <span class="sktvd-l-quote-meta">{{quote.role}} · {{quote.loc}}</span>
+                  </div>
+                </footer>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      {{! ─── S7 · HOW TO JOIN ─── }}
+      <section class="sktvd-l-steps">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-steps-head">
+            <p class="sktvd-l-steps-eyebrow">Вступление</p>
+            <h2 class="sktvd-l-steps-h2">Три шага и день ожидания</h2>
+          </div>
+
+          <div class="sktvd-l-steps-grid">
+            {{#each this.steps as |step|}}
+              <div class="sktvd-l-step-card">
+                <div class="sktvd-l-step-num" aria-hidden="true">{{step.n}}</div>
+                <h3 class="sktvd-l-step-title">{{step.title}}</h3>
+                <p class="sktvd-l-step-text">{{step.text}}</p>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      {{! ─── S7.5 · PRICING TEASER ─── }}
+      <section class="sktvd-l-teaser">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-teaser-box">
+            <div class="sktvd-l-teaser-grid">
+
+              {{! Left column — eyebrow + h2 + lead + CTA }}
+              <div class="sktvd-l-teaser-left">
+                <p class="sktvd-l-teaser-eyebrow">Стоимость членства</p>
+                <h2 class="sktvd-l-teaser-h2">Три категории · цена зависит от роли</h2>
+                <p class="sktvd-l-teaser-lead">Тариф подбирается автоматически из ответа в форме заявки. Платите после одобрения.</p>
+                <a href="/membership" class="sktvd-l-teaser-cta">
+                  Открыть страницу тарифов →
+                </a>
+              </div>
+
+              {{! Right column — 3 mini tier-cards }}
+              <div class="sktvd-l-teaser-cards">
+                {{#each this.teaserTiers as |tier|}}
+                  <div class="sktvd-l-teaser-card --{{tier.tone}}">
+                    <span class="sktvd-l-teaser-card-tag">{{tier.tag}}</span>
+                    <div class="sktvd-l-teaser-card-name">{{tier.name}}</div>
+                    <div class="sktvd-l-teaser-card-sub">{{tier.sub}}</div>
+                    <div class="sktvd-l-teaser-card-price">{{tier.price}}</div>
+                  </div>
+                {{/each}}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {{! S8-S9 added in later tasks }}
     </div>
   </template>
 }

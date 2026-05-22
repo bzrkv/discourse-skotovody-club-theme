@@ -3071,3 +3071,382 @@ body.sktvd-landing-route {
   .sktvd-l-news-all { align-self: flex-start; }
   .sktvd-l-news-grid { grid-template-columns: 1fr; }
 }
+
+// ════════════════════════════════════════════════════════════════
+//  S6 · TESTIMONIALS — «Голоса участников» (LANDING_SPEC §S6)
+// ════════════════════════════════════════════════════════════════
+
+.sktvd-l-quotes {
+  padding: 72px 0 24px;
+}
+
+.sktvd-l-quotes-head {
+  margin-bottom: 36px;
+}
+
+.sktvd-l-quotes-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-forest);
+}
+
+.sktvd-l-quotes-h2 {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--sktvd-ink);
+}
+
+// 3-column quote-card grid — gap 14
+.sktvd-l-quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.sktvd-l-quote-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 26px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 14px;
+}
+
+// Big opening quote mark «"» — 38px Fraunces, ochre, lh 0.6, height 14
+.sktvd-l-quote-mark {
+  font-family: var(--sktvd-font-display);
+  font-size: 38px;
+  line-height: 0.6;
+  height: 14px;
+  color: var(--sktvd-ochre);
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+// Quote body text — 14.5px, lh 1.6, flex: 1 so it stretches evenly
+.sktvd-l-quote-text {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--sktvd-ink);
+  flex: 1;
+}
+
+// Footer — separator, avatar + name stack
+.sktvd-l-quote-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--sktvd-line);
+}
+
+// Initials avatar — 36×36 colour circle. Colour cycles across the three cards.
+// We can't run JS logic in CSS — use :nth-child on the parent card.
+.sktvd-l-quote-av {
+  display: block;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 100px;
+  background: var(--sktvd-forest-soft);
+
+  .sktvd-l-quote-card:nth-child(1) & { background: oklch(0.55 0.13 35 / 0.25); } // terracotta-ish
+  .sktvd-l-quote-card:nth-child(2) & { background: oklch(0.42 0.08 145 / 0.18); } // forest-ish
+  .sktvd-l-quote-card:nth-child(3) & { background: oklch(0.62 0.10 65 / 0.22); }  // ochre-ish
+}
+
+.sktvd-l-quote-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sktvd-l-quote-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-quote-meta {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--sktvd-ink-3);
+}
+
+// ─── S6 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-quotes-h2 { font-size: 28px; }
+  .sktvd-l-quotes-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-quotes { padding: 48px 0 20px; }
+  .sktvd-l-quotes-h2 { font-size: 22px; }
+  .sktvd-l-quotes-grid { grid-template-columns: 1fr; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  S7 · HOW TO JOIN — «Три шага» (LANDING_SPEC §S7)
+// ════════════════════════════════════════════════════════════════
+
+.sktvd-l-steps {
+  padding: 56px 0 24px;
+}
+
+.sktvd-l-steps-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.sktvd-l-steps-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-ochre-deep);
+}
+
+.sktvd-l-steps-h2 {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--sktvd-ink);
+}
+
+// 3-column step card grid — gap 16
+.sktvd-l-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.sktvd-l-step-card {
+  padding: 28px 26px 24px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 14px;
+}
+
+// Big step numeral «01/02/03» — 48px Fraunces, ochre, opacity 0.6
+.sktvd-l-step-num {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 48px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--sktvd-ochre);
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.sktvd-l-step-title {
+  margin: 0 0 10px;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-step-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sktvd-ink-2);
+}
+
+// ─── S7 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-steps-h2 { font-size: 28px; }
+  .sktvd-l-steps-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-steps { padding: 40px 0 20px; }
+  .sktvd-l-steps-h2 { font-size: 22px; }
+  .sktvd-l-steps-grid { grid-template-columns: 1fr; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  S7.5 · PRICING TEASER — три тарифа (LANDING_SPEC §S7.5)
+// ════════════════════════════════════════════════════════════════
+
+.sktvd-l-teaser {
+  padding: 64px 0 24px;
+}
+
+// Bordered container — surface bg, border, radius 16, inner padding
+.sktvd-l-teaser-box {
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 16px;
+  padding: 36px 40px;
+}
+
+// 2-column layout: 1fr 1.2fr, gap 36, vertically centred
+.sktvd-l-teaser-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 36px;
+  align-items: center;
+}
+
+// ─── Left column ─────────────────────────────────────────────
+
+.sktvd-l-teaser-eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-ochre-deep);
+}
+
+.sktvd-l-teaser-h2 {
+  margin: 0 0 12px;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-teaser-lead {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--sktvd-ink-2);
+}
+
+// CTA — primary-style button (forest green)
+.sktvd-l-teaser-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 20px;
+  border-radius: var(--sktvd-r-md);
+  background: var(--sktvd-forest);
+  border: 1px solid var(--sktvd-forest);
+  color: oklch(0.97 0.012 85);
+  font-family: var(--sktvd-font-ui);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.12s, border-color 0.12s;
+
+  // pin :visited — Discourse a:visited renders green otherwise
+  &,
+  &:visited { color: oklch(0.97 0.012 85); }
+
+  &:hover {
+    background: var(--sktvd-forest-ink);
+    border-color: var(--sktvd-forest-ink);
+    text-decoration: none;
+    color: oklch(0.97 0.012 85);
+  }
+}
+
+// ─── Right column: mini tier-cards (1fr 1fr 1fr, gap 10) ────
+
+.sktvd-l-teaser-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+// Shared mini-card base
+.sktvd-l-teaser-card {
+  padding: 14px;
+  border-radius: 10px;
+
+  // tone-based border + bg — default to forest
+  --teaser-tone-color: var(--sktvd-forest);
+  --teaser-tone-bg:    var(--sktvd-forest-soft);
+
+  border: 1px solid color-mix(in oklch, var(--teaser-tone-color) 25%, transparent);
+  background: var(--teaser-tone-bg);
+
+  &.--forest {
+    --teaser-tone-color: var(--sktvd-forest);
+    --teaser-tone-bg:    var(--sktvd-forest-soft);
+  }
+  &.--ochre {
+    --teaser-tone-color: var(--sktvd-ochre-deep);
+    --teaser-tone-bg:    var(--sktvd-ochre-soft);
+  }
+  &.--terracotta {
+    --teaser-tone-color: var(--sktvd-terracotta);
+    --teaser-tone-bg:    var(--sktvd-terracotta-soft);
+  }
+}
+
+// Tag — 9px Manrope 800 UPPERCASE
+.sktvd-l-teaser-card-tag {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--sktvd-font-ui);
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teaser-tone-color);
+}
+
+// Tier name — 16px Fraunces 600
+.sktvd-l-teaser-card-name {
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--sktvd-ink);
+  margin-bottom: 2px;
+}
+
+// Sub-line — 11px, lh 1.4, ink-3
+.sktvd-l-teaser-card-sub {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--sktvd-ink-3);
+  margin-bottom: 8px;
+}
+
+// Price — 13px mono 700, tone colour
+.sktvd-l-teaser-card-price {
+  font-family: var(--sktvd-font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--teaser-tone-color);
+}
+
+// ─── S7.5 responsive ─────────────────────────────────────────
+// 980px: box collapses to vertical (text above, cards below), mini-cards stay 3-col
+@media (max-width: 980px) {
+  .sktvd-l-teaser-h2 { font-size: 26px; }
+  .sktvd-l-teaser-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+// 720px: mini-cards go 1-col too; full-width CTA
+@media (max-width: 720px) {
+  .sktvd-l-teaser { padding: 40px 0 20px; }
+  .sktvd-l-teaser-box { padding: 24px 20px; }
+  .sktvd-l-teaser-h2 { font-size: 22px; }
+  .sktvd-l-teaser-cards { grid-template-columns: 1fr; }
+  .sktvd-l-teaser-cta { width: 100%; justify-content: center; }
+}
