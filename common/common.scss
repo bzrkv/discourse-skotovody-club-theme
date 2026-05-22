@@ -1,5 +1,3 @@
-@import "landing";
-
 // ============================================
 //  Skotovody Club — Discourse theme
 //  Source of truth: docs/Club_Skotovody/club/club-styles.css (mockup)
@@ -2150,4 +2148,44 @@ body.sktvd-membership-route {
 
 @media (max-width: 550px) {
   .sktvd-footer-cols { grid-template-columns: 1fr; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  Guest landing — toggled by api-initializer sktvd-route-bodyclass.js.
+//  Strips native Discourse discovery chrome so <ClubLanding/> (rendered
+//  by the below-site-header connector) stands alone. Mirrors the
+//  body.sktvd-membership-route block in common.scss.
+// ════════════════════════════════════════════════════════════════
+body.sktvd-landing-route {
+  .sidebar-wrapper { display: none; }
+
+  // native discovery topic list + Этап-1 guest connectors
+  #main-outlet .list-container,
+  #main-outlet .topic-list,
+  .sktvd-nav,
+  .sktvd-banner,
+  .sktvd-slider,
+  .sktvd-notice,
+  .sktvd-notice-guest,
+  .sktvd-cat-teaser,
+  // old single-hero connector (sktvd-3-landing .js+.hbs) — still in DOM
+  // until the .hbs file is deleted and rebuilt; hide both wrapper classes.
+  .sktvd-landing-shell,
+  .sktvd-landing { display: none; }
+
+  #main-outlet-wrapper {
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  #main-outlet { padding: 0; }
+}
+
+// ─── ClubLanding shell ───────────────────────────────────────────
+// Rendered by the below-site-header connector, which is already
+// full-width above #main-outlet-wrapper — no full-bleed margin trick
+// needed (unlike .sktvd-mb, which the plugin renders inside #main-outlet).
+.sktvd-l {
+  font-family: var(--sktvd-font-ui);
 }
