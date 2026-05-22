@@ -38,15 +38,6 @@ const TRUST = [
   { icon: "file-lines", title: "Без рекламы", sub: "Не продают БАДы и курсы" },
 ];
 
-// Mobile trust grid — shorter labels for the compact 2×2 layout
-// (GUEST_LANDING_UPDATE Часть 2 «Trust-сетка 2×2»)
-const TRUST_MOBILE = [
-  { icon: "calendar-days", title: "С ноября 2019", sub: "Шестой год" },
-  { icon: "shield-halved", title: "По заявке", sub: "Каждый — проверен" },
-  { icon: "wand-magic-sparkles", title: "9 разделов", sub: "От пород до техники" },
-  { icon: "file-lines", title: "Без рекламы", sub: "Только по делу" },
-];
-
 // S4 — categories preview (LANDING_SPEC §S4, HOMEPAGE_SPEC §6)
 // Verbatim from HOMEPAGE_SPEC §6 table. «Новости и анонсы» is the only
 // public category (open: true → «Открыто» badge, links to /c/news).
@@ -199,7 +190,6 @@ export default class ClubLanding extends Component {
   @service site;
 
   trust = TRUST;
-  trustMobile = TRUST_MOBILE;
   why = WHY;
   personas = PERSONAS;
   categories = CATEGORIES;
@@ -215,10 +205,6 @@ export default class ClubLanding extends Component {
   // S8 — FAQ accordion state; first item open by default
   @tracked openFaq = 0;
 
-  // Layout branch — desktop 10-section vs mobile compact. Discourse 2026 is
-  // fully responsive (site.mobileView is unreliable), so branch on viewport.
-  @tracked isMobile = false;
-
   @action
   toggleFaq(index) {
     this.openFaq = this.openFaq === index ? -1 : index;
@@ -227,19 +213,6 @@ export default class ClubLanding extends Component {
   constructor() {
     super(...arguments);
     this.#loadNews();
-
-    // Viewport-width layout branch (≤768px → mobile compact layout)
-    if (typeof window !== "undefined" && window.matchMedia) {
-      this._mq = window.matchMedia("(max-width: 768px)");
-      this.isMobile = this._mq.matches;
-      this._mqHandler = (e) => (this.isMobile = e.matches);
-      this._mq.addEventListener("change", this._mqHandler);
-    }
-  }
-
-  willDestroy() {
-    super.willDestroy(...arguments);
-    this._mq?.removeEventListener("change", this._mqHandler);
   }
 
   async #loadNews() {
@@ -285,49 +258,9 @@ export default class ClubLanding extends Component {
 
   <template>
     <div class="sktvd-l">
-      {{#if this.isMobile}}
-        {{! ─── S1 MOBILE — hero card + trust 2×2 (GUEST_LANDING_UPDATE
-             Часть 2). S2–S9 render shared below, responsive. ─── }}
-        <div class="sktvd-lm-hero">
-          <div class="sktvd-lm-hero-inner">
-            <span class="sktvd-lm-eyebrow">
-              {{icon "shield-halved"}}
-              Закрытое сообщество
-            </span>
-            <h1 class="sktvd-lm-h1">
-              Клуб скотоводов.<br />
-              <span class="sktvd-lm-h1-ochre">Опыт, которого нет в учебниках.</span>
-            </h1>
-            <p class="sktvd-lm-lead">
-              Для тех, кто работает с мясным скотом каждый день.
-            </p>
-            <div class="sktvd-lm-cta">
-              <a href={{this.applicationUrl}} class="sktvd-lm-btn-accent">
-                Подать заявку
-              </a>
-              <a href="/session/sso" class="sktvd-lm-btn-ghost">Войти</a>
-            </div>
-          </div>
-        </div>
-
-        {{! Trust 2×2 grid }}
-        <div class="sktvd-lm-trust">
-          {{#each this.trustMobile as |item|}}
-            <div class="sktvd-lm-trust-card">
-              <span class="sktvd-lm-trust-icon" aria-hidden="true">
-                {{icon item.icon}}
-              </span>
-              <div class="sktvd-lm-trust-body">
-                <div class="sktvd-lm-trust-title">{{item.title}}</div>
-                <div class="sktvd-lm-trust-sub">{{item.sub}}</div>
-              </div>
-            </div>
-          {{/each}}
-        </div>
-
-      {{else}}
-
-      {{! ─── S1 · HERO (desktop) ─── }}
+      {{! ─── S1 · HERO — single responsive hero. The desktop layout
+           scales down to mobile via @media in common.scss (H1 size,
+           stacked CTAs, 2×2 trust strip, adapted scrim). ─── }}
       <section class="sktvd-l-hero" data-hero-photo>
         {{! Horizontal + vertical scrim for text readability (::before handled in CSS) }}
         <div class="sktvd-l-hero-scrim" aria-hidden="true"></div>
@@ -400,9 +333,8 @@ export default class ClubLanding extends Component {
           </div>
         </div>
       </section>
-      {{/if}}
 
-      {{! ─── S2 · WHY CLOSED — shared (desktop + mobile, responsive) ─── }}
+      {{! ─── S2 · WHY CLOSED ─── }}
       <section class="sktvd-l-why">
         <div class="sktvd-l-wrap">
           <div class="sktvd-l-why-head">
