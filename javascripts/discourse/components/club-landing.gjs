@@ -15,24 +15,25 @@ import icon from "discourse/helpers/d-icon";
 
 // S2 — why a closed community (LANDING_SPEC §S2)
 const WHY = [
-  { icon: "shield", title: "Без рекламы и спама", text: "Внутри клуба не продают БАДы, кредиты и курсы. Только профильные обсуждения и проверенные объявления хозяйств." },
+  { icon: "shield-halved", title: "Без рекламы и спама", text: "Внутри клуба не продают БАДы, кредиты и курсы. Только профильные обсуждения и проверенные объявления хозяйств." },
   { icon: "user", title: "Каждый — кто-то конкретный", text: "Анонимных аккаунтов нет. У каждого участника заполнен профиль: хозяйство, регион, специализация. Это меняет качество разговора." },
   { icon: "file-lines", title: "Ответы — от практиков", text: "Здесь не теоретизируют. Если кто-то отвечает про КЕ на телёнка — у него за плечами 200 голов и три зимы наблюдений." },
 ];
 
-// S3 — who it's for (LANDING_SPEC §S3)
+// S3 — who it's for (GUEST_LANDING_UPDATE §S3). Icon plaque per persona,
+// no «N участников» count badges (no invented numbers).
 const PERSONAS = [
-  { name: "Хозяйство", sub: "50–500 голов", count: "2 140", tone: "forest", text: "Сравниваете породы, ищете быка-производителя с EPD, обсуждаете протоколы кормления и ветеринарии." },
-  { name: "Ветеринар", sub: "Региональный или частный", count: "420", tone: "terracotta", text: "Делитесь протоколами вакцинации, отслеживаете вспышки, советуетесь по сложным случаям." },
-  { name: "Зоотехник", sub: "На крупных предприятиях", count: "880", tone: "ochre", text: "Расчёт КЕ, ротация пастбищ, ИО, племучёт — всё по делу, без теории «из учебника»." },
-  { name: "Новичок", sub: "Делает первые шаги", count: "780", tone: "info", text: "Спрашиваете без боязни. Опытные участники подсказывают, а ответы попадают в Базу знаний." },
+  { name: "Хозяйство", sub: "КФХ, ЛПХ, кооператив", icon: "house", tone: "forest", text: "Сравниваете породы, ищете быка-производителя с EPD, обсуждаете протоколы кормления и ветеринарии." },
+  { name: "Ветеринар", sub: "Региональный или частный", icon: "shield-halved", tone: "terracotta", text: "Делитесь протоколами вакцинации, отслеживаете вспышки, советуетесь по сложным случаям." },
+  { name: "Зоотехник", sub: "На крупных предприятиях", icon: "box-archive", tone: "ochre", text: "Расчёт КЕ, ротация пастбищ, ИО, племучёт — всё по делу, без теории «из учебника»." },
+  { name: "Новичок", sub: "Делает первые шаги", icon: "wand-magic-sparkles", tone: "info", text: "Спрашиваете без боязни. Опытные участники подсказывают, а ответы попадают в Базу знаний." },
 ];
 
 // S1 trust strip — qualitative claims, no invented numbers
 // (GUEST_LANDING_UPDATE §S1 «Trust-полоса под hero»)
 const TRUST = [
   { icon: "calendar-days", title: "С 11 ноября 2019", sub: "Шестой год в работе" },
-  { icon: "shield", title: "Закрытое сообщество", sub: "Каждый вступающий — по заявке" },
+  { icon: "shield-halved", title: "Закрытое сообщество", sub: "Каждый вступающий — по заявке" },
   { icon: "layer-group", title: "9 тематических разделов", sub: "От пород до техники и документов" },
   { icon: "file-lines", title: "Без рекламы", sub: "Не продают БАДы и курсы" },
 ];
@@ -269,7 +270,7 @@ export default class ClubLanding extends Component {
 
             {{! Eyebrow pill }}
             <span class="sktvd-l-eyebrow-pill">
-              {{icon "shield"}}
+              {{icon "shield-halved"}}
               Закрытое сообщество · с 11 ноября 2019
             </span>
 
@@ -365,7 +366,9 @@ export default class ClubLanding extends Component {
           <div class="sktvd-l-who-grid">
             {{#each this.personas as |persona|}}
               <div class="sktvd-l-who-card --{{persona.tone}}">
-                <span class="sktvd-l-who-pill">{{persona.count}} участников</span>
+                <span class="sktvd-l-who-icon" aria-hidden="true">
+                  {{icon persona.icon}}
+                </span>
                 <h3 class="sktvd-l-who-name">{{persona.name}}</h3>
                 <p class="sktvd-l-who-sub">{{persona.sub}}</p>
                 <p class="sktvd-l-who-text">{{persona.text}}</p>
@@ -379,11 +382,8 @@ export default class ClubLanding extends Component {
       <section class="sktvd-l-cats">
         <div class="sktvd-l-wrap">
           <div class="sktvd-l-cats-head">
-            <div class="sktvd-l-cats-head-left">
-              <p class="sktvd-l-cats-eyebrow">Разделы клуба</p>
-              <h2 class="sktvd-l-cats-h2">9 разделов — структура работы хозяйства</h2>
-            </div>
-            <div class="sktvd-l-cats-head-right">5 280 тем · 68 920 сообщений</div>
+            <p class="sktvd-l-cats-eyebrow">Разделы клуба</p>
+            <h2 class="sktvd-l-cats-h2">9 разделов — структура работы хозяйства</h2>
           </div>
 
           <div class="sktvd-l-cats-grid">
@@ -400,7 +400,6 @@ export default class ClubLanding extends Component {
                   </div>
                   <div class="sktvd-l-cats-meta">
                     <span class="sktvd-l-cats-name">{{cat.name}}</span>
-                    <span class="sktvd-l-cats-count">{{cat.count}} тем</span>
                   </div>
                   {{#if cat.open}}
                     <span class="sktvd-l-cats-badge is-open">Открыто</span>

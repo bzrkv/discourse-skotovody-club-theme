@@ -2660,17 +2660,19 @@ body.sktvd-landing-route {
   }
 }
 
-// Counter pill «N участников» — tone-coloured
-.sktvd-l-who-pill {
-  display: inline-flex;
-  align-items: center;
+// Persona icon plaque — tone-coloured (GUEST_LANDING_UPDATE §S3).
+// Replaces the old «N участников» counter pill — no invented numbers.
+.sktvd-l-who-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
   margin-bottom: 12px;
-  padding: 4px 9px;
-  border-radius: 100px;
+  border-radius: 10px;
   background: var(--who-tone-bg);
   color: var(--who-tone-ink);
-  font-size: 11px;
-  font-weight: 700;
+
+  .d-icon { width: 20px; height: 20px; }
 }
 
 .sktvd-l-who-name {
@@ -2714,17 +2716,10 @@ body.sktvd-landing-route {
   padding: 56px 0 24px;
 }
 
+// Section head — only eyebrow + H2, no number column
+// (GUEST_LANDING_UPDATE §S4)
 .sktvd-l-cats-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
   margin-bottom: 24px;
-}
-
-.sktvd-l-cats-head-left {
-  // contains eyebrow + h2
 }
 
 .sktvd-l-cats-eyebrow {
@@ -2744,14 +2739,6 @@ body.sktvd-landing-route {
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--sktvd-ink);
-}
-
-.sktvd-l-cats-head-right {
-  flex-shrink: 0;
-  font-size: 13px;
-  color: var(--sktvd-ink-3);
-  align-self: flex-end;
-  margin-bottom: 4px; // visually baseline-align with the h2
 }
 
 // 3-column card grid — gap 10
@@ -2836,29 +2823,23 @@ body.sktvd-landing-route {
   line-height: 1;
 }
 
-// Name + counter block
+// Name block — category name only, no topic-count line
+// (GUEST_LANDING_UPDATE §S4)
 .sktvd-l-cats-meta {
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: center;
 }
 
 .sktvd-l-cats-name {
   font-family: var(--sktvd-font-ui);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--sktvd-ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.sktvd-l-cats-count {
-  font-family: var(--sktvd-font-mono);
-  font-size: 11px;
-  color: var(--sktvd-ink-3);
 }
 
 // Badges — «Открыто» (forest) or 🔒 (ink-mute)
@@ -2896,8 +2877,6 @@ body.sktvd-landing-route {
 @media (max-width: 720px) {
   .sktvd-l-cats { padding: 40px 0 20px; }
   .sktvd-l-cats-h2 { font-size: 22px; }
-  .sktvd-l-cats-head { align-items: flex-start; }
-  .sktvd-l-cats-head-right { margin-bottom: 0; }
   .sktvd-l-cats-grid { grid-template-columns: 1fr; }
 }
 
