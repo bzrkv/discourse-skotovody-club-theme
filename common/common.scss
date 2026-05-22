@@ -3904,9 +3904,11 @@ body.sktvd-landing-route {
     // no search icon in the mobile guest header
     .d-header-icons .search-dropdown { display: none; }
 
-    // .panel (= the hamburger; search hidden) → far right, after auth
-    .panel { order: 5; }
-    .after-header-panel-outlet {
+    // .panel (= the hamburger; search hidden) → far right, after auth.
+    // Selectors include .d-header .contents to outrank the base
+    // `.d-header .contents .panel { order: 3 }` rule (specificity).
+    .d-header .contents .panel { order: 6; }
+    .d-header .contents .after-header-panel-outlet {
       order: 4;
       margin-left: auto;
     }
