@@ -3450,3 +3450,228 @@ body.sktvd-landing-route {
   .sktvd-l-teaser-cards { grid-template-columns: 1fr; }
   .sktvd-l-teaser-cta { width: 100%; justify-content: center; }
 }
+
+// ─── S8 · FAQ ────────────────────────────────────────────────
+
+.sktvd-l-faq {
+  padding: 56px 0 24px;
+}
+
+.sktvd-l-faq-inner {
+  // narrow container — 880px per spec
+  max-width: 880px;
+}
+
+.sktvd-l-faq-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.sktvd-l-faq-eyebrow {
+  margin: 0 0 10px;
+  font-family: var(--sktvd-font-ui);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-forest);
+}
+
+.sktvd-l-faq-h2 {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 36px;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+  color: var(--sktvd-ink);
+}
+
+// Accordion container
+.sktvd-l-acc {
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sktvd-l-acc-item {
+  & + & { border-top: 1px solid var(--sktvd-line); }
+}
+
+.sktvd-l-acc-q {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 22px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+
+  // Question text
+  span:first-child {
+    flex: 1;
+    font-family: var(--sktvd-font-display);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: var(--sktvd-ink);
+  }
+}
+
+.sktvd-l-acc-toggle {
+  font-size: 20px;
+  line-height: 1;
+  color: var(--sktvd-ink-3);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+
+  &.is-open { transform: rotate(45deg); }
+}
+
+.sktvd-l-acc-a {
+  padding: 0 22px 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sktvd-ink-2);
+}
+
+// S8 responsive
+@media (max-width: 980px) {
+  .sktvd-l-faq-h2 { font-size: 28px; }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-faq { padding: 40px 0 16px; }
+  .sktvd-l-faq-h2 { font-size: 22px; }
+  .sktvd-l-acc-q { padding: 14px 16px; }
+  .sktvd-l-acc-a { padding: 0 16px 16px; }
+}
+
+// ─── S9 · FINAL CTA ──────────────────────────────────────────
+
+.sktvd-l-final {
+  padding: 72px 0 0;
+}
+
+.sktvd-l-final-banner {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 36px;
+  align-items: center;
+  padding: 52px 56px;
+  background: linear-gradient(
+    135deg,
+    var(--sktvd-forest) 0%,
+    var(--sktvd-forest-ink) 60%,
+    oklch(0.18 0.05 100) 100%
+  );
+  color: oklch(0.95 0.02 80);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.sktvd-l-final-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sktvd-l-final-h2 {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 44px;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: oklch(0.95 0.02 80);
+}
+
+.sktvd-l-final-lead {
+  margin: 0;
+  max-width: 540px;
+  font-size: 16px;
+  line-height: 1.55;
+  opacity: 0.86;
+}
+
+.sktvd-l-final-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+// Override btn-accent + btn-ghost for --lg sizing inside banner
+.sktvd-l-final-banner {
+  .sktvd-l-btn-accent.--lg,
+  .sktvd-l-btn-ghost.--dark.--lg {
+    padding: 13px 22px;
+    font-size: 15px;
+  }
+
+  .sktvd-l-btn-accent {
+    // pin visited colour explicitly (spec requirement)
+    &:visited { color: oklch(0.97 0.012 85); }
+  }
+
+  .sktvd-l-btn-ghost.--dark {
+    background: oklch(1 0 0 / 0.12);
+    border: 1px solid oklch(1 0 0 / 0.2);
+    color: oklch(0.95 0.02 80);
+    backdrop-filter: blur(6px);
+    text-decoration: none;
+
+    &:visited { color: oklch(0.95 0.02 80); }
+    &:hover {
+      background: oklch(1 0 0 / 0.2);
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
+
+// RIGHT — «JOIN» watermark
+.sktvd-l-final-right {
+  text-align: right;
+}
+
+.sktvd-l-final-watermark {
+  font-family: var(--sktvd-font-display);
+  font-weight: 700;
+  font-size: 140px;
+  letter-spacing: -0.06em;
+  color: oklch(0.85 0.13 80);
+  opacity: 0.18;
+  line-height: 1;
+  display: block;
+}
+
+// S9 responsive
+@media (max-width: 980px) {
+  .sktvd-l-final-h2 { font-size: 34px; }
+  .sktvd-l-final-watermark { font-size: 100px; }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-final { padding: 40px 0 0; }
+  .sktvd-l-final-banner {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+    gap: 16px;
+  }
+  .sktvd-l-final-right { display: none; }
+  .sktvd-l-final-h2 { font-size: 28px; }
+  .sktvd-l-final-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sktvd-l-final-banner .sktvd-l-btn-accent.--lg,
+  .sktvd-l-final-banner .sktvd-l-btn-ghost.--dark.--lg {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}

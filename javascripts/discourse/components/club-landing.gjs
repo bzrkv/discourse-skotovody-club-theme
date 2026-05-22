@@ -5,6 +5,10 @@
 
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
+import { fn } from "@ember/helper";
+import { on } from "@ember/modifier";
+import { eq } from "truth-helpers";
 import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import icon from "discourse/helpers/d-icon";
@@ -151,6 +155,34 @@ const TEASER_TIERS = [
   { tag: "По приглашению", name: "Почётный", sub: "Эксперты · студенты", price: "0 ₽", tone: "terracotta" },
 ];
 
+// S8 — FAQ accordion (LANDING_SPEC §S8)
+const FAQ = [
+  {
+    q: "Это платно?",
+    a: "Базовое участие в клубе — бесплатно. Платными могут быть отдельные мастер-классы, AMA с экспертами и платные объявления хозяйств — это редкие исключения и они всегда отмечены.",
+  },
+  {
+    q: "Меня могут не принять?",
+    a: "Если профиль явно фейковый или ничего не указывает на причастность к мясному скотоводству — да. Конкретного «гейткипера» нет, мы просто хотим понимать, кто заходит.",
+  },
+  {
+    q: "Можно ли продавать скот в клубе?",
+    a: "Частные объявления — только в разделе «Купи-продай», и без коммерческих сетей хозяйств (их место в каталоге skotovody.com). Продавать в обход — повод для блокировки.",
+  },
+  {
+    q: "Связан ли клуб с skotovody.com?",
+    a: "Да, это часть одной экосистемы. Каталог хозяйств, аукционы и База знаний — на skotovody.com, клуб — это сообщество и площадка обсуждения. Аккаунты единые.",
+  },
+  {
+    q: "Как защищены мои данные?",
+    a: "Регистрация только через email и проверенный профиль. В клубе нет публичного API, индексация поисковиками отключена (кроме раздела «Новости»). Удалить аккаунт можно в один клик.",
+  },
+  {
+    q: "Что делать, если мне неудобно или сложно?",
+    a: "Напишите в личку @admin или в раздел «Вопросы новичков» — здесь принято помогать. На каждый вопрос приходят 3–5 ответов с практикой.",
+  },
+];
+
 const APPLICATION_URL = settings.application_url;
 
 export default class ClubLanding extends Component {
@@ -164,9 +196,18 @@ export default class ClubLanding extends Component {
   testimonials = TESTIMONIALS;
   steps = STEPS;
   teaserTiers = TEASER_TIERS;
+  faq = FAQ;
 
   // S5 — public news fetch
   @tracked news = null;
+
+  // S8 — FAQ accordion state; first item open by default
+  @tracked openFaq = 0;
+
+  @action
+  toggleFaq(index) {
+    this.openFaq = this.openFaq === index ? -1 : index;
+  }
 
   constructor() {
     super(...arguments);
@@ -501,7 +542,61 @@ export default class ClubLanding extends Component {
         </div>
       </section>
 
-      {{! S8-S9 added in later tasks }}
+      {{! ─── S8 · FAQ ─── }}
+      <section class="sktvd-l-faq">
+        <div class="sktvd-l-wrap sktvd-l-faq-inner">
+          <div class="sktvd-l-faq-head">
+            <p class="sktvd-l-faq-eyebrow">Вопросы и ответы</p>
+            <h2 class="sktvd-l-faq-h2">Что обычно спрашивают</h2>
+          </div>
+          <div class="sktvd-l-acc">
+            {{#each this.faq as |faqItem index|}}
+              <div class="sktvd-l-acc-item">
+                <button
+                  type="button"
+                  class="sktvd-l-acc-q"
+                  {{on "click" (fn this.toggleFaq index)}}
+                >
+                  <span>{{faqItem.q}}</span>
+                  <span
+                    class="sktvd-l-acc-toggle {{if (eq this.openFaq index) 'is-open'}}"
+                  >+</span>
+                </button>
+                {{#if (eq this.openFaq index)}}
+                  <div class="sktvd-l-acc-a">{{faqItem.a}}</div>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      {{! ─── S9 · FINAL CTA ─── }}
+      <section class="sktvd-l-final">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-final-banner">
+            <div class="sktvd-l-final-left">
+              <h2 class="sktvd-l-final-h2">Готовы вступить?</h2>
+              <p class="sktvd-l-final-lead">
+                Заполнение заявки занимает две минуты. Мы рассмотрим её в течение одного рабочего дня и откроем доступ ко всем 9 разделам.
+              </p>
+              <div class="sktvd-l-final-cta-row">
+                <a href={{this.applicationUrl}} class="sktvd-l-btn-accent --lg">
+                  {{icon "plus"}}
+                  Подать заявку
+                </a>
+                <a href="/c/news" class="sktvd-l-btn-ghost --dark --lg">
+                  Сначала почитать новости
+                </a>
+              </div>
+            </div>
+            <div class="sktvd-l-final-right" aria-hidden="true">
+              <span class="sktvd-l-final-watermark">JOIN</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </template>
 }
