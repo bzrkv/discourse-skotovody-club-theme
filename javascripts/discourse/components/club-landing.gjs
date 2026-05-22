@@ -4,6 +4,8 @@
 // live data. Pattern reference: plugin component club-membership.gjs.
 
 import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
+import { ajax } from "discourse/lib/ajax";
 import icon from "discourse/helpers/d-icon";
 
 // S2 — why a closed community (LANDING_SPEC §S2)
@@ -30,13 +32,153 @@ const STATS = [
   { num: "6+ лет", label: "С ноября 2019" },
 ];
 
+// S4 — categories preview (LANDING_SPEC §S4, HOMEPAGE_SPEC §6)
+// Verbatim from HOMEPAGE_SPEC §6 table. «Новости и анонсы» is the only
+// public category (open: true → «Открыто» badge, links to /c/news).
+// All other 8 have open: false → 🔒 badge, link to /membership.
+const CATEGORIES = [
+  {
+    slug: "news",
+    name: "Новости и анонсы",
+    color: "oklch(0.55 0.13 35)",        // --terracotta
+    iconBg: "oklch(0.93 0.05 40)",        // terracotta-soft
+    emoji: "📰",
+    count: 412,
+    sub: ["Официальные", "Анонсы", "Итоги"],
+    open: true,
+  },
+  {
+    slug: "general",
+    name: "Общий разговор",
+    color: "oklch(0.40 0.02 60)",         // --ink-2
+    iconBg: "oklch(0.92 0.012 75)",
+    emoji: "💬",
+    count: 1284,
+    sub: ["Обсуждения", "Вопросы", "Знакомства"],
+    open: false,
+  },
+  {
+    slug: "breeds",
+    name: "Породы и генетика",
+    color: "oklch(0.42 0.08 145)",        // --forest
+    iconBg: "oklch(0.92 0.04 145)",       // forest-soft
+    emoji: "🐄",
+    count: 876,
+    sub: ["Ангус", "Герефорд", "EPD"],
+    open: false,
+  },
+  {
+    slug: "feed",
+    name: "Корма и пастбище",
+    color: "oklch(0.52 0.12 110)",
+    iconBg: "oklch(0.93 0.06 110)",
+    emoji: "🌾",
+    count: 634,
+    sub: ["Рационы", "Пастбищный", "Премиксы"],
+    open: false,
+  },
+  {
+    slug: "vet",
+    name: "Ветеринария",
+    color: "oklch(0.28 0.06 145)",        // --forest-ink
+    iconBg: "oklch(0.92 0.04 145)",
+    emoji: "💉",
+    count: 748,
+    sub: ["Вакцинация", "Протоколы", "Вспышки"],
+    open: false,
+  },
+  {
+    slug: "tech",
+    name: "Техника",
+    color: "oklch(0.45 0.05 250)",
+    iconBg: "oklch(0.92 0.025 250)",
+    emoji: "⚙️",
+    count: 391,
+    sub: ["Трактора", "Оборудование", "Загоны"],
+    open: false,
+  },
+  {
+    slug: "market",
+    name: "Купи-продай",
+    color: "oklch(0.48 0.10 60)",         // --ochre-deep
+    iconBg: "oklch(0.93 0.05 75)",        // ochre-soft
+    emoji: "🤝",
+    count: 522,
+    sub: ["КРС", "Техника", "Корма"],
+    open: false,
+  },
+  {
+    slug: "newbie",
+    name: "Вопросы новичков",
+    color: "oklch(0.50 0.10 230)",
+    iconBg: "oklch(0.92 0.04 230)",
+    emoji: "🌱",
+    count: 467,
+    sub: ["Старт", "База знаний", "Помощь"],
+    open: false,
+  },
+  {
+    slug: "docs",
+    name: "Документы",
+    color: "oklch(0.42 0.04 60)",
+    iconBg: "oklch(0.91 0.018 75)",
+    emoji: "📋",
+    count: 198,
+    sub: ["Шаблоны", "Нормативы", "Отчёты"],
+    open: false,
+  },
+];
+
 const APPLICATION_URL = settings.application_url;
 
 export default class ClubLanding extends Component {
   stats = STATS;
   why = WHY;
   personas = PERSONAS;
+  categories = CATEGORIES;
   applicationUrl = APPLICATION_URL;
+
+  // S5 — public news fetch
+  @tracked news = null;
+
+  constructor() {
+    super(...arguments);
+    this.#loadNews();
+  }
+
+  async #loadNews() {
+    try {
+      const data = await ajax("/c/news/5.json");
+      // data.users is a flat array keyed by id; build a map for O(1) lookups
+      const usersById = {};
+      if (Array.isArray(data.users)) {
+        for (const u of data.users) {
+          usersById[u.id] = u;
+        }
+      }
+      const list = (data?.topic_list?.topics || [])
+        .filter((t) => !t.pinned_globally)
+        .slice(0, 3)
+        .map((t) => {
+          // Resolve author: prefer the poster whose description contains
+          // "Original Poster", fall back to posters[0], fall back to null.
+          let author = null;
+          if (Array.isArray(t.posters) && t.posters.length > 0) {
+            const opEntry =
+              t.posters.find((p) =>
+                (p.description || "").includes("Original Poster")
+              ) || t.posters[0];
+            if (opEntry) {
+              author = usersById[opEntry.user_id] || null;
+            }
+          }
+          return { ...t, _author: author };
+        });
+      this.news = list;
+    } catch {
+      this.news = []; // S5 hides itself on failure
+    }
+  }
 
   <template>
     <div class="sktvd-l">
@@ -155,7 +297,95 @@ export default class ClubLanding extends Component {
         </div>
       </section>
 
-      {{! S4-S9 added in later tasks }}
+      {{! ─── S4 · CATEGORIES PREVIEW ─── }}
+      <section class="sktvd-l-cats">
+        <div class="sktvd-l-wrap">
+          <div class="sktvd-l-cats-head">
+            <div class="sktvd-l-cats-head-left">
+              <p class="sktvd-l-cats-eyebrow">Разделы клуба</p>
+              <h2 class="sktvd-l-cats-h2">9 разделов — структура работы хозяйства</h2>
+            </div>
+            <div class="sktvd-l-cats-head-right">5 280 тем · 68 920 сообщений</div>
+          </div>
+
+          <div class="sktvd-l-cats-grid">
+            {{#each this.categories as |cat|}}
+              <a
+                href={{if cat.open "/c/news" "/membership"}}
+                class="sktvd-l-cats-card {{if cat.open 'is-open'}}"
+                style="--cat-color: {{cat.color}}; --cat-icon-bg: {{cat.iconBg}}"
+              >
+                {{! Left colour bar — rendered via ::before in CSS }}
+                <div class="sktvd-l-cats-card-top">
+                  <div class="sktvd-l-cats-icon" aria-hidden="true">
+                    <span class="sktvd-l-cats-emoji">{{cat.emoji}}</span>
+                  </div>
+                  <div class="sktvd-l-cats-meta">
+                    <span class="sktvd-l-cats-name">{{cat.name}}</span>
+                    <span class="sktvd-l-cats-count">{{cat.count}} тем</span>
+                  </div>
+                  {{#if cat.open}}
+                    <span class="sktvd-l-cats-badge is-open">Открыто</span>
+                  {{else}}
+                    <span class="sktvd-l-cats-badge is-locked" aria-hidden="true">🔒</span>
+                  {{/if}}
+                </div>
+                <div class="sktvd-l-cats-sub">{{cat.sub.[0]}} · {{cat.sub.[1]}} · {{cat.sub.[2]}}</div>
+              </a>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      {{! ─── S5 · PUBLIC NEWS ─── }}
+      {{#if this.news.length}}
+        <section class="sktvd-l-news">
+          <div class="sktvd-l-wrap">
+            <div class="sktvd-l-news-head">
+              <div class="sktvd-l-news-head-left">
+                <p class="sktvd-l-news-eyebrow">Открытые новости</p>
+                <h2 class="sktvd-l-news-h2">Свежие новости и анонсы</h2>
+              </div>
+              <a href="/c/news" class="sktvd-l-news-all">Открыть раздел «Новости» →</a>
+            </div>
+
+            <div class="sktvd-l-news-grid">
+              {{#each this.news as |topic|}}
+                <a
+                  href="/t/{{topic.slug}}/{{topic.id}}"
+                  class="sktvd-l-news-card"
+                >
+                  <span class="sktvd-l-news-chip" aria-label="Категория: Новости">
+                    <span class="sktvd-l-news-chip-dot" aria-hidden="true"></span>
+                    Новости
+                  </span>
+
+                  <h3 class="sktvd-l-news-title">{{topic.title}}</h3>
+
+                  <div class="sktvd-l-news-footer">
+                    {{#if topic._author}}
+                      <img
+                        class="sktvd-l-news-avatar"
+                        src="/user_avatar/club.skotovody.com/{{topic._author.username}}/22/{{topic._author.avatar_template}}"
+                        alt={{topic._author.username}}
+                        width="22"
+                        height="22"
+                        loading="lazy"
+                      />
+                      <span class="sktvd-l-news-author">{{topic._author.username}}</span>
+                      <span class="sktvd-l-news-sep" aria-hidden="true">·</span>
+                    {{/if}}
+                    <span class="sktvd-l-news-time">{{topic.created_at}}</span>
+                    <span class="sktvd-l-news-replies">{{topic.reply_count}} отв.</span>
+                  </div>
+                </a>
+              {{/each}}
+            </div>
+          </div>
+        </section>
+      {{/if}}
+
+      {{! S6-S9 added in later tasks }}
     </div>
   </template>
 }

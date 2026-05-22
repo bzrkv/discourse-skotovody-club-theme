@@ -2695,3 +2695,379 @@ body.sktvd-landing-route {
   .sktvd-l-who-h2 { font-size: 26px; }
   .sktvd-l-who-grid { grid-template-columns: 1fr; }
 }
+
+// ════════════════════════════════════════════════════════════════
+//  S4 · CATEGORIES PREVIEW — «9 разделов клуба» (LANDING_SPEC §S4)
+// ════════════════════════════════════════════════════════════════
+
+.sktvd-l-cats {
+  padding: 56px 0 24px;
+}
+
+.sktvd-l-cats-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sktvd-l-cats-head-left {
+  // contains eyebrow + h2
+}
+
+.sktvd-l-cats-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-ochre-deep);
+}
+
+.sktvd-l-cats-h2 {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-cats-head-right {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--sktvd-ink-3);
+  align-self: flex-end;
+  margin-bottom: 4px; // visually baseline-align with the h2
+}
+
+// 3-column card grid — gap 10
+.sktvd-l-cats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+// Each card is an <a> — pin :visited to avoid Discourse's a:visited colour
+.sktvd-l-cats-card {
+  position: relative;
+  padding: 18px 20px 18px 22px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+
+  // :visited — must be explicit (Discourse a:visited renders green otherwise)
+  &,
+  &:visited { color: var(--sktvd-ink); }
+
+  // Left colour-bar (spec: position absolute, left 0, top 0, bottom 0, width 4px)
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 12px 0 0 12px;
+    background: var(--cat-color, var(--sktvd-ink-3));
+  }
+
+  &.is-open {
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--sktvd-line-strong);
+      box-shadow: var(--sktvd-shadow-sm);
+      text-decoration: none;
+    }
+  }
+
+  // Locked cards — dull pointer, no hover lift
+  &:not(.is-open) {
+    cursor: default;
+
+    &:hover {
+      border-color: var(--sktvd-line-strong);
+      text-decoration: none;
+      color: var(--sktvd-ink);
+    }
+  }
+}
+
+// Top row: icon plaque + name/counter + badge
+.sktvd-l-cats-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+// Icon plaque — 32×32, radius 8, icon background from CSS var
+.sktvd-l-cats-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--cat-icon-bg, var(--sktvd-bg-sunk));
+  font-size: 16px;
+  line-height: 1;
+}
+
+.sktvd-l-cats-emoji {
+  line-height: 1;
+}
+
+// Name + counter block
+.sktvd-l-cats-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sktvd-l-cats-name {
+  font-family: var(--sktvd-font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sktvd-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sktvd-l-cats-count {
+  font-family: var(--sktvd-font-mono);
+  font-size: 11px;
+  color: var(--sktvd-ink-3);
+}
+
+// Badges — «Открыто» (forest) or 🔒 (ink-mute)
+.sktvd-l-cats-badge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+
+  &.is-open {
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--sktvd-forest-soft);
+    color: var(--sktvd-forest);
+  }
+
+  &.is-locked {
+    font-size: 14px;
+    color: var(--sktvd-ink-mute);
+  }
+}
+
+// Sub-tags row — 3 tags joined by ·
+.sktvd-l-cats-sub {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--sktvd-ink-3);
+}
+
+// ─── S4 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-cats-h2 { font-size: 28px; }
+  .sktvd-l-cats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-cats { padding: 40px 0 20px; }
+  .sktvd-l-cats-h2 { font-size: 22px; }
+  .sktvd-l-cats-head { align-items: flex-start; }
+  .sktvd-l-cats-head-right { margin-bottom: 0; }
+  .sktvd-l-cats-grid { grid-template-columns: 1fr; }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  S5 · PUBLIC NEWS — «Свежие новости» (LANDING_SPEC §S5)
+// ════════════════════════════════════════════════════════════════
+
+// Section — elevated background band, border top + bottom, margin-top 56
+.sktvd-l-news {
+  margin-top: 56px;
+  background: var(--sktvd-bg-elev);
+  border-top: 1px solid var(--sktvd-line);
+  border-bottom: 1px solid var(--sktvd-line);
+  padding: 56px 0;
+}
+
+// Header row: eyebrow + h2 left, link right
+.sktvd-l-news-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sktvd-l-news-head-left {
+  // eyebrow + h2 stacked
+}
+
+.sktvd-l-news-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sktvd-terracotta);
+}
+
+.sktvd-l-news-h2 {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-weight: 600;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--sktvd-ink);
+}
+
+.sktvd-l-news-all {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sktvd-forest-ink);
+  text-decoration: none;
+  align-self: flex-end;
+
+  // pin :visited
+  &,
+  &:visited { color: var(--sktvd-forest-ink); }
+
+  &:hover { text-decoration: underline; color: var(--sktvd-forest); }
+}
+
+// 3-column news card grid — gap 14
+.sktvd-l-news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+// Each card is an <a>
+.sktvd-l-news-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 22px;
+  background: var(--sktvd-surface);
+  border: 1px solid var(--sktvd-line);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+
+  // pin :visited
+  &,
+  &:visited { color: var(--sktvd-ink); }
+
+  &:hover {
+    border-color: var(--sktvd-line-strong);
+    box-shadow: var(--sktvd-shadow-sm);
+    text-decoration: none;
+    color: var(--sktvd-ink);
+  }
+}
+
+// «Новости» chip — terracotta, align-self flex-start
+.sktvd-l-news-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--sktvd-terracotta-soft);
+  color: var(--sktvd-terracotta);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+// Small coloured square inside the chip
+.sktvd-l-news-chip-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--sktvd-terracotta);
+  flex-shrink: 0;
+}
+
+// Topic title — display serif 19px
+.sktvd-l-news-title {
+  margin: 0;
+  font-family: var(--sktvd-font-display);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--sktvd-ink);
+  flex: 1;
+}
+
+// Footer row — avatar + author + sep + time + replies
+.sktvd-l-news-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--sktvd-ink-3);
+}
+
+.sktvd-l-news-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 100px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sktvd-l-news-author {
+  font-weight: 600;
+  color: var(--sktvd-ink-2);
+}
+
+.sktvd-l-news-sep {
+  color: var(--sktvd-ink-mute);
+}
+
+.sktvd-l-news-time {
+  color: var(--sktvd-ink-3);
+}
+
+.sktvd-l-news-replies {
+  margin-left: auto;
+  font-family: var(--sktvd-font-mono);
+  font-size: 11px;
+  color: var(--sktvd-ink-3);
+}
+
+// ─── S5 responsive ───────────────────────────────────────────
+@media (max-width: 980px) {
+  .sktvd-l-news-h2 { font-size: 26px; }
+  .sktvd-l-news-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .sktvd-l-news { margin-top: 40px; padding: 40px 0; }
+  .sktvd-l-news-h2 { font-size: 22px; }
+  .sktvd-l-news-head { align-items: flex-start; }
+  .sktvd-l-news-all { align-self: flex-start; }
+  .sktvd-l-news-grid { grid-template-columns: 1fr; }
+}
