@@ -28,13 +28,13 @@ const PERSONAS = [
   { name: "Новичок", sub: "Делает первые шаги", count: "780", tone: "info", text: "Спрашиваете без боязни. Опытные участники подсказывают, а ответы попадают в Базу знаний." },
 ];
 
-// S1 stats strip — static marketing figures (LANDING_SPEC §S1)
-const STATS = [
-  { num: "4 218", label: "Скотоводов" },
-  { num: "5 280", label: "Открытых тем" },
-  { num: "83", label: "Региона" },
-  { num: "36", label: "Ветврачей" },
-  { num: "6+ лет", label: "С ноября 2019" },
+// S1 trust strip — qualitative claims, no invented numbers
+// (GUEST_LANDING_UPDATE §S1 «Trust-полоса под hero»)
+const TRUST = [
+  { icon: "calendar-days", title: "С 11 ноября 2019", sub: "Шестой год в работе" },
+  { icon: "shield", title: "Закрытое сообщество", sub: "Каждый вступающий — по заявке" },
+  { icon: "layer-group", title: "9 тематических разделов", sub: "От пород до техники и документов" },
+  { icon: "file-lines", title: "Без рекламы", sub: "Не продают БАДы и курсы" },
 ];
 
 // S4 — categories preview (LANDING_SPEC §S4, HOMEPAGE_SPEC §6)
@@ -188,7 +188,7 @@ const APPLICATION_URL = settings.application_url;
 export default class ClubLanding extends Component {
   @service site;
 
-  stats = STATS;
+  trust = TRUST;
   why = WHY;
   personas = PERSONAS;
   categories = CATEGORIES;
@@ -297,7 +297,7 @@ export default class ClubLanding extends Component {
                 Тарифы клуба
               </a>
 
-              {{! Inline trust-row }}
+              {{! Inline trust-row — participant types, no numbers }}
               <div class="sktvd-l-trust">
                 {{! 4 placeholder avatar circles with -7px overlap }}
                 <div class="sktvd-l-avatars" aria-hidden="true">
@@ -306,23 +306,26 @@ export default class ClubLanding extends Component {
                   <span class="sktvd-l-av sktvd-l-av--3"></span>
                   <span class="sktvd-l-av sktvd-l-av--4"></span>
                 </div>
-                <span class="sktvd-l-trust-text">
-                  <strong class="sktvd-l-trust-num">1 284</strong>
-                  онлайн · 4 218 в клубе
-                </span>
+                <span class="sktvd-l-trust-text">фермеры, ветврачи, зоотехники</span>
               </div>
             </div>
 
           </div>
         </div>
 
-        {{! Stats strip — inside the dark hero zone, below content }}
-        <div class="sktvd-l-stats-strip">
-          <div class="sktvd-l-wrap sktvd-l-stats-inner">
-            {{#each this.stats as |stat index|}}
-              <div class="sktvd-l-stat {{if index 'has-border'}}">
-                <div class="sktvd-l-stat-num">{{stat.num}}</div>
-                <div class="sktvd-l-stat-lab">{{stat.label}}</div>
+        {{! Trust strip — inside the dark hero zone, below content.
+            4 qualitative claims, no invented numbers }}
+        <div class="sktvd-l-trust-strip">
+          <div class="sktvd-l-wrap sktvd-l-trust-strip-inner">
+            {{#each this.trust as |item index|}}
+              <div class="sktvd-l-trust-item {{if index 'has-border'}}">
+                <span class="sktvd-l-trust-item-icon" aria-hidden="true">
+                  {{icon item.icon}}
+                </span>
+                <div class="sktvd-l-trust-item-body">
+                  <div class="sktvd-l-trust-item-title">{{item.title}}</div>
+                  <div class="sktvd-l-trust-item-sub">{{item.sub}}</div>
+                </div>
               </div>
             {{/each}}
           </div>
