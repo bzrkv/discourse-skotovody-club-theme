@@ -5,6 +5,7 @@
 
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
+import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import icon from "discourse/helpers/d-icon";
 
@@ -132,6 +133,8 @@ const CATEGORIES = [
 const APPLICATION_URL = settings.application_url;
 
 export default class ClubLanding extends Component {
+  @service site;
+
   stats = STATS;
   why = WHY;
   personas = PERSONAS;
@@ -156,8 +159,15 @@ export default class ClubLanding extends Component {
           usersById[u.id] = u;
         }
       }
+
+      // Exclude the category's auto-generated "About …" definition topic.
+      // Prefer the id from the site category record; fall back to the known
+      // definition topic id for category 5 if the record is unavailable.
+      const newsCat = this.site?.categories?.find((c) => c.id === 5);
+      const definitionId = newsCat?.topic_id ?? 7;
+
       const list = (data?.topic_list?.topics || [])
-        .filter((t) => !t.pinned_globally)
+        .filter((t) => !t.pinned_globally && t.id !== definitionId)
         .slice(0, 3)
         .map((t) => {
           // Resolve author: prefer the poster whose description contains
