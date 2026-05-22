@@ -2496,25 +2496,23 @@ body.sktvd-membership-route {
 @media (max-width: 720px) {
   .sktvd-l-h1 { font-size: 28px; }
 
-  // Mobile hero: full-width text leaves no room for a side-by-side
-  // photo, so the photo becomes a band on top. The section's full-area
-  // background photo is dropped; ::before renders the photo band and
-  // the content below sits on a solid dark fill — no scrim needed.
+  // Mobile hero: the photo stays the full banner background, as on
+  // desktop — just scaled down. The text spans the full width, so the
+  // desktop horizontal scrim is swapped for a vertical wash: darker at
+  // the top behind the headline, lighter below — text stays readable
+  // while the photo shows through across the whole banner.
   .sktvd-l-hero {
-    padding-top: 0;
-    background-image: none;
-    background-color: oklch(0.17 0.022 70);
+    padding-top: 24px;
+    background-position: center right;
   }
-  .sktvd-l-hero::before {
-    content: "";
-    display: block;
-    height: 170px;
-    background-image: url($hero-photo);
-    background-size: cover;
-    background-position: center 38%;
+  .sktvd-l-hero-scrim {
+    background: linear-gradient(
+      180deg,
+      oklch(0.15 0.018 60 / 0.80) 0%,
+      oklch(0.15 0.018 62 / 0.58) 52%,
+      oklch(0.13 0.016 60 / 0.74) 100%
+    );
   }
-  .sktvd-l-hero-scrim { display: none; }
-  .sktvd-l-hero-body { padding-top: 28px; }
 
   // CTA buttons stay compact and left-aligned (no full-width override).
   .sktvd-l-trust { margin-left: 0; }
