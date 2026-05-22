@@ -2236,18 +2236,14 @@ body.sktvd-membership-route {
   padding: 36px 0 0;
   color: oklch(0.95 0.02 80);
 
-  // Background: warm sunset gradient fallback (real photo wired later via
-  // [data-hero-photo] { background-image: url(...) }).
-  background:
-    linear-gradient(
-      155deg,
-      oklch(0.20 0.022 55) 0%,
-      oklch(0.22 0.030 75) 40%,
-      oklch(0.26 0.045 95) 70%,
-      oklch(0.30 0.055 105) 100%
-    );
+  // Real hero photo (theme asset). Dark fallback colour shows if the
+  // image fails; the .sktvd-l-hero-scrim div darkens the left side for
+  // text readability. Object sits in the right third → center right.
+  background-color: oklch(0.20 0.025 95);
+  background-image: url($hero-photo);
   background-position: center right;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 // Scrim layers — rendered as a sibling div so the hero photo (when added)

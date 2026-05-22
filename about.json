@@ -5,7 +5,8 @@
   "component": false,
   "assets": {
     "primary-logo": "assets/svg/logo.svg",
-    "favicon": "assets/svg/favicon.svg"
+    "favicon": "assets/svg/favicon.svg",
+    "hero-photo": "assets/hero-landing.jpg"
   },
   "color_schemes": {
     "Skotovody Light": {
