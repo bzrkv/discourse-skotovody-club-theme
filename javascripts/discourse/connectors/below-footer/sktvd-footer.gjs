@@ -98,8 +98,7 @@ export default class SktvdFooter extends Component {
           </div>
 
           <div class="sktvd-footer-strip">
-            <span>© 2024–2026 Skotovody. Все права защищены.</span>
-            <span>Платформа на базе Discourse · работает на CDN</span>
+            <span>© 2026 Skotovody. Все права защищены.</span>
           </div>
         </div>
       </footer>
