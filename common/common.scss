@@ -2523,6 +2523,36 @@ body.sktvd-membership-route {
     border-left: 1px solid oklch(1 0 0 / 0.1);
     padding-left: 14px;
   }
+
+  // Mobile hero — упрощённая раскладка по запросу user (2026-05-27):
+  // оставляем только eyebrow + H1 + 2 кнопки. Lead-параграф и avatars-row
+  // («фермеры, ветврачи, зоотехники») съедают вертикальное место и закрывают
+  // фото — скрываем. CTA прижимаем к нижней части hero column через
+  // margin-top:auto, чтобы фото было видно сверху между H1 и кнопками.
+  .sktvd-l-hero-col {
+    display: flex;
+    flex-direction: column;
+    min-height: 60vh;
+  }
+  .sktvd-l-hero .sktvd-l-lead,
+  .sktvd-l-hero .sktvd-l-trust { display: none; }
+  .sktvd-l-cta-group { margin-top: auto; }
+  // Усиливаем нижний scrim чтобы кнопки на фото читались
+  .sktvd-l-hero-scrim {
+    background:
+      linear-gradient(
+        180deg,
+        oklch(0.16 0.018 60 / 0.78) 0%,
+        oklch(0.18 0.025 80 / 0.30) 35%,
+        transparent 55%,
+        oklch(0.10 0.012 60 / 0.55) 100%
+      ),
+      repeating-linear-gradient(
+        135deg,
+        transparent 0 60px,
+        oklch(1 0 0 / 0.025) 60px 61px
+      );
+  }
 }
 
 // ════════════════════════════════════════════════════════════════
