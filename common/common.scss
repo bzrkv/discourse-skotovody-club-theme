@@ -2499,13 +2499,15 @@ body.sktvd-membership-route {
   .sktvd-l-h1 { font-size: 28px; }
 
   .sktvd-l-cta-group {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 10px;
   }
   .sktvd-l-btn-accent,
   .sktvd-l-btn-ghost {
-    width: 100%;
+    flex: 1;
     justify-content: center;
+    white-space: nowrap;
   }
   .sktvd-l-trust { margin-left: 0; }
 
