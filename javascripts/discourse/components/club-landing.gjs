@@ -285,49 +285,10 @@ export default class ClubLanding extends Component {
 
   <template>
     <div class="sktvd-l">
-      {{#if this.isMobile}}
-        {{! ─── S1 MOBILE — hero card + trust 2×2 (GUEST_LANDING_UPDATE
-             Часть 2). S2–S9 render shared below, responsive. ─── }}
-        <div class="sktvd-lm-hero">
-          <div class="sktvd-lm-hero-inner">
-            <span class="sktvd-lm-eyebrow">
-              {{icon "shield-halved"}}
-              Закрытое сообщество
-            </span>
-            <h1 class="sktvd-lm-h1">
-              Клуб скотоводов.<br />
-              <span class="sktvd-lm-h1-ochre">Опыт, которого нет в учебниках.</span>
-            </h1>
-            <p class="sktvd-lm-lead">
-              Для тех, кто работает с мясным скотом каждый день.
-            </p>
-            <div class="sktvd-lm-cta">
-              <a href={{this.applicationUrl}} class="sktvd-lm-btn-accent">
-                Подать заявку
-              </a>
-              <a href="/session/sso" class="sktvd-lm-btn-ghost">Войти</a>
-            </div>
-          </div>
-        </div>
-
-        {{! Trust 2×2 grid }}
-        <div class="sktvd-lm-trust">
-          {{#each this.trustMobile as |item|}}
-            <div class="sktvd-lm-trust-card">
-              <span class="sktvd-lm-trust-icon" aria-hidden="true">
-                {{icon item.icon}}
-              </span>
-              <div class="sktvd-lm-trust-body">
-                <div class="sktvd-lm-trust-title">{{item.title}}</div>
-                <div class="sktvd-lm-trust-sub">{{item.sub}}</div>
-              </div>
-            </div>
-          {{/each}}
-        </div>
-
-      {{else}}
-
-      {{! ─── S1 · HERO (desktop) ─── }}
+      {{! ─── S1 · HERO — единый для desktop и mobile (фото + CTA),
+           адаптируется через CSS media queries. Отдельная mobile-card
+           раскладка (sktvd-lm-*) была отключена 2026-05-27 — теряла
+           hero-фото и оставшийся контент S2-S9 на mobile. ─── }}
       <section class="sktvd-l-hero" data-hero-photo>
         {{! Horizontal + vertical scrim for text readability (::before handled in CSS) }}
         <div class="sktvd-l-hero-scrim" aria-hidden="true"></div>
@@ -400,16 +361,8 @@ export default class ClubLanding extends Component {
           </div>
         </div>
       </section>
-      {{/if}}
 
-      {{! ─── S2-S4 + S6-S9 — desktop only.
-           На mobile guest landing показывается ТОЛЬКО S1 hero-card + trust
-           2×2 + S5 news (per GUEST_LANDING_UPDATE R5: «мобильная гостевая =
-           ОТДЕЛЬНАЯ компактная раскладка»). Это сознательный выбор: не
-           заставлять mobile-юзера скроллить весь маркетинговый лендинг,
-           самое ценное — новости и быстрое CTA «Подать заявку». ─── }}
-      {{#unless this.isMobile}}
-      {{! ─── S2 · WHY CLOSED ─── }}
+      {{! ─── S2 · WHY CLOSED — shared (desktop + mobile, responsive) ─── }}
       <section class="sktvd-l-why">
         <div class="sktvd-l-wrap">
           <div class="sktvd-l-why-head">
@@ -490,8 +443,6 @@ export default class ClubLanding extends Component {
         </div>
       </section>
 
-      {{/unless}}
-
       {{! ─── S5 · PUBLIC NEWS — shared (desktop + mobile) ─── }}
       {{#if this.news.length}}
         <section class="sktvd-l-news">
@@ -540,8 +491,6 @@ export default class ClubLanding extends Component {
         </section>
       {{/if}}
 
-      {{! ─── S6-S9 desktop only (per GUEST_LANDING_UPDATE R5 — mobile = hero+trust+news) ─── }}
-      {{#unless this.isMobile}}
       {{! ─── S6 · TESTIMONIALS ─── }}
       <section class="sktvd-l-quotes">
         <div class="sktvd-l-wrap">
@@ -678,7 +627,6 @@ export default class ClubLanding extends Component {
           </div>
         </div>
       </section>
-      {{/unless}}
 
     </div>
   </template>
