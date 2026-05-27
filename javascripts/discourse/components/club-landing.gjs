@@ -144,11 +144,11 @@ const CATEGORIES = [
   },
 ];
 
-// S6 — testimonials (LANDING_SPEC §S6). Static marketing copy.
+// S6 — testimonials (LANDING_SPEC §S6). Реальные участники клуба.
 const TESTIMONIALS = [
-  { name: "Марина Власова", role: "Ветврач к.б.н.", loc: "Калмыкия", quote: "За год здесь я разобрала больше реальных случаев нодулярного дерматита, чем в любой профессиональной рассылке. Коллеги делятся протоколами без оговорок." },
-  { name: "Павел Кузнецов", role: "Хозяйство «Лесное»", loc: "Брянская обл.", quote: "Брал стадо в 60 голов первый раз. Получил подробный разбор «ангус vs герефорд» под мою географию от четырёх человек — каждый с практикой не меньше 5 лет." },
-  { name: "Сергей Дроздов", role: "Генетик-консультант", loc: "Алтайский край", quote: "Сюда идут с конкретными вопросами по EPD — не «что такое CE», а «как читать перцентили под мою линию». Это уровень разговора, которого мне не хватало." },
+  { name: "Александр Москвин", role: "Глава КФХ", loc: "Ленинградская обл.", quote: "Я основал этот клуб в 2019 и поддерживаю его с первого дня. Мы занимаемся абердин-ангусом — здесь собрались практики, которым важно делиться опытом без рекламы и без посредников." },
+  { name: "Александр Дильдин", role: "Глава КФХ", loc: "Ленинградская обл.", quote: "Помогаю новичкам разобраться: какие породы под их регион, с чего начать, к кому обратиться. За эти годы в клубе сложилась практика поддержки — каждый, кто заходит впервые, получает развёрнутые ответы." },
+  { name: "Екатерина Зимина", role: "Ветеринарный врач", loc: "Санкт-Петербург", quote: "Делюсь международным опытом ветеринарии и зоотехники. В клубе обсуждаем реальные случаи — протоколы вакцинации, кормление, племенную работу. Это уровень разговора, которого не найти в общих рассылках." },
 ];
 
 // S7 — how to join (LANDING_SPEC §S7)
@@ -402,7 +402,14 @@ export default class ClubLanding extends Component {
       </section>
       {{/if}}
 
-      {{! ─── S2 · WHY CLOSED — shared (desktop + mobile, responsive) ─── }}
+      {{! ─── S2-S4 + S6-S9 — desktop only.
+           На mobile guest landing показывается ТОЛЬКО S1 hero-card + trust
+           2×2 + S5 news (per GUEST_LANDING_UPDATE R5: «мобильная гостевая =
+           ОТДЕЛЬНАЯ компактная раскладка»). Это сознательный выбор: не
+           заставлять mobile-юзера скроллить весь маркетинговый лендинг,
+           самое ценное — новости и быстрое CTA «Подать заявку». ─── }}
+      {{#unless this.isMobile}}
+      {{! ─── S2 · WHY CLOSED ─── }}
       <section class="sktvd-l-why">
         <div class="sktvd-l-wrap">
           <div class="sktvd-l-why-head">
@@ -483,7 +490,9 @@ export default class ClubLanding extends Component {
         </div>
       </section>
 
-      {{! ─── S5 · PUBLIC NEWS ─── }}
+      {{/unless}}
+
+      {{! ─── S5 · PUBLIC NEWS — shared (desktop + mobile) ─── }}
       {{#if this.news.length}}
         <section class="sktvd-l-news">
           <div class="sktvd-l-wrap">
@@ -531,6 +540,8 @@ export default class ClubLanding extends Component {
         </section>
       {{/if}}
 
+      {{! ─── S6-S9 desktop only (per GUEST_LANDING_UPDATE R5 — mobile = hero+trust+news) ─── }}
+      {{#unless this.isMobile}}
       {{! ─── S6 · TESTIMONIALS ─── }}
       <section class="sktvd-l-quotes">
         <div class="sktvd-l-wrap">
@@ -667,6 +678,7 @@ export default class ClubLanding extends Component {
           </div>
         </div>
       </section>
+      {{/unless}}
 
     </div>
   </template>
