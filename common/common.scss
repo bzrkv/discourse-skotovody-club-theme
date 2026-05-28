@@ -2534,8 +2534,14 @@ body.sktvd-membership-route {
   .sktvd-l-hero-col {
     display: flex;
     flex-direction: column;
-    min-height: 60vh;
+    min-height: 45vh;
   }
+  // Сократить gap между CTA и trust-strip — CTA в нижней части hero-col
+  // (margin-top:auto уже даёт это), но раньше был padding-bottom:32 на body +
+  // margin-top:32 на trust-strip = 64px gap. На mobile это слишком много —
+  // CTA «висят» далеко от trust-strip. Compress gap.
+  .sktvd-l-hero-body { padding-bottom: 0 !important; }
+  .sktvd-l-trust-strip { margin-top: 0 !important; }
   .sktvd-l-hero .sktvd-l-lead,
   .sktvd-l-hero .sktvd-l-trust { display: none; }
   .sktvd-l-cta-group { margin-top: auto; }
