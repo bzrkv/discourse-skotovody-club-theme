@@ -33,8 +33,8 @@ const PERSONAS = [
 // (GUEST_LANDING_UPDATE §S1 «Trust-полоса под hero»)
 const TRUST = [
   { icon: "calendar-days", title: "С 11 ноября 2019", sub: "Шестой год в работе" },
-  { icon: "shield-halved", title: "Закрытое сообщество", sub: "Каждый вступающий — по заявке" },
-  { icon: "layer-group", title: "9 тематических разделов", sub: "От пород до техники и документов" },
+  { icon: "shield-halved", title: "Закрытое сообщество", sub: "Вступление по заявке" },
+  { icon: "layer-group", title: "9 разделов", sub: "От пород до техники" },
   { icon: "file-lines", title: "Без рекламы", sub: "Не продают БАДы и курсы" },
 ];
 
