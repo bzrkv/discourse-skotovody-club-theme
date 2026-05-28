@@ -4230,39 +4230,95 @@ body.sktvd-membership-route {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
-  .sktvd-l-teaser-h2 { font-size: 22px !important; margin: 0 0 6px !important; }
-  .sktvd-l-teaser-lead { font-size: 12.5px !important; margin: 0 0 10px !important; }
-  .sktvd-l-teaser-cta { font-size: 12px !important; padding: 8px 14px !important; }
+  .sktvd-l-teaser-h2 { font-size: 26px !important; margin: 0 0 6px !important; font-weight: 700 !important; line-height: 1.15 !important; }
+  // Lead text не нужен на mobile (per reference — только H2 + 3 строки + link)
+  .sktvd-l-teaser-lead { display: none !important; }
+  // Большая зелёная кнопка → маленькая inline link «Подробнее о тарифах →»
+  .sktvd-l-teaser-cta {
+    font-size: 13px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: var(--sktvd-forest-ink) !important;
+    text-decoration: none;
+    display: block !important;
+    text-align: center !important;
+    margin-top: 12px !important;
+  }
   .sktvd-l-teaser-cards {
     grid-template-columns: 1fr !important;
     gap: 0 !important;
     background: var(--sktvd-surface);
-    border-radius: 8px;
+    border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--sktvd-line);
   }
+  // Card grid layout — tag/name/sub stack слева, pill price справа centered.
+  // grid-template-areas позволяет цене span 3 rows, выравниваясь по центру.
   .sktvd-l-teaser-card {
-    padding: 10px 12px !important;
+    padding: 12px 14px !important;
     border: 0 !important;
     border-top: 1px solid var(--sktvd-line) !important;
     border-radius: 0 !important;
     background: transparent !important;
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "tag   price"
+      "name  price"
+      "sub   price";
+    gap: 2px 12px;
     align-items: center;
-    gap: 12px;
   }
   .sktvd-l-teaser-card:first-child { border-top: 0 !important; }
-  .sktvd-l-teaser-card-tag { font-size: 9px !important; margin-bottom: 3px !important; }
-  .sktvd-l-teaser-card-name { font-size: 14px !important; margin: 0 !important; }
-  .sktvd-l-teaser-card-sub { font-size: 11px !important; margin-top: 1px !important; }
-  .sktvd-l-teaser-card-price {
-    font-size: 12.5px !important;
-    padding: 4px 9px !important;
-    border-radius: 6px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    margin-left: auto;
+  .sktvd-l-teaser-card-tag {
+    grid-area: tag;
+    font-size: 10px !important;
+    margin: 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
   }
+  .sktvd-l-teaser-card-name {
+    grid-area: name;
+    font-size: 15px !important;
+    margin: 0 !important;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .sktvd-l-teaser-card-sub {
+    grid-area: sub;
+    font-size: 11px !important;
+    margin: 0 !important;
+    color: var(--sktvd-ink-3);
+  }
+  // Pill price справа — цвет фона зависит от .--tone классa на карточке
+  .sktvd-l-teaser-card-price {
+    grid-area: price;
+    align-self: center;
+    font-family: var(--sktvd-font-mono) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    white-space: nowrap;
+  }
+  .sktvd-l-teaser-card.--forest .sktvd-l-teaser-card-price {
+    background: var(--sktvd-forest-soft);
+    color: var(--sktvd-forest-ink);
+  }
+  .sktvd-l-teaser-card.--ochre .sktvd-l-teaser-card-price {
+    background: var(--sktvd-ochre-soft);
+    color: var(--sktvd-ochre-deep);
+  }
+  .sktvd-l-teaser-card.--terracotta .sktvd-l-teaser-card-price {
+    background: var(--sktvd-terracotta-soft);
+    color: var(--sktvd-terracotta);
+  }
+  // Tag color tone matching
+  .sktvd-l-teaser-card.--forest .sktvd-l-teaser-card-tag { color: var(--sktvd-forest-ink); }
+  .sktvd-l-teaser-card.--ochre .sktvd-l-teaser-card-tag { color: var(--sktvd-ochre-deep); }
+  .sktvd-l-teaser-card.--terracotta .sktvd-l-teaser-card-tag { color: var(--sktvd-terracotta); }
 
   // ── S8 · FAQ — accordion с меньшими шрифтами ──
   .sktvd-l-faq { padding: 24px 0 8px !important; }
