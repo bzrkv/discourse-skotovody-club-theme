@@ -543,9 +543,11 @@ export default class ClubLanding extends Component {
             {{#each this.steps as |step|}}
               <div class="sktvd-l-step-card">
                 <div class="sktvd-l-step-num" aria-hidden="true">{{step.n}}</div>
-                <h3 class="sktvd-l-step-title">{{step.title}}</h3>
-                <p class="sktvd-l-step-text sktvd-l-text-full">{{step.text}}</p>
-                <p class="sktvd-l-step-text sktvd-l-text-short">{{step.textShort}}</p>
+                <div class="sktvd-l-step-body">
+                  <h3 class="sktvd-l-step-title">{{step.title}}</h3>
+                  <p class="sktvd-l-step-text sktvd-l-text-full">{{step.text}}</p>
+                  <p class="sktvd-l-step-text sktvd-l-text-short">{{step.textShort}}</p>
+                </div>
               </div>
             {{/each}}
           </div>
