@@ -55,6 +55,7 @@ const CATEGORIES = [
   {
     slug: "news",
     name: "Новости и анонсы",
+    short: "Новости",
     color: "oklch(0.55 0.13 35)",        // --terracotta
     iconBg: "oklch(0.93 0.05 40)",        // terracotta-soft
     emoji: "📰",
@@ -65,6 +66,7 @@ const CATEGORIES = [
   {
     slug: "general",
     name: "Общий разговор",
+    short: "Общий",
     color: "oklch(0.40 0.02 60)",         // --ink-2
     iconBg: "oklch(0.92 0.012 75)",
     emoji: "💬",
@@ -75,6 +77,7 @@ const CATEGORIES = [
   {
     slug: "breeds",
     name: "Породы и генетика",
+    short: "Породы",
     color: "oklch(0.42 0.08 145)",        // --forest
     iconBg: "oklch(0.92 0.04 145)",       // forest-soft
     emoji: "🐄",
@@ -85,6 +88,7 @@ const CATEGORIES = [
   {
     slug: "feed",
     name: "Корма и пастбище",
+    short: "Корма",
     color: "oklch(0.52 0.12 110)",
     iconBg: "oklch(0.93 0.06 110)",
     emoji: "🌾",
@@ -95,6 +99,7 @@ const CATEGORIES = [
   {
     slug: "vet",
     name: "Ветеринария",
+    short: "Ветеринария",
     color: "oklch(0.28 0.06 145)",        // --forest-ink
     iconBg: "oklch(0.92 0.04 145)",
     emoji: "💉",
@@ -105,6 +110,7 @@ const CATEGORIES = [
   {
     slug: "tech",
     name: "Техника",
+    short: "Техника",
     color: "oklch(0.45 0.05 250)",
     iconBg: "oklch(0.92 0.025 250)",
     emoji: "⚙️",
@@ -115,6 +121,7 @@ const CATEGORIES = [
   {
     slug: "market",
     name: "Купи-продай",
+    short: "Купи-продай",
     color: "oklch(0.48 0.10 60)",         // --ochre-deep
     iconBg: "oklch(0.93 0.05 75)",        // ochre-soft
     emoji: "🤝",
@@ -125,6 +132,7 @@ const CATEGORIES = [
   {
     slug: "newbie",
     name: "Вопросы новичков",
+    short: "Новичкам",
     color: "oklch(0.50 0.10 230)",
     iconBg: "oklch(0.92 0.04 230)",
     emoji: "🌱",
@@ -135,6 +143,7 @@ const CATEGORIES = [
   {
     slug: "docs",
     name: "Документы",
+    short: "Документы",
     color: "oklch(0.42 0.04 60)",
     iconBg: "oklch(0.91 0.018 75)",
     emoji: "📋",
@@ -428,7 +437,8 @@ export default class ClubLanding extends Component {
                     <span class="sktvd-l-cats-emoji">{{cat.emoji}}</span>
                   </div>
                   <div class="sktvd-l-cats-meta">
-                    <span class="sktvd-l-cats-name">{{cat.name}}</span>
+                    <span class="sktvd-l-cats-name sktvd-l-cats-name-full">{{cat.name}}</span>
+                    <span class="sktvd-l-cats-name sktvd-l-cats-name-short">{{cat.short}}</span>
                   </div>
                   {{#if cat.open}}
                     <span class="sktvd-l-cats-badge is-open">Открыто</span>

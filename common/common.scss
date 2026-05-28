@@ -2534,7 +2534,7 @@ body.sktvd-membership-route {
   .sktvd-l-hero-col {
     display: flex;
     flex-direction: column;
-    min-height: 78vh;
+    min-height: 45vh;
   }
   .sktvd-l-hero .sktvd-l-lead,
   .sktvd-l-hero .sktvd-l-trust { display: none; }
@@ -3949,4 +3949,308 @@ body.sktvd-membership-route {
       margin-left: auto;
     }
   }
+}
+
+/* ═══════════════════════════════════════════════════════════
+ * MOBILE LANDING OPTIMIZATION  (@media max-width:640px)
+ * Уплотняет гостевой лендинг club.skotovody.com на мобильных.
+ * Hero (sktvd-l-hero) НЕ ТРОГАЕТСЯ — правила применяются ниже него.
+ * Спека: docs/MOBILE_LANDING_OPTIMIZATION.md
+ * ═══════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+
+  // ── S2 · «Почему закрытое сообщество» — 3 ряда в одной плитке ──
+  .sktvd-l-why { padding: 24px 0 8px !important; }
+  .sktvd-l-why-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-why-h2 { font-size: 22px !important; max-width: none !important; margin: 0 !important; }
+  .sktvd-l-why-eyebrow { margin-bottom: 6px !important; font-size: 10px !important; }
+  .sktvd-l-why-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    margin: 0 14px;
+    background: var(--sktvd-surface);
+    border: 1px solid var(--sktvd-line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sktvd-l-why-card {
+    padding: 12px 14px !important;
+    border: 0 !important;
+    border-top: 1px solid var(--sktvd-line) !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    gap: 12px;
+    align-items: center;
+  }
+  .sktvd-l-why-card:first-child { border-top: 0 !important; }
+  .sktvd-l-why-icon {
+    width: 34px !important; height: 34px !important;
+    margin-bottom: 0 !important; flex-shrink: 0;
+  }
+  .sktvd-l-why-icon svg,
+  .sktvd-l-why-icon .d-icon { width: 16px !important; height: 16px !important; }
+  .sktvd-l-why-h3 { font-size: 13px !important; margin: 0 0 1px !important; font-weight: 700 !important; }
+  .sktvd-l-why-text { font-size: 12px !important; line-height: 1.35 !important; }
+
+  // ── S3 · «Подходит, если вы…» — 2×2 компактных плиток ──
+  .sktvd-l-who { padding: 24px 0 8px !important; }
+  .sktvd-l-who-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-who-h2 { font-size: 22px !important; margin: 0 !important; }
+  .sktvd-l-who-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin: 0 14px;
+  }
+  .sktvd-l-who-card {
+    padding: 12px 14px !important;
+    border-radius: 10px !important;
+  }
+  .sktvd-l-who-icon {
+    width: 30px !important; height: 30px !important;
+    margin-bottom: 6px !important;
+  }
+  .sktvd-l-who-icon svg,
+  .sktvd-l-who-icon .d-icon { width: 15px !important; height: 15px !important; }
+  .sktvd-l-who-name { font-size: 15px !important; margin: 0 !important; }
+  .sktvd-l-who-sub { font-size: 11px !important; margin-bottom: 0 !important; }
+  // Длинное описание персоны на мобильном скрываем
+  .sktvd-l-who-text { display: none !important; }
+
+  // ── S4 · «9 разделов» — 2 колонки × 5 рядов мини-плиток ──
+  .sktvd-l-cats { padding: 24px 0 8px !important; }
+  .sktvd-l-cats-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-cats-h2 { font-size: 22px !important; margin: 0 !important; }
+  .sktvd-l-cats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    margin: 0 14px;
+  }
+  .sktvd-l-cats-card {
+    padding: 10px 11px 10px 13px !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+  }
+  .sktvd-l-cats-card-top {
+    gap: 8px !important;
+    margin-bottom: 0 !important;
+  }
+  .sktvd-l-cats-icon {
+    width: 26px !important; height: 26px !important;
+    border-radius: 6px !important;
+  }
+  .sktvd-l-cats-emoji { font-size: 13px !important; }
+  // На мобильном показываем КОРОТКОЕ имя категории (cat.short)
+  .sktvd-l-cats-name-full { display: none !important; }
+  .sktvd-l-cats-name-short { display: inline !important; }
+  .sktvd-l-cats-name {
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sktvd-l-cats-badge {
+    font-size: 9.5px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    margin-top: 1px;
+  }
+  // Длинный список подкатегорий (Ангус · Герефорд …) — скрываем
+  .sktvd-l-cats-sub { display: none !important; }
+
+  // ── S5 · «Новости» — горизонтальный scroll snap (если есть news) ──
+  .sktvd-l-news { padding: 24px 0 8px !important; }
+  .sktvd-l-news-head {
+    padding: 0 14px !important;
+    margin-bottom: 12px !important;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 8px;
+  }
+  .sktvd-l-news-h2 { font-size: 20px !important; margin: 0 !important; }
+  .sktvd-l-news-all { font-size: 11px !important; white-space: nowrap; }
+  .sktvd-l-news-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 10px !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0 14px;
+    scrollbar-width: none;
+  }
+  .sktvd-l-news-grid::-webkit-scrollbar { display: none; }
+  .sktvd-l-news-card {
+    flex: 0 0 78% !important;
+    scroll-snap-align: start;
+    padding: 14px 16px !important;
+    border-radius: 10px !important;
+    gap: 10px !important;
+  }
+  .sktvd-l-news-title {
+    font-size: 14.5px !important;
+    line-height: 1.3 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .sktvd-l-news-avatar { width: 18px !important; height: 18px !important; }
+
+  // ── S6 · «Кто уже в клубе и зачем» — горизонтальный scroll snap ──
+  .sktvd-l-quotes { padding: 24px 0 8px !important; }
+  .sktvd-l-quotes-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-quotes-h2 { font-size: 22px !important; margin: 0 !important; }
+  .sktvd-l-quotes-grid {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: 10px !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0 14px 14px;
+    scrollbar-width: none;
+  }
+  .sktvd-l-quotes-grid::-webkit-scrollbar { display: none; }
+  .sktvd-l-quote-card {
+    flex: 0 0 82% !important;
+    scroll-snap-align: start;
+    padding: 14px 16px !important;
+    border-radius: 10px !important;
+    gap: 12px !important;
+  }
+  .sktvd-l-quote-mark { font-size: 32px !important; line-height: 0.4 !important; height: 10px !important; }
+  .sktvd-l-quote-text {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .sktvd-l-quote-footer { gap: 8px !important; padding-top: 10px !important; }
+  .sktvd-l-quote-av { width: 28px !important; height: 28px !important; }
+  .sktvd-l-quote-name { font-size: 12px !important; }
+  .sktvd-l-quote-meta { font-size: 10.5px !important; }
+
+  // ── S7 · «Три шага» — вертикальный таймлайн с кружками ──
+  .sktvd-l-steps { padding: 24px 0 8px !important; }
+  .sktvd-l-steps-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-steps-h2 { font-size: 22px !important; margin: 0 !important; }
+  .sktvd-l-steps-eyebrow { margin-bottom: 6px !important; }
+  .sktvd-l-steps-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    margin: 0 14px;
+    position: relative;
+  }
+  // Вертикальная полоса между кружками
+  .sktvd-l-steps-grid::before {
+    content: '';
+    position: absolute;
+    left: 19px; top: 18px; bottom: 18px;
+    width: 1px;
+    background: var(--sktvd-line);
+    z-index: 0;
+  }
+  .sktvd-l-step-card {
+    padding: 10px 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    gap: 14px !important;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+  .sktvd-l-step-num {
+    flex-shrink: 0;
+    width: 38px !important; height: 38px !important;
+    border-radius: 50% !important;
+    background: var(--sktvd-surface) !important;
+    border: 2px solid var(--sktvd-ochre, oklch(0.65 0.13 80)) !important;
+    color: var(--sktvd-ochre-deep, oklch(0.55 0.15 70)) !important;
+    font-family: var(--sktvd-font-mono, monospace) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    display: grid !important;
+    place-items: center;
+    letter-spacing: 0 !important;
+    opacity: 1 !important;
+    margin-bottom: 0 !important;
+    line-height: 1 !important;
+  }
+  .sktvd-l-step-title { font-size: 15px !important; margin: 0 0 2px !important; }
+  .sktvd-l-step-text { font-size: 12px !important; line-height: 1.45 !important; margin: 0 !important; }
+
+  // ── S7.5 · «Три категории» — текст сверху + 3 строки тарифов ──
+  .sktvd-l-teaser { padding: 24px 0 8px !important; }
+  .sktvd-l-teaser-box {
+    padding: 14px !important;
+    margin: 0 14px;
+    border-radius: 10px !important;
+  }
+  .sktvd-l-teaser-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .sktvd-l-teaser-h2 { font-size: 22px !important; margin: 0 0 6px !important; }
+  .sktvd-l-teaser-lead { font-size: 12.5px !important; margin: 0 0 10px !important; }
+  .sktvd-l-teaser-cta { font-size: 12px !important; padding: 8px 14px !important; }
+  .sktvd-l-teaser-cards {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    background: var(--sktvd-surface);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--sktvd-line);
+  }
+  .sktvd-l-teaser-card {
+    padding: 10px 12px !important;
+    border: 0 !important;
+    border-top: 1px solid var(--sktvd-line) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+  }
+  .sktvd-l-teaser-card:first-child { border-top: 0 !important; }
+  .sktvd-l-teaser-card-tag { font-size: 9px !important; margin-bottom: 3px !important; }
+  .sktvd-l-teaser-card-name { font-size: 14px !important; margin: 0 !important; }
+  .sktvd-l-teaser-card-sub { font-size: 11px !important; margin-top: 1px !important; }
+  .sktvd-l-teaser-card-price {
+    font-size: 12.5px !important;
+    padding: 4px 9px !important;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  // ── S8 · FAQ — accordion с меньшими шрифтами ──
+  .sktvd-l-faq { padding: 24px 0 8px !important; }
+  .sktvd-l-faq-inner { max-width: none !important; }
+  .sktvd-l-faq-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-faq-h2 { font-size: 22px !important; margin: 0 !important; }
+  .sktvd-l-acc { margin: 0 14px; border-radius: 10px !important; }
+  .sktvd-l-acc-q { padding: 12px 14px !important; gap: 10px !important; font-size: 13.5px !important; line-height: 1.3 !important; }
+  .sktvd-l-acc-toggle { font-size: 18px !important; width: 18px !important; height: 18px !important; }
+  .sktvd-l-acc-a { padding: 0 14px 12px !important; font-size: 12.5px !important; line-height: 1.55 !important; }
+
+  // ── S9 · Final CTA — без JOIN-декора, кнопки на ширину ──
+  .sktvd-l-final { padding: 28px 14px 16px !important; }
+  .sktvd-l-final-banner {
+    grid-template-columns: 1fr !important;
+    padding: 20px 22px !important;
+    border-radius: 12px !important;
+    gap: 0 !important;
+  }
+  .sktvd-l-final-h2 { font-size: 22px !important; margin: 0 0 8px !important; line-height: 1.1 !important; }
+  .sktvd-l-final-lead { font-size: 12.5px !important; margin: 0 0 14px !important; line-height: 1.5 !important; }
+  .sktvd-l-final-cta-row { display: flex; gap: 8px; flex-direction: row !important; }
+  .sktvd-l-final-cta-row .sktvd-l-btn-accent,
+  .sktvd-l-final-cta-row .sktvd-l-btn-ghost { font-size: 13px !important; padding: 9px 14px !important; flex: 1; }
+  // «JOIN» декоративная надпись справа — скрываем
+  .sktvd-l-final-right { display: none !important; }
 }
