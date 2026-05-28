@@ -2536,10 +2536,20 @@ body.sktvd-membership-route {
     flex-direction: column;
     min-height: 55vh;
   }
-  // CTA отступ от низа hero — небольшой gap до trust-strip; без этого
-  // кнопки прижимаются вплотную к границе секции.
+  // Hero photo обрезаем сверху ~10% — background-position: center 80%
+  // показывает нижние 90% кадра, верх скрыт. Корова визуально поднимается.
+  .sktvd-l-hero {
+    background-position: center 80% !important;
+  }
+  // CTA вплотную к границе hero (margin-top:auto уже даёт это), без extra
+  // bottom margin. Trust-strip margin-top даёт нужный gap.
   .sktvd-l-hero .sktvd-l-cta-group {
-    margin-bottom: 12px;
+    margin-bottom: 0;
+  }
+  // Gap CTA → trust-strip = такой же как внутри trust-strip 2×2 (14px).
+  // Было 32px (desktop) — слишком много на mobile.
+  .sktvd-l-trust-strip {
+    margin-top: 14px !important;
   }
   .sktvd-l-hero .sktvd-l-lead,
   .sktvd-l-hero .sktvd-l-trust { display: none; }
