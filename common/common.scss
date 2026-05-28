@@ -2534,15 +2534,15 @@ body.sktvd-membership-route {
   .sktvd-l-hero-col {
     display: flex;
     flex-direction: column;
-    min-height: 55vh;
+    min-height: 62vh;
   }
-  // Hero photo обрезаем сверху ~10% — background-position: center 80%
-  // показывает нижние 90% кадра, верх скрыт. Корова визуально поднимается.
+  // Hero photo: crop top 15% + явный horizontal center (desktop был
+  // `center right` — на mobile это shift'ило subjects вправо, нужно по центру).
+  // Two values: X=50% (центр горизонтально), Y=85% (показываем нижние 85% =
+  // обрезаем верхние 15%).
   .sktvd-l-hero {
-    background-position: center 80% !important;
+    background-position: 50% 85% !important;
   }
-  // CTA вплотную к границе hero (margin-top:auto уже даёт это), без extra
-  // bottom margin. Trust-strip margin-top даёт нужный gap.
   .sktvd-l-hero .sktvd-l-cta-group {
     margin-bottom: 0;
   }
