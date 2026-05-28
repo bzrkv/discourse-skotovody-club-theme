@@ -2531,23 +2531,14 @@ body.sktvd-membership-route {
   // («фермеры, ветврачи, зоотехники») съедают вертикальное место и закрывают
   // фото — скрываем. CTA прижимаем к нижней части hero column через
   // margin-top:auto, чтобы фото было видно сверху между H1 и кнопками.
-  // Hero mobile — natural-compact height (без min-height): eyebrow + H1 +
-  // CTA идут естественной высотой, hero не пухнет специально.
-  // background-position: center bottom — фото «обрезается сверху», на
-  // мобиле виден нижний фрагмент кадра (морда коровы и фермеры),
-  // а не середина с зелёным полем над головами. Это даёт визуальный
-  // эффект «фото поднято вверх» без изменения самого фото.
-  .sktvd-l-hero {
-    background-position: center bottom !important;
-  }
   .sktvd-l-hero-col {
-    display: block;
-    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 55vh;
   }
-  // CTA не прижимаем к низу column — column сам compact. Просто небольшой
-  // margin-top для отделения от H1 + margin-bottom до trust-strip.
+  // CTA отступ от низа hero — небольшой gap до trust-strip; без этого
+  // кнопки прижимаются вплотную к границе секции.
   .sktvd-l-hero .sktvd-l-cta-group {
-    margin-top: 10px;
     margin-bottom: 12px;
   }
   .sktvd-l-hero .sktvd-l-lead,
