@@ -2534,22 +2534,7 @@ body.sktvd-membership-route {
   .sktvd-l-hero-col {
     display: flex;
     flex-direction: column;
-    min-height: 62vh;
-  }
-  // Hero photo: crop top 15% + явный horizontal center (desktop был
-  // `center right` — на mobile это shift'ило subjects вправо, нужно по центру).
-  // Two values: X=50% (центр горизонтально), Y=85% (показываем нижние 85% =
-  // обрезаем верхние 15%).
-  .sktvd-l-hero {
-    background-position: 50% 85% !important;
-  }
-  .sktvd-l-hero .sktvd-l-cta-group {
-    margin-bottom: 0;
-  }
-  // Gap CTA → trust-strip = такой же как внутри trust-strip 2×2 (14px).
-  // Было 32px (desktop) — слишком много на mobile.
-  .sktvd-l-trust-strip {
-    margin-top: 14px !important;
+    min-height: 45vh;
   }
   .sktvd-l-hero .sktvd-l-lead,
   .sktvd-l-hero .sktvd-l-trust { display: none; }
