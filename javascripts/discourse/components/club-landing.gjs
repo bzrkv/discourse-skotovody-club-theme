@@ -15,9 +15,9 @@ import icon from "discourse/helpers/d-icon";
 
 // S2 — why a closed community (LANDING_SPEC §S2)
 const WHY = [
-  { icon: "shield-halved", title: "Без рекламы и спама", text: "Внутри клуба не продают БАДы, кредиты и курсы. Только профильные обсуждения и проверенные объявления хозяйств." },
-  { icon: "user", title: "Каждый — кто-то конкретный", text: "Анонимных аккаунтов нет. У каждого участника заполнен профиль: хозяйство, регион, специализация. Это меняет качество разговора." },
-  { icon: "file-lines", title: "Ответы — от практиков", text: "Здесь не теоретизируют. Если кто-то отвечает про КЕ на телёнка — у него за плечами 200 голов и три зимы наблюдений." },
+  { icon: "shield-halved", title: "Без рекламы и спама", text: "Внутри клуба не продают БАДы, кредиты и курсы. Только профильные обсуждения и проверенные объявления хозяйств.", textShort: "Не продают БАДы, кредиты и курсы" },
+  { icon: "user", title: "Каждый — кто-то конкретный", text: "Анонимных аккаунтов нет. У каждого участника заполнен профиль: хозяйство, регион, специализация. Это меняет качество разговора.", textShort: "Аккаунтов без профиля нет" },
+  { icon: "file-lines", title: "Ответы — от практиков", text: "Здесь не теоретизируют. Если кто-то отвечает про КЕ на телёнка — у него за плечами 200 голов и три зимы наблюдений.", textShort: "За плечами 200 голов и три зимы" },
 ];
 
 // S3 — who it's for (GUEST_LANDING_UPDATE §S3). Icon plaque per persona,
@@ -162,9 +162,9 @@ const TESTIMONIALS = [
 
 // S7 — how to join (LANDING_SPEC §S7)
 const STEPS = [
-  { n: "01", title: "Заявка", text: "Заполняете короткую форму: хозяйство, регион, специализация, ссылка на инстаграм или сайт, если есть. Это 2 минуты." },
-  { n: "02", title: "Проверка", text: "Команда клуба смотрит вашу заявку и связывается, если нужны уточнения. Решение — в течение одного рабочего дня." },
-  { n: "03", title: "Доступ", text: "Открываются все 9 разделов. Можно создавать темы, отвечать, отмечать закладки, писать в личные сообщения и пользоваться Базой знаний." },
+  { n: "01", title: "Заявка", text: "Заполняете короткую форму: хозяйство, регион, специализация, ссылка на инстаграм или сайт, если есть. Это 2 минуты.", textShort: "Короткая форма: хозяйство, регион, специализация. Две минуты." },
+  { n: "02", title: "Проверка", text: "Команда клуба смотрит вашу заявку и связывается, если нужны уточнения. Решение — в течение одного рабочего дня.", textShort: "Решение — в течение одного рабочего дня." },
+  { n: "03", title: "Доступ", text: "Открываются все 9 разделов. Можно создавать темы, отвечать, отмечать закладки, писать в личные сообщения и пользоваться Базой знаний.", textShort: "Открываются все 9 разделов и личные сообщения." },
 ];
 
 // S7.5 — pricing teaser mini-cards (LANDING_SPEC §S7.5)
@@ -375,8 +375,8 @@ export default class ClubLanding extends Component {
       <section class="sktvd-l-why">
         <div class="sktvd-l-wrap">
           <div class="sktvd-l-why-head">
-            <p class="sktvd-l-why-eyebrow">Закрытый формат</p>
-            <h2 class="sktvd-l-why-h2">Доступ только для своих — это не снобизм. Это качество ответов.</h2>
+            <p class="sktvd-l-why-eyebrow">Почему закрытое</p>
+            <h2 class="sktvd-l-why-h2">Доступ только для своих — это качество ответов.</h2>
           </div>
 
           <div class="sktvd-l-why-grid">
@@ -386,7 +386,8 @@ export default class ClubLanding extends Component {
                   {{icon item.icon}}
                 </div>
                 <h3 class="sktvd-l-why-h3">{{item.title}}</h3>
-                <p class="sktvd-l-why-text">{{item.text}}</p>
+                <p class="sktvd-l-why-text sktvd-l-text-full">{{item.text}}</p>
+                <p class="sktvd-l-why-text sktvd-l-text-short">{{item.textShort}}</p>
               </div>
             {{/each}}
           </div>
@@ -543,7 +544,8 @@ export default class ClubLanding extends Component {
               <div class="sktvd-l-step-card">
                 <div class="sktvd-l-step-num" aria-hidden="true">{{step.n}}</div>
                 <h3 class="sktvd-l-step-title">{{step.title}}</h3>
-                <p class="sktvd-l-step-text">{{step.text}}</p>
+                <p class="sktvd-l-step-text sktvd-l-text-full">{{step.text}}</p>
+                <p class="sktvd-l-step-text sktvd-l-text-short">{{step.textShort}}</p>
               </div>
             {{/each}}
           </div>
@@ -618,8 +620,11 @@ export default class ClubLanding extends Component {
           <div class="sktvd-l-final-banner">
             <div class="sktvd-l-final-left">
               <h2 class="sktvd-l-final-h2">Готовы вступить?</h2>
-              <p class="sktvd-l-final-lead">
+              <p class="sktvd-l-final-lead sktvd-l-text-full">
                 Заполнение заявки занимает две минуты. Мы рассмотрим её в течение одного рабочего дня и откроем доступ ко всем 9 разделам.
+              </p>
+              <p class="sktvd-l-final-lead sktvd-l-text-short">
+                Заявка — две минуты. Рассмотрим за один рабочий день.
               </p>
               <div class="sktvd-l-final-cta-row">
                 <a href={{this.applicationUrl}} class="sktvd-l-btn-accent --lg">
@@ -627,7 +632,8 @@ export default class ClubLanding extends Component {
                   Подать заявку
                 </a>
                 <a href="/c/news" class="sktvd-l-btn-ghost --dark --lg">
-                  Сначала почитать новости
+                  <span class="sktvd-l-text-full">Сначала почитать новости</span>
+                  <span class="sktvd-l-text-short">Новости</span>
                 </a>
               </div>
             </div>

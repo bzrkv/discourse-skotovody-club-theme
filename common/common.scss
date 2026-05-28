@@ -2534,7 +2534,12 @@ body.sktvd-membership-route {
   .sktvd-l-hero-col {
     display: flex;
     flex-direction: column;
-    min-height: 45vh;
+    min-height: 55vh;
+  }
+  // CTA отступ от низа hero — небольшой gap до trust-strip; без этого
+  // кнопки прижимаются вплотную к границе секции.
+  .sktvd-l-hero .sktvd-l-cta-group {
+    margin-bottom: 12px;
   }
   .sktvd-l-hero .sktvd-l-lead,
   .sktvd-l-hero .sktvd-l-trust { display: none; }
@@ -3957,17 +3962,30 @@ body.sktvd-membership-route {
  * Hero (sktvd-l-hero) НЕ ТРОГАЕТСЯ — правила применяются ниже него.
  * Спека: docs/MOBILE_LANDING_OPTIMIZATION.md
  * ═══════════════════════════════════════════════════════════ */
+
+// Helper для парных long/short текстов: full виден на desktop, short — mobile
+.sktvd-l-text-short { display: none; }
+.sktvd-l-text-full  { display: block; }
+
 @media (max-width: 640px) {
+  // Глобально на мобиле — desktop full тексты прячем, показываем mobile short
+  .sktvd-l-text-full  { display: none !important; }
+  .sktvd-l-text-short { display: block !important; }
+  // Для inline вариантов (span внутри кнопки) — inline-display
+  span.sktvd-l-text-full  { display: none !important; }
+  span.sktvd-l-text-short { display: inline !important; }
+  // wrap padding пожиже (было 24px на десктопе)
+  .sktvd-l .sktvd-l-wrap { padding-left: 10px !important; padding-right: 10px !important; }
 
   // ── S2 · «Почему закрытое сообщество» — 3 ряда в одной плитке ──
   .sktvd-l-why { padding: 24px 0 8px !important; }
-  .sktvd-l-why-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-why-head { padding: 0 8px; margin-bottom: 14px !important; text-align: left !important; }
   .sktvd-l-why-h2 { font-size: 22px !important; max-width: none !important; margin: 0 !important; }
   .sktvd-l-why-eyebrow { margin-bottom: 6px !important; font-size: 10px !important; }
   .sktvd-l-why-grid {
     grid-template-columns: 1fr !important;
     gap: 0 !important;
-    margin: 0 14px;
+    margin: 0 8px;
     background: var(--sktvd-surface);
     border: 1px solid var(--sktvd-line);
     border-radius: 10px;
@@ -3994,12 +4012,12 @@ body.sktvd-membership-route {
 
   // ── S3 · «Подходит, если вы…» — 2×2 компактных плиток ──
   .sktvd-l-who { padding: 24px 0 8px !important; }
-  .sktvd-l-who-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-who-head { padding: 0 8px; margin-bottom: 14px !important; text-align: left !important; }
   .sktvd-l-who-h2 { font-size: 22px !important; margin: 0 !important; }
   .sktvd-l-who-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 8px !important;
-    margin: 0 14px;
+    margin: 0 8px;
   }
   .sktvd-l-who-card {
     padding: 12px 14px !important;
@@ -4018,12 +4036,12 @@ body.sktvd-membership-route {
 
   // ── S4 · «9 разделов» — 2 колонки × 5 рядов мини-плиток ──
   .sktvd-l-cats { padding: 24px 0 8px !important; }
-  .sktvd-l-cats-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
+  .sktvd-l-cats-head { padding: 0 8px; margin-bottom: 14px !important; text-align: left !important; }
   .sktvd-l-cats-h2 { font-size: 22px !important; margin: 0 !important; }
   .sktvd-l-cats-grid {
     grid-template-columns: 1fr 1fr !important;
     gap: 6px !important;
-    margin: 0 14px;
+    margin: 0 8px;
   }
   .sktvd-l-cats-card {
     padding: 10px 11px 10px 13px !important;
@@ -4062,7 +4080,7 @@ body.sktvd-membership-route {
   // ── S5 · «Новости» — горизонтальный scroll snap (если есть news) ──
   .sktvd-l-news { padding: 24px 0 8px !important; }
   .sktvd-l-news-head {
-    padding: 0 14px !important;
+    padding: 0 8px !important;
     margin-bottom: 12px !important;
     display: flex; align-items: flex-end; justify-content: space-between; gap: 8px;
   }
@@ -4075,7 +4093,7 @@ body.sktvd-membership-route {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    padding: 0 14px;
+    padding: 0 8px;
     scrollbar-width: none;
   }
   .sktvd-l-news-grid::-webkit-scrollbar { display: none; }
@@ -4107,7 +4125,7 @@ body.sktvd-membership-route {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    padding: 0 14px 14px;
+    padding: 0 8px 14px;
     scrollbar-width: none;
   }
   .sktvd-l-quotes-grid::-webkit-scrollbar { display: none; }
@@ -4140,7 +4158,7 @@ body.sktvd-membership-route {
   .sktvd-l-steps-grid {
     grid-template-columns: 1fr !important;
     gap: 0 !important;
-    margin: 0 14px;
+    margin: 0 8px;
     position: relative;
   }
   // Вертикальная полоса между кружками
@@ -4187,7 +4205,7 @@ body.sktvd-membership-route {
   .sktvd-l-teaser { padding: 24px 0 8px !important; }
   .sktvd-l-teaser-box {
     padding: 14px !important;
-    margin: 0 14px;
+    margin: 0 8px;
     border-radius: 10px !important;
   }
   .sktvd-l-teaser-grid {
@@ -4239,7 +4257,7 @@ body.sktvd-membership-route {
   .sktvd-l-acc-a { padding: 0 14px 12px !important; font-size: 12.5px !important; line-height: 1.55 !important; }
 
   // ── S9 · Final CTA — без JOIN-декора, кнопки на ширину ──
-  .sktvd-l-final { padding: 28px 14px 16px !important; }
+  .sktvd-l-final { padding: 28px 8px 16px !important; }
   .sktvd-l-final-banner {
     grid-template-columns: 1fr !important;
     padding: 20px 22px !important;
