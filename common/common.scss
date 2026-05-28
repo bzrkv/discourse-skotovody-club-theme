@@ -4168,19 +4168,19 @@ body.sktvd-membership-route {
   // ── S7 · «Три шага» — вертикальный таймлайн с кружками ──
   .sktvd-l-steps { padding: 24px 0 8px !important; }
   .sktvd-l-steps-head { padding: 0 14px; margin-bottom: 14px !important; text-align: left !important; }
-  .sktvd-l-steps-h2 { font-size: 22px !important; margin: 0 !important; }
+  .sktvd-l-steps-h2 { font-size: 26px !important; margin: 0 !important; font-weight: 700 !important; line-height: 1.15 !important; }
   .sktvd-l-steps-eyebrow { margin-bottom: 6px !important; }
   .sktvd-l-steps-grid {
     grid-template-columns: 1fr !important;
     gap: 0 !important;
-    margin: 0 8px;
+    margin: 0 14px;
     position: relative;
   }
   // Вертикальная полоса между кружками
   .sktvd-l-steps-grid::before {
     content: '';
     position: absolute;
-    left: 19px; top: 18px; bottom: 18px;
+    left: 19px; top: 22px; bottom: 22px;
     width: 1px;
     background: var(--sktvd-line);
     z-index: 0;
@@ -4197,7 +4197,7 @@ body.sktvd-membership-route {
     z-index: 1;
   }
   .sktvd-l-step-num {
-    flex-shrink: 0;
+    flex: 0 0 38px !important;
     width: 38px !important; height: 38px !important;
     border-radius: 50% !important;
     background: var(--sktvd-surface) !important;
@@ -4213,8 +4213,11 @@ body.sktvd-membership-route {
     margin-bottom: 0 !important;
     line-height: 1 !important;
   }
-  .sktvd-l-step-title { font-size: 15px !important; margin: 0 0 2px !important; }
-  .sktvd-l-step-text { font-size: 12px !important; line-height: 1.45 !important; margin: 0 !important; }
+  // Wrapper для title+text — позволяет им stack'аться вертикально справа
+  // от кружка, а не быть siblings flex row.
+  .sktvd-l-step-body { flex: 1; min-width: 0; padding-top: 2px; }
+  .sktvd-l-step-title { font-size: 16px !important; margin: 0 0 2px !important; font-weight: 700 !important; }
+  .sktvd-l-step-text { font-size: 13px !important; line-height: 1.45 !important; margin: 0 !important; color: var(--sktvd-ink-2); }
 
   // ── S7.5 · «Три категории» — текст сверху + 3 строки тарифов ──
   .sktvd-l-teaser { padding: 24px 0 8px !important; }
