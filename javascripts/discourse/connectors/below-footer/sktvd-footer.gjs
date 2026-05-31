@@ -98,6 +98,15 @@ export default class SktvdFooter extends Component {
           </div>
 
           <div class="sktvd-footer-strip">
+            {{! Юр-лицо без числовых реквизитов — детальные ИНН/ОГРН/адрес
+                живут на странице «Правила пользования» (/tos), не в футере. }}
+            <span class="sktvd-footer-legal">
+              ООО «Кэттл Эксперт»
+              <span class="sktvd-footer-sep">·</span>
+              <a href="/tos">Правила пользования</a>
+              <span class="sktvd-footer-sep">·</span>
+              <a href="/privacy">Политика обработки персональных данных</a>
+            </span>
             <span>© 2026 Skotovody. Все права защищены.</span>
           </div>
         </div>

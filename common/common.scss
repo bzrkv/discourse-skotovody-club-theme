@@ -2168,6 +2168,24 @@ body.sktvd-membership-route {
   color: var(--sktvd-ink-3);
 }
 
+.sktvd-footer-legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  a {
+    color: var(--sktvd-ink-3);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover { color: var(--sktvd-ink-1); }
+  }
+}
+
+.sktvd-footer-sep { opacity: 0.5; }
+
 @media (max-width: 900px) {
   .sktvd-footer { margin-top: 40px; padding: 44px 16px 32px; }
   .sktvd-footer-cols { grid-template-columns: 1fr 1fr; gap: 28px 24px; }
