@@ -4140,8 +4140,11 @@ body.sktvd-membership-route {
 }
 
 /* ═══════════════════════════════════════════════════════════
- * MOBILE LANDING OPTIMIZATION  (@media max-width:640px)
- * Уплотняет гостевой лендинг club.skotovody.com на мобильных.
+ * MOBILE LANDING OPTIMIZATION  (@media max-width:720px)
+ * Уплотняет гостевой лендинг club.skotovody.com на мобильных и в зоне
+ * планшета (641–720px), где основной лендинг уже сваливается в 1 колонку.
+ * Брейк выровнен 640→720 (2026-06-01), чтобы зона 641–720 не оставалась
+ * «недоупакованной» одноколоночной — см. screenshots/club-landing-700px-*.
  * Hero (sktvd-l-hero) НЕ ТРОГАЕТСЯ — правила применяются ниже него.
  * Спека: docs/MOBILE_LANDING_OPTIMIZATION.md
  * ═══════════════════════════════════════════════════════════ */
@@ -4150,7 +4153,7 @@ body.sktvd-membership-route {
 .sktvd-l-text-short { display: none; }
 .sktvd-l-text-full  { display: block; }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   // Глобально на мобиле — desktop full тексты прячем, показываем mobile short
   .sktvd-l-text-full  { display: none !important; }
   .sktvd-l-text-short { display: block !important; }
