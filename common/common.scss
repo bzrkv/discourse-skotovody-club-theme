@@ -339,6 +339,26 @@ h1, h2, h3 {
       }
     }
   }
+
+  // Browse-вид каналов (✏️ «Каналы») — вкладки «Все/Открытые/Закрытые»
+  // были 18.4px/42px, поиск 16px/38px → компактнее + поиск в тон темы
+  .chat-browse-view__filters {
+    gap: 2px;
+  }
+  .chat-browse-view__filter-link {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 11px;
+    line-height: 1.2;
+  }
+  .filter-input-container .filter-input {
+    font-size: 13px;
+    padding: 6px 11px;
+    height: 32px;
+    border-radius: var(--sktvd-r-md);
+    border-color: var(--sktvd-line);
+    background: var(--sktvd-bg-elev);
+  }
 }
 
 .sktvd-header-icon-link {
