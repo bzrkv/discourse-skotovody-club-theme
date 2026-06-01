@@ -45,7 +45,7 @@ export default class SktvdNav extends Component {
     const url = (this.router.currentURL || "/").split("?")[0];
     const member = !!this.currentUser;
     const defs = [
-      { label: "Свежие", href: "/latest", match: ["/", "/latest"] },
+      { label: "Главная", href: "/latest", match: ["/", "/latest"] },
       member && {
         label: "Новые",
         href: "/new",
