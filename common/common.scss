@@ -1804,6 +1804,31 @@ body.has-sidebar-page .sktvd-landing-shell {
       background: linear-gradient(135deg, oklch(0.93 0.04 230) 0%, oklch(0.87 0.05 245) 100%);
       color: oklch(0.24 0.05 240);
     }
+
+    // Слайд с фоновой фотографией (bg_image): фото + тёмный градиент-оверлей
+    // слева (где текст) для читаемости + светлый текст.
+    &.has-bg {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      color: oklch(0.97 0.01 90);
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg,
+          oklch(0.15 0.03 150 / 0.72) 0%,
+          oklch(0.15 0.03 150 / 0.42) 48%,
+          oklch(0.15 0.03 150 / 0.10) 100%);
+        z-index: 0;
+      }
+
+      .sktvd-slider-main { position: relative; z-index: 1; }
+      .sktvd-slider-title,
+      .sktvd-slider-desc,
+      .sktvd-slider-when { color: oklch(0.97 0.01 90); }
+    }
   }
 
   &-main { min-width: 0; }

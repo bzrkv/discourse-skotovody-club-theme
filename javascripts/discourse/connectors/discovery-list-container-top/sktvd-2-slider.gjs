@@ -9,13 +9,16 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
+import { service } from "@ember/service";
 import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
+import { htmlSafe } from "@ember/template";
 import { eq, gt } from "truth-helpers";
 
 const ROTATE_MS = 7000;
 
 export default class SktvdSlider extends Component {
+  @service router;
   slides = Array.isArray(settings.slides) ? settings.slides : [];
   @tracked index = 0;
   @tracked paused = false;
@@ -32,12 +35,30 @@ export default class SktvdSlider extends Component {
     this.#stop();
   }
 
+  // Slider показывается ТОЛЬКО на главной (/ и /latest) и в категории
+  // «Новости и анонсы» (slug news) — не на остальных категориях и тегах.
+  get onAllowedPage() {
+    const url = (this.router.currentURL || "/").split("?")[0];
+    if (url === "/" || url === "/latest") {
+      return true;
+    }
+    return url.startsWith("/c/news");
+  }
+
   get enabled() {
-    return settings.enable_slider && this.slides.length > 0;
+    return (
+      settings.enable_slider && this.slides.length > 0 && this.onAllowedPage
+    );
   }
 
   get current() {
     return this.slides[this.index];
+  }
+
+  // Фоновая фотография слайда (если задана в bg_image слайда).
+  get slideStyle() {
+    const bg = this.current && this.current.bg_image;
+    return bg ? htmlSafe(`background-image:url('${bg}')`) : null;
   }
 
   get multiple() {
@@ -108,7 +129,11 @@ export default class SktvdSlider extends Component {
         {{on "mouseenter" this.pause}}
         {{on "mouseleave" this.resume}}
       >
-        <div class="sktvd-slider-slide --{{this.current.kind}}">
+        <div
+          class="sktvd-slider-slide --{{this.current.kind}}
+            {{if this.current.bg_image 'has-bg'}}"
+          style={{this.slideStyle}}
+        >
           <div class="sktvd-slider-main">
             {{#if this.current.tag}}
               <span class="sktvd-slider-tag">{{this.current.tag}}</span>
