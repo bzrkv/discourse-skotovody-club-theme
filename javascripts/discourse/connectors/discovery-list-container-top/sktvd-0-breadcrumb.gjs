@@ -15,8 +15,27 @@ export default class SktvdBreadcrumb extends Component {
     return this.args?.outletArgs?.category;
   }
 
-  get tag() {
-    return this.args?.outletArgs?.tag;
+  // Имя тега: outletArgs.tag иногда отдаёт числовой route-param ("1"),
+  // поэтому берём название из route-параметра tag_id, затем из URL.
+  get tagName() {
+    const t = this.args?.outletArgs?.tag;
+    let name = t && (t.name || t.id);
+    name = name == null ? null : String(name);
+    if (!name || /^\d+$/.test(name)) {
+      let route = this.router.currentRoute;
+      while (route && !(route.params && route.params.tag_id)) {
+        route = route.parent;
+      }
+      if (route?.params?.tag_id) {
+        name = decodeURIComponent(route.params.tag_id);
+      } else {
+        const m = (this.router.currentURL || "").match(
+          /\/tags?\/(?:intersection\/)?([^/?]+)/
+        );
+        name = m ? decodeURIComponent(m[1]) : null;
+      }
+    }
+    return name;
   }
 
   // Защита: на главной (/, /latest) крошку не показываем.
@@ -36,11 +55,12 @@ export default class SktvdBreadcrumb extends Component {
         current: this.category.name,
       };
     }
-    if (this.tag) {
+    const tag = this.tagName;
+    if (tag) {
       return {
         sectionLabel: "Теги",
         sectionHref: "/tags",
-        current: this.tag.id || this.tag.name,
+        current: tag,
       };
     }
     return null;
