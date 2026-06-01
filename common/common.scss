@@ -275,6 +275,72 @@ h1, h2, h3 {
   font-size: 18px;
 }
 
+// ─── Компактный чат-drawer (по запросу: меньше шрифты + «+»/«✕» вместо
+//     текста «Подписаться»/«Отписаться»; имя канала было 18.4px) ───
+.chat-drawer {
+  // Заголовки в drawer (навбар «Каналы», имя активного канала) — компактнее
+  .c-navbar__title,
+  .chat-channel-title__name {
+    font-size: 14px;
+  }
+  .chat-channel-title__metadata,
+  .c-navbar__title-suffix {
+    font-size: 11px;
+  }
+
+  // Browse-карточки каналов — плотнее и мельче (универсально)
+  .chat-channel-card {
+    padding: 10px 12px;
+
+    &__name {
+      font-size: 13px;
+      line-height: 1.25;
+
+      .emoji {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    &__members {
+      font-size: 11px;
+    }
+
+    &__description {
+      font-size: 11.5px;
+      line-height: 1.35;
+    }
+
+    &__read-restricted {
+      width: 11px;
+      height: 11px;
+    }
+
+    // Подписка/отписка → иконки «+» / «✕» вместо текста
+    .toggle-channel-membership-button {
+      min-width: 0;
+      padding: 4px 8px;
+
+      .d-button-label {
+        display: none;
+      }
+
+      &::after {
+        font-weight: 700;
+        line-height: 1;
+      }
+      &.-leave::after {
+        content: "✕";
+        font-size: 13px;
+      }
+      &.-join::after {
+        content: "+";
+        font-size: 16px;
+      }
+    }
+  }
+}
+
 .sktvd-header-icon-link {
   position: relative;
 }
