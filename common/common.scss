@@ -3081,6 +3081,12 @@ body.sktvd-membership-route {
   text-overflow: ellipsis;
 }
 
+// Desktop shows the full category name; the short variant is mobile-only and
+// is revealed inside @media (max-width: 720px) below. Without this base hide
+// BOTH spans render on desktop → «Новости и анонсыНовости». Mirrors the
+// .sktvd-l-text-short base-hide pattern.
+.sktvd-l-cats-name-short { display: none; }
+
 // Badges — «Открыто» (forest) or 🔒 (ink-mute)
 .sktvd-l-cats-badge {
   flex-shrink: 0;
